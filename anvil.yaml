@@ -1,4 +1,72 @@
 allow_embedding: false
+db_schema:
+  comments:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: created
+      type: datetime
+    - admin_ui: {order: 1, width: 749}
+      name: comment_info
+      type: simpleObject
+    server: full
+    title: comments
+  users:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: email
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: enabled
+      type: bool
+    - admin_ui: {order: 2, width: 200}
+      name: last_login
+      type: datetime
+    - admin_ui: {order: 3, width: 200}
+      name: password_hash
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: n_password_failures
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: confirmed_email
+      type: bool
+    - admin_ui: {order: 6, width: 200}
+      name: remembered_logins
+      type: simpleObject
+    - admin_ui: {order: 7, width: 91}
+      name: last_name
+      type: string
+    - admin_ui: {order: 8, width: 92}
+      name: first_name
+      type: string
+    - admin_ui: {order: 9, width: 200}
+      name: couple_id
+      type: string
+    - admin_ui: {order: 10, width: 200}
+      name: signup_name
+      type: string
+    - admin_ui: {order: 11, width: 200}
+      name: couple_signup_name
+      type: string
+    - admin_ui: {order: 12, width: 200}
+      name: roles
+      type: string
+    - admin_ui: {order: 13, width: 200}
+      name: phone
+      type: string
+    - admin_ui: {order: 14, width: 200}
+      name: birth_month
+      type: number
+    - admin_ui: {order: 15, width: 200}
+      name: birth_day
+      type: number
+    - admin_ui: {order: 16, width: 200}
+      name: birth_date_text
+      type: string
+    server: full
+    title: Users
 dependencies:
 - config: {}
   dep_id: dep_lin1x4oec0ytd
@@ -16,3 +84,11 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/tables.yml
+- client_config: {allow_remember_me: true, allow_signup: false, confirm_email: false, enable_automatically: true, remember_me_days: 365, use_email: true}
+  server_config: {user_table: users}
+  source: /runtime/services/anvil/users.yml
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/anvil/email.yml
+startup: {module: HelpLoggedOut, type: form}
+startup_form: null
