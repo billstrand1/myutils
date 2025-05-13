@@ -17,7 +17,7 @@ class HelpLoggedIn(HelpLoggedInTemplate):
     DEBUG = True
     if DEBUG:
       print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login')
+      anvil.server.call('force_debug_login_shr_utils')
     
     user = anvil.users.get_user()
     full_name = f"{user['first_name']} {user['last_name']}"
@@ -41,7 +41,7 @@ class HelpLoggedIn(HelpLoggedInTemplate):
     # --- Server call ---
     try:
       anvil.server.call('add_comment', comment_dict)  
-      alert("Question / Comment submitted,\nThank you.\n\nI'll reply shortly.", title="Received")
+      alert("Question / Comment submitted,\nthank you.\n\nI'll reply shortly.", title="Received")
       # Clear the form
       self.comment_area.text = ""
 

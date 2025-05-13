@@ -39,7 +39,7 @@ class HelpLoggedOut(HelpLoggedOutTemplate):
     try:
       anvil.server.call('add_comment', comment_dict)
 
-      alert("Question / Comment submitted,\nThank you.\n\nI'll reply shortly.", title="Received")
+      alert("Question / Comment submitted,\nthank you.\n\nI'll reply shortly.", title="Received")
       # Clear the form
       self.comment_area.text = ""
 
