@@ -1,4 +1,4 @@
-from ._anvil_designer import HomeContactsTemplate
+from ._anvil_designer import ContactsHomeTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 import m3.components as m3
 from ..ContactsEdit import ContactsEdit
 
-class HomeContacts(HomeContactsTemplate):
+class ContactsHome(ContactsHomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
