@@ -13,8 +13,15 @@ def is_valid_email(email):
   print (f"Email: {re.match(pattern, email) is not None}")
   return re.match(pattern, email) is not None
 
+# @anvil.server.callable
+# def is_valid_phone(phone):
+#   # Allow optional leading plus sign, followed by at least 6 digits, no spaces
+#   return re.fullmatch(r"\+?\d{6,}", phone) is not None
+
 @anvil.server.callable
 def is_valid_phone(phone):
-  # Allow optional leading plus sign, followed by at least 6 digits, no spaces
-  return re.fullmatch(r"\+?\d{6,}", phone) is not None
+  # Remove common formatting characters
+  digits_only = re.sub(r"[^\d]", "", phone)
 
+  # Validate that we have at least 7 digits
+  return len(digits_only) == 10 

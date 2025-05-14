@@ -13,8 +13,7 @@ class DirectoryHome(DirectoryHomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    #Had to go back to Links in the ButtonMenu, I couldn't get the click() to work.
-
+    # --------Menu Items
     menu_add = m3.MenuItem(text="Create New Contact", tag='create')
     menu_edit = m3.MenuItem(text="Edit Contact", tag='edit')    
     self.MultiButton.menu_items = [menu_add, menu_edit]
@@ -23,17 +22,17 @@ class DirectoryHome(DirectoryHomeTemplate):
     menu_edit.add_event_handler('click', self.edit_contact_click)
 
 
-  #Do the WhileTrue loop here....
   def add_contact_click(self, **event_args):
     user = anvil.users.get_user()
     if user:
       print(f" {user['first_name']} {user['last_name']} is adding a new Member")
+      
     new_contact = {'first_name': '',
                   'last_name': '',
                    'email': '',
                    'phone': '',
-                   'birth_month': '',
-                   'birth_day': ''}
+                   'birth_month': None,
+                   'birth_day': None}
     
     player_add_form = DirectoryEdit(item=new_contact)
 
@@ -65,11 +64,12 @@ class DirectoryHome(DirectoryHomeTemplate):
         phone = new_contact['phone']
         if phone:
           if not anvil.server.call('is_valid_phone', phone):          
-            alert ("Please enter a valid phone number (without spaces).", title="Input Error")
+            alert ("Please enter a valid 10 digit phone number.", title="Input Error")
             continue
 
         birth_month = new_contact['birth_month']
         birth_day = new_contact['birth_day']
+        
         if birth_month:
           if not (1 <= birth_month <= 12):
             alert(content="Birth month must be between 1 and 12.", title="Input Error")
@@ -84,12 +84,22 @@ class DirectoryHome(DirectoryHomeTemplate):
         if not birth_day and  birth_month:
           alert(content="Please enter both birth month & day, or neither.", title="Input Error")
           continue
-            
+          
       break
 
-      #Now work on Server Code to add contacts.
-      
-    # new_member['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
+    ##Now work on Server Code to add contacts.
+    new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
+    new_contact['roles'] = None
+    new_contact['enabled'] = True
+    new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+    new_contact['couple_id'] = new_contact['last_name'].lower()
+
+    anvil.server.call('add_new_contact', new_contact)
+    if user:
+      Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
+    else: 
+      Notification(f"{new_contact['first_name']} added, thanks.").show()
+    self.refresh_data_bindings()
 
   def edit_contact_click(self, **event_args):
     alert("Edit button clicked....")
