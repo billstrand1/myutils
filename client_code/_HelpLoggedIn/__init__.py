@@ -1,4 +1,4 @@
-from ._anvil_designer import HelpLoggedInTemplate
+from ._anvil_designer import _HelpLoggedInTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 
 
 
-class HelpLoggedIn(HelpLoggedInTemplate):
+class _HelpLoggedIn(_HelpLoggedInTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
