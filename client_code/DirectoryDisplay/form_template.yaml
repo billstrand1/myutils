@@ -1,0 +1,30 @@
+components:
+- components:
+  - components:
+    - components:
+      - name: directory_panel
+        properties: {item_template: DirectoryDisplay.RowTemplate2}
+        type: RepeatingPanel
+      layout_properties: {slot: card-content-container-slot}
+      name: directory_grid
+      properties:
+        columns:
+        - {data_key: first_name, id: MDTJPM, title: First Name}
+        - {data_key: last_name, id: NBZGBP, title: Last Name}
+        - {data_key: email, id: JSPGUY, title: Email}
+        - {data_key: phone, expand: false, id: DAQBNF, title: Phone, width: 164.859375}
+        - {data_key: column_1, expand: false, id: EJYKDQ, title: Edit, width: 97.140625}
+        - {data_key: column_2, expand: false, id: FUNTIS, title: Delete, width: 85.76953125}
+        rows_per_page: 150
+        show_page_controls: false
+      type: DataGrid
+    layout_properties: {slot: card-content-slot}
+    name: directory_card
+    properties: {}
+    type: form:dep_lin1x4oec0ytd:_Components.Card.CardContentContainer
+  layout_properties: {grid_position: 'QKPWXE,OPMYCS'}
+  name: card_1
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Card
+container: {type: ColumnPanel}
+is_package: true

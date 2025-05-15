@@ -103,3 +103,4 @@ class DirectoryHome(DirectoryHomeTemplate):
 
   def edit_contact_click(self, **event_args):
     alert("Edit button clicked....")
+    
