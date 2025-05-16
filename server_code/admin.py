@@ -5,15 +5,11 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
-# This is a server module. It runs on the Anvil server,
-# rather than in the user's browser.
-#
-# To allow anvil.server.call() to call functions here, we mark
-# them with @anvil.server.callable.
-# Here is an example - you can replace it with your own:
-#
-# @anvil.server.callable
-# def say_hello(name):
-#   print("Hello, " + name + "!")
-#   return 42
-#
+def get_columns_in_user_table():
+  columns_in_user_table = app_tables.users.list_columns()
+  # Birthday = next((item for item in columns_in_birthday_list if item["name"] == "Birthday"), None)
+  # if Birthday: 
+  #     print('Birthday found')
+  # else: 
+  #     print('Birthday not found')
+  return columns_in_user_table
