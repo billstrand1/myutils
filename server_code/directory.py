@@ -9,3 +9,10 @@ import anvil.server
 def add_new_contact(contact_dict):
   print('Add User successfully called.')
   app_tables.users.add_row(**contact_dict)
+
+
+@anvil.server.callable
+def get_directory():  #gets all users except super_user
+  #Need to add a "no_directory" role for the search.
+  return app_tables.users.search(
+  tables.order_by("last_name", ascending=True),enabled=True)
