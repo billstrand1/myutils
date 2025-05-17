@@ -94,7 +94,7 @@ class DirectoryHome(DirectoryHomeTemplate):
     new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
     new_contact['couple_id'] = new_contact['last_name'].lower()
 
-    anvil.server.call('add_new_contact', new_contact)
+    anvil.server.call('add_new_member', new_contact)
     if user:
       Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
     else: 

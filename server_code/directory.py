@@ -4,11 +4,19 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+from datetime import datetime
 
 @anvil.server.callable
-def add_new_contact(contact_dict):
+def add_new_member(contact_dict):
   print('Add User successfully called.')
   app_tables.users.add_row(**contact_dict)
+
+@anvil.server.callable
+def update_member(member, member_dict):
+  
+  # member_dict['updated'] = datetime.now()
+  # member_dict['full_name'] = member_dict['last_name'] + ', ' + member_dict['first_name']
+  member.update(**member_dict)
 
 
 @anvil.server.callable

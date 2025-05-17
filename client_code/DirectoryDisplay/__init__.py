@@ -17,7 +17,8 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
     # self.directory_panel.items = anvil.server.call('get_directory')
     self.refresh_directory()
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
-
+    self.directory_panel.set_event_handler('x-refresh_directory', self.refresh_directory)
+    
     # ------------------VERIFY FALSE AFTER TESTING
     DEBUG = True
     if DEBUG:
@@ -59,6 +60,13 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         print(new_contact)
         print(f"First Name: {new_contact['first_name']}")
 
+        if new_contact['first_name']:
+          new_contact['first_name'] = new_contact['first_name'].title()
+        if new_contact['last_name']:
+          new_contact['last_name'] = new_contact['last_name'].title()
+        if new_contact['email']:
+          new_contact['email'] = new_contact['email'].lower()          
+          
         if not new_contact['first_name']:
           alert ("Please enter first name.", title="Input Error")
           continue
@@ -105,10 +113,15 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
     new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
     new_contact['couple_id'] = new_contact['last_name'].lower()
 
-    anvil.server.call('add_new_contact', new_contact)
+    
+    anvil.server.call('add_new_member', new_contact)
+
     if user:
+      message = f"{new_contact['first_name']} {new_contact['last_name']}, {new_contact['email']} added by {user['first_name']} {user['last_name']}."
+      anvil.server.call('email_change', message)
       Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
     else: 
+      message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
       Notification(f"{new_contact['first_name']} added, thanks.").show()
-      
+      anvil.server.call('email_change', message)
     self.refresh_directory()
