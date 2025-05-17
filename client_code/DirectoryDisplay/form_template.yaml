@@ -1,0 +1,28 @@
+components:
+- components:
+  - event_bindings: {click: button_add_member_click}
+    layout_properties: {grid_position: 'FZMTTA,EMRBGX'}
+    name: button_add_member
+    properties: {align: right, appearance: outlined, icon: 'mi:add', icon_align: left, text: Add New Member}
+    type: form:dep_lin1x4oec0ytd:_Components.Button
+  - components:
+    - name: directory_panel
+      properties: {item_template: DirectoryDisplay.DirectoryTemplate}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'MWVQXE,IWDSNA'}
+    name: directory_grid
+    properties:
+      columns:
+      - {data_key: first_name, id: JCQVAD, title: First Name, width: ''}
+      - {data_key: last_name, id: NEBXYB, title: Last Name, width: ''}
+      - {data_key: email, expand: false, id: ZTJWNO, title: Email, width: ''}
+      - {data_key: phone, expand: false, id: IDSHQN, title: Phone, width: ''}
+      - {data_key: column_1, expand: false, id: MXKQHD, title: Edit, width: '60'}
+      - {data_key: column_2, id: WWDTUK, title: Delete, width: '60'}
+    type: DataGrid
+  layout_properties: {grid_position: 'DQFIFL,XUNFGW'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true
