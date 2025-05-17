@@ -30,14 +30,10 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
       large=False
     )
     if delete:
-      anvil.server.call('email_change', message, subject='Directory Deletion')
       self.parent.raise_event('x-delete-member', member=self.item)    
-
-    #Email to Bill of the deletion:
-    # board_member = 
-    message = (f"{user_full_name} DELETED {member_to_delete} \n{self.member_copy} in the User Table")
-    print(message)
-    anvil.server.call('email_change', message, subject='Deleting Member')    
+      message = (f"{user_full_name} DELETED {member_to_delete} \n{self.member_copy} in the User Table")
+      print(message)
+      anvil.server.call('email_change', message, subject='Deleting Member')    
 
   def link_edit_click(self, **event_args):
     print('entering link_edit_click')
@@ -61,7 +57,7 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
         print(f"First Name: {self.member_copy['first_name']}")
 
         if self.member_copy['first_name']:
-          print('setting First name to Title')
+          print('setting First name to Title: ')
           self.member_copy['first_name'] = self.member_copy['first_name'].title()
         if self.member_copy['last_name']:
           print('setting Last name to Title')
@@ -108,31 +104,23 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
           continue
 
       break
-      
-      anvil.server.call('update_member', self.item, self.member_copy)
+    # self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"
+    
+    anvil.server.call('update_member', self.item, self.member_copy)
+    print('calling parent refresh')
+    # self.parent.raise_event('x-refresh-directory')
+    self.refresh_data_bindings()
 
-      
-    ##Now work on Server Code to update Member
-      # new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
-      # new_contact['roles'] = None
-      # new_contact['enabled'] = True
-      # new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
-      # new_contact['couple_id'] = new_contact['last_name'].lower()
-  
-  
+    if user:
+      message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
+      anvil.server.call('email_change', message)
+      Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
+    else: 
+      message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
+      Notification(f"{self.member_copy['first_name']} added, thanks.").show()
+      anvil.server.call('email_change', message)
 
-  
-      if user:
-        message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
-        anvil.server.call('email_change', message)
-        Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
-      else: 
-        message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
-        Notification(f"{self.member_copy['first_name']} added, thanks.").show()
-        anvil.server.call('email_change', message)
 
-      self.parent.raise_event('x-refresh-directory')
-      # self.refresh_directory()
 
 
 

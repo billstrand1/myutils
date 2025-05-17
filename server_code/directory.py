@@ -13,7 +13,7 @@ def add_new_member(contact_dict):
 
 @anvil.server.callable
 def update_member(member, member_dict):
-  
+  print(f"Receiving {member['first_name']} to update with\n{member_dict}")
   # member_dict['updated'] = datetime.now()
   # member_dict['full_name'] = member_dict['last_name'] + ', ' + member_dict['first_name']
   member.update(**member_dict)
