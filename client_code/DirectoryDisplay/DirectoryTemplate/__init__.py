@@ -11,7 +11,11 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+    user = anvil.users.get_user()
 
+    # work on role admin to make edit visible
+    # if user['role']
+    
     # Any code you write here will run before the form opens.
 
   def link_delete_click(self, **event_args):
