@@ -23,6 +23,10 @@ components:
       name: divider_1
       properties: {}
       type: form:dep_lin1x4oec0ytd:_Components.Divider
+    - layout_properties: {slot: card-content-container-slot}
+      name: divider_1_copy
+      properties: {}
+      type: form:dep_lin1x4oec0ytd:_Components.Divider
     - data_bindings:
       - {code: 'self.item[''signup_name'']', property: text, writeback: true}
       layout_properties: {slot: card-content-container-slot}

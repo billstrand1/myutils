@@ -103,8 +103,11 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
           alert(content="Please enter both birth month & day, or neither.", title="Input Error")
           continue
 
+        if not self.member_copy['signup_name']:
+          self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"       
+          
       break
-    # self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"
+    
     
     anvil.server.call('update_member', self.item, self.member_copy)
     print('calling parent refresh')
