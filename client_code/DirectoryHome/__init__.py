@@ -84,6 +84,9 @@ class DirectoryHome(DirectoryHomeTemplate):
         if not birth_day and  birth_month:
           alert(content="Please enter both birth month & day, or neither.", title="Input Error")
           continue
+
+        if not new_contact['signup_name']:
+          new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
           
       break
 
@@ -91,7 +94,6 @@ class DirectoryHome(DirectoryHomeTemplate):
     new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
     new_contact['roles'] = None
     new_contact['enabled'] = True
-    new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
     new_contact['couple_id'] = new_contact['last_name'].lower()
 
     anvil.server.call('add_new_member', new_contact)

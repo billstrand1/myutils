@@ -17,7 +17,7 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
     # self.directory_panel.items = anvil.server.call('get_directory')
     self.refresh_directory()
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
-    self.directory_panel.set_event_handler('x-refresh_directory', self.refresh_directory)
+    # self.directory_panel.set_event_handler('x-refresh_directory', self.refresh_directory)
     
     # ------------------VERIFY FALSE AFTER TESTING
     DEBUG = True
@@ -42,6 +42,7 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
     new_contact = {'first_name': '',
                    'last_name': '',
                    'email': '',
+                   'signup_name': '',
                    'phone': '',
                    'birth_month': None,
                    'birth_day': None}
@@ -60,10 +61,12 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         print(new_contact)
         print(f"First Name: {new_contact['first_name']}")
 
+        # TODO: Figure out how to handle Signup Name 
         if new_contact['first_name']:
           new_contact['first_name'] = new_contact['first_name'].title()
         if new_contact['last_name']:
           new_contact['last_name'] = new_contact['last_name'].title()
+        
         if new_contact['email']:
           new_contact['email'] = new_contact['email'].lower()          
           
@@ -104,13 +107,16 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
           alert(content="Please enter both birth month & day, or neither.", title="Input Error")
           continue
 
+        if not new_contact['signup_name']:
+          new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+
       break
 
     ##Now work on Server Code to add contacts.
     new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
     new_contact['roles'] = None
     new_contact['enabled'] = True
-    new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+    # new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
     new_contact['couple_id'] = new_contact['last_name'].lower()
 
     
