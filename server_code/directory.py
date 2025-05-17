@@ -16,3 +16,10 @@ def get_directory():  #gets all users except super_user
   #Need to add a "no_directory" role for the search.
   return app_tables.users.search(
   tables.order_by("last_name", ascending=True),enabled=True)
+
+@anvil.server.callable
+def delete_member(member): 
+  if app_tables.users.has_row(member):
+    member.delete()
+  else:
+    raise Exception("Member does not exist")

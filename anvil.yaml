@@ -72,9 +72,9 @@ dependencies:
   dep_id: dep_lin1x4oec0ytd
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}
   version: {version_tag: v1.2.3}
-name: ShrUtils
+name: MyUtils
 native_deps: null
-package_name: ShrUtils
+package_name: MyUtils
 runtime_options:
   client_version: '3'
   server_spec: {base: python310-minimal}
@@ -90,5 +90,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/email.yml
-startup: {module: DirectoryHome, type: form}
+startup: {module: DirectoryDisplay, type: form}
 startup_form: null
