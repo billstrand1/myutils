@@ -14,9 +14,16 @@ def get_columns_in_user_table():
   # else: 
   #     print('Birthday not found')
   return columns_in_user_table
-
-@anvil.server.callable
-def has_role(role):
-  user = anvil.users.get_user()
-  return user and 'roles' in user and role in user['roles']
   
+@anvil.server.callable  
+def has_role(user, role):
+  if user:
+    try:
+      result = role in user['roles']
+      print(f"Checking role '{role}' in {user['roles']} → {result}")
+      return result
+    except Exception as e:
+      print(f"Role check failed: {e}")
+      return False
+  else:
+    return False

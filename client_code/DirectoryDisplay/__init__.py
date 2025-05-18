@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 
 import m3.components as m3
 from ..DirectoryEdit import DirectoryEdit
-
+from .. import Globals
 
 class DirectoryDisplay(DirectoryDisplayTemplate):
   def __init__(self, **properties):
@@ -24,7 +24,29 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
     if DEBUG:
       print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
       anvil.server.call('force_debug_login_shr_utils')
+      
+    user = anvil.users.get_user()
+    print(f"DirectoryDisplay user = {user['first_name']}")
+    admin = anvil.server.call('has_role', user, 'admin')
+    self.button_add_member.visible = bool(admin)  
+    
 
+  # def validate_member_data(self, member):
+  #   if not member['first_name']:
+  #     return "Please enter first name."
+  #   if not member['last_name']:
+  #     return "Please enter last name."
+  #   if not member['email'] or not anvil.server.call('is_valid_email', member['email']):
+  #     return "Please enter a valid email address."
+  #   if member.get('phone') and not anvil.server.call('is_valid_phone', member['phone']):
+  #     return "Please enter a valid 10 digit phone number."
+  #   if (member.get('birth_month') and not (1 <= member['birth_month'] <= 12)) or \
+  #   (member.get('birth_day') and not (1 <= member['birth_day'] <= 31)):
+  #     return "Birth date must be valid."
+  #   if bool(member.get('birth_month')) ^ bool(member.get('birth_day')):
+  #     return "Please enter both birth month & day, or neither."
+  #   return None
+  
   def refresh_directory(self):
     self.refresh_data_bindings()
     self.directory_panel.items = anvil.server.call('get_directory')
@@ -61,51 +83,57 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         print(new_contact)
         print(f"First Name: {new_contact['first_name']}")
 
-        # TODO: Figure out how to handle Signup Name 
+        # error = self.validate_member_data(new_contact)
+        error = Globals.validate_member_data(new_contact)
+
+        if error:
+          alert(error, title="Input Error")
+          continue
+
+        #Set to appropriate string modes
         if new_contact['first_name']:
           new_contact['first_name'] = new_contact['first_name'].title()
         if new_contact['last_name']:
-          new_contact['last_name'] = new_contact['last_name'].title()
-        
+          new_contact['last_name'] = new_contact['last_name'].title()     
         if new_contact['email']:
           new_contact['email'] = new_contact['email'].lower()          
           
-        if not new_contact['first_name']:
-          alert ("Please enter first name.", title="Input Error")
-          continue
+        # if not new_contact['first_name']:
+        #   alert ("Please enter first name.", title="Input Error")
+        #   continue
 
-        if not new_contact['last_name']:
-          alert ("Please enter last name.", title="Input Error")
-          continue
+        # if not new_contact['last_name']:
+        #   alert ("Please enter last name.", title="Input Error")
+        #   continue
 
-        email = new_contact['email']
-        if not email or not anvil.server.call('is_valid_email', email):
-          alert ("Please enter valid email address.", title="Input Error")
-          continue     
+        # email = new_contact['email']
+        # if not email or not anvil.server.call('is_valid_email', email):
+        #   alert ("Please enter valid email address.", title="Input Error")
+        #   continue     
 
-        phone = new_contact['phone']
-        if phone:
-          if not anvil.server.call('is_valid_phone', phone):          
-            alert ("Please enter a valid 10 digit phone number.", title="Input Error")
-            continue
+        # phone = new_contact['phone']
+        # if phone:
+        #   if not anvil.server.call('is_valid_phone', phone):          
+        #     alert ("Please enter a valid 10 digit phone number.", title="Input Error")
+        #     continue
 
-        birth_month = new_contact['birth_month']
-        birth_day = new_contact['birth_day']
+        # birth_month = new_contact['birth_month']
+        # birth_day = new_contact['birth_day']
 
-        if birth_month:
-          if not (1 <= birth_month <= 12):
-            alert(content="Birth month must be between 1 and 12.", title="Input Error")
-            continue
-        if birth_day:
-          if not (1 <= birth_day <= 31):
-            alert(content="Birth day must be between 1 and 31.", title="Input Error")
-            continue   
-        if birth_day and not birth_month:
-          alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-          continue
-        if not birth_day and  birth_month:
-          alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-          continue
+        # if birth_month:
+        #   if not (1 <= birth_month <= 12):
+        #     alert(content="Birth month must be between 1 and 12.", title="Input Error")
+        #     continue
+        # if birth_day:
+        #   if not (1 <= birth_day <= 31):
+        #     alert(content="Birth day must be between 1 and 31.", title="Input Error")
+        #     continue   
+        # if birth_day and not birth_month:
+        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
+        #   continue
+        # if not birth_day and  birth_month:
+        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
+        #   continue
 
         if not new_contact['signup_name']:
           new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
