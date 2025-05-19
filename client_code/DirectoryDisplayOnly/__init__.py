@@ -1,4 +1,4 @@
-from ._anvil_designer import DirectoryDisplayTemplate
+from ._anvil_designer import DirectoryDisplayOnlyTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -7,32 +7,50 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 import m3.components as m3
-from ..DirectoryEdit import DirectoryEdit
+# from ..DirectoryEdi÷t import DirectoryEdit
 from .. import Globals
 
-class DirectoryDisplay(DirectoryDisplayTemplate):
+class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # self.directory_panel.items = anvil.server.call('get_directory')
     self.refresh_directory()
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
-    
+    # self.directory_panel.set_event_handler('x-refresh_directory', self.refresh_directory)
+
     # ------------------VERIFY FALSE AFTER TESTING
     DEBUG = True
     if DEBUG:
       print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
       anvil.server.call('force_debug_login_shr_utils')
-      
+
     user = anvil.users.get_user()
     print(f"DirectoryDisplay user = {user['first_name']}")
     admin = anvil.server.call('has_role', user, 'admin')
-    self.button_add_member.visible = bool(admin)  
-  
+    self.button_add_member.visible = bool(admin)
+
+
+  # def validate_member_data(self, member):
+  #   if not member['first_name']:
+  #     return "Please enter first name."
+  #   if not member['last_name']:
+  #     return "Please enter last name."
+  #   if not member['email'] or not anvil.server.call('is_valid_email', member['email']):
+  #     return "Please enter a valid email address."
+  #   if member.get('phone') and not anvil.server.call('is_valid_phone', member['phone']):
+  #     return "Please enter a valid 10 digit phone number."
+  #   if (member.get('birth_month') and not (1 <= member['birth_month'] <= 12)) or \
+  #   (member.get('birth_day') and not (1 <= member['birth_day'] <= 31)):
+  #     return "Birth date must be valid."
+  #   if bool(member.get('birth_month')) ^ bool(member.get('birth_day')):
+  #     return "Please enter both birth month & day, or neither."
+  #   return None
+
   def refresh_directory(self):
     self.refresh_data_bindings()
     self.directory_panel.items = anvil.server.call('get_directory')
-  
+
   def delete_member(self, member, **event_args):
     # Delete the score
     anvil.server.call('delete_member', member)
@@ -76,10 +94,10 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         if new_contact['first_name']:
           new_contact['first_name'] = new_contact['first_name'].title()
         if new_contact['last_name']:
-          new_contact['last_name'] = new_contact['last_name'].title()     
+          new_contact['last_name'] = new_contact['last_name'].title()
         if new_contact['email']:
-          new_contact['email'] = new_contact['email'].lower()          
-          
+          new_contact['email'] = new_contact['email'].lower()
+
         # if not new_contact['first_name']:
         #   alert ("Please enter first name.", title="Input Error")
         #   continue
@@ -91,11 +109,11 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         # email = new_contact['email']
         # if not email or not anvil.server.call('is_valid_email', email):
         #   alert ("Please enter valid email address.", title="Input Error")
-        #   continue     
+        #   continue
 
         # phone = new_contact['phone']
         # if phone:
-        #   if not anvil.server.call('is_valid_phone', phone):          
+        #   if not anvil.server.call('is_valid_phone', phone):
         #     alert ("Please enter a valid 10 digit phone number.", title="Input Error")
         #     continue
 
@@ -109,7 +127,7 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
         # if birth_day:
         #   if not (1 <= birth_day <= 31):
         #     alert(content="Birth day must be between 1 and 31.", title="Input Error")
-        #     continue   
+        #     continue
         # if birth_day and not birth_month:
         #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
         #   continue
@@ -123,20 +141,20 @@ class DirectoryDisplay(DirectoryDisplayTemplate):
       break
 
     ##Now work on Server Code to add contacts.
-    new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
+    new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu'
     new_contact['roles'] = None
     new_contact['enabled'] = True
     # new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
     new_contact['couple_id'] = new_contact['last_name'].lower()
 
-    
+
     anvil.server.call('add_new_member', new_contact)
 
     if user:
       message = f"{new_contact['first_name']} {new_contact['last_name']}, {new_contact['email']} added by {user['first_name']} {user['last_name']}."
       anvil.server.call('email_change', message)
       Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
-    else: 
+    else:
       message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
       Notification(f"{new_contact['first_name']} added, thanks.").show()
       anvil.server.call('email_change', message)
