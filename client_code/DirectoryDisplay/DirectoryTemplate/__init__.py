@@ -15,24 +15,24 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
     self.refresh_data_bindings()
     
     # ------------------VERIFY FALSE AFTER TESTING
-    DEBUG = True
-    if DEBUG:
-      print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login_shr_utils') 
+    # DEBUG = True
+    # if DEBUG:
+    #   print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
+    #   anvil.server.call('force_debug_login_shr_utils') 
       
-    user = anvil.users.get_user()
+    # user = anvil.users.get_user()
     
-    if user:
-      print(f"in DirectoryTemplate, user = {user['email']}")
-      admin = anvil.server.call('has_role', user, 'admin')
-      self.link_edit.visible = bool(admin)  
-      self.link_delete.visible = bool(admin)
+    # if user:
+    #   print(f"in DirectoryTemplate, user = {user['email']}")
+    #   admin = anvil.server.call('has_role', user, 'admin')
+    #   self.link_edit.visible = bool(admin)  
+    #   self.link_delete.visible = bool(admin)
       
-      if user['email'] == self.item['email']:
-        print('user found')
-        self.link_edit.visible = True
-    else:
-      print('user not found in DirectoryTemplate')
+    #   if user['email'] == self.item['email']:
+    #     print('user found')
+    #     self.link_edit.visible = True
+    # else:
+    #   print('user not found in DirectoryTemplate')
 
   def link_delete_click(self, **event_args):
     user = anvil.users.get_user()
