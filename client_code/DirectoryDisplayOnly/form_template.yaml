@@ -1,0 +1,23 @@
+components:
+- components:
+  - components:
+    - layout_properties: {}
+      name: directory_panel
+      properties: {item_template: DirectoryDisplayOnly.DirectoryTemplateDisplayOnly}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'EADWRY,CHADRO'}
+    name: directory_grid
+    properties:
+      columns:
+      - {data_key: first_name, id: JCQVAD, title: First Name, width: ''}
+      - {data_key: last_name, id: NEBXYB, title: Last Name, width: ''}
+      - {data_key: email, expand: false, id: ZTJWNO, title: Email, width: '200'}
+      - {data_key: phone, expand: false, id: IDSHQN, title: Phone, width: ''}
+      - {data_key: column_1, id: SNZATL, title: 'Signup Name '}
+    type: DataGrid
+  layout_properties: {grid_position: 'DQFIFL,XUNFGW'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

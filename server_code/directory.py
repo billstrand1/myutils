@@ -8,7 +8,8 @@ from datetime import datetime
 
 @anvil.server.callable
 def add_new_member(contact_dict):
-  print('Add User successfully called.')
+  print('Add User successfully called.\n')
+  print(contact_dict)
   app_tables.users.add_row(**contact_dict)
 
 @anvil.server.callable
