@@ -51,9 +51,9 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
 
   def link_edit_click(self, **event_args):
     print('entering link_edit_click')
-    user = anvil.users.get_user()
-    
+    user = anvil.users.get_user()    
     print(f"Directory Edit accessed by: {user['first_name']} {user['last_name']}")
+    
     self.member_copy = dict(self.item)
     print(f"{self.member_copy['first_name']} {self.member_copy['last_name']} about to be edited.")
     
@@ -67,33 +67,39 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
         buttons=[("Save", True), ("Cancel", False)],
       )
 
-      if save_clicked:
+      if not save_clicked:
+        return
+      
+      # if save_clicked:
         # print(self.member_copy)
-        print(f"First Name: {self.member_copy['first_name']}")
+      print(f"First Name: {self.member_copy['first_name']}")
 
-        error = Globals.validate_member_data(self.member_copy)
-        if error:
-          alert(error, title="Input Error")
-          continue
- 
-        self.member_copy['first_name'] = self.member_copy['first_name'].title()
-        self.member_copy['last_name'] = self.member_copy['last_name'].title()
-        self.member_copy['email'] = self.member_copy['email'].lower()   
-        if not self.member_copy['signup_name']:
-          self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"       
+      error = Globals.validate_member_data(self.member_copy)
+      if error:
+        alert(error, title="Input Error")
+        continue
 
-        anvil.server.call('update_member', self.item, self.member_copy)
-        if user:
-          message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
-          anvil.server.call('email_change', message)
-          Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
-        else: 
-          message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
-          Notification(f"{self.member_copy['first_name']} added, thanks.").show()
-          anvil.server.call('email_change', message)
+      self.member_copy['first_name'] = self.member_copy['first_name'].title()
+      self.member_copy['last_name'] = self.member_copy['last_name'].title()
+      self.member_copy['email'] = self.member_copy['email'].lower()   
+      if not self.member_copy['signup_name']:
+        self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"       
+
+      # Save and notify
+      anvil.server.call('update_member', self.item, self.member_copy)
+      
+      if user:
+        message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
+        anvil.server.call('email_change', message, subject='User Directory Edit')
+        Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
+      else: 
+        message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
+        Notification(f"{self.member_copy['first_name']} added, thanks.").show()
+        anvil.server.call('email_change', message, subject='User Directory Edit')
+      self.refresh_data_bindings()
       break
 
-    self.refresh_data_bindings()
+    
 
 
 

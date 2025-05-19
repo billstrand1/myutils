@@ -72,24 +72,27 @@ class DirectoryHome(DirectoryHomeTemplate):
           large=True,
           buttons=[("Save", True), ("Cancel", False)],
         )
-  
-        if save_clicked:
-          print(new_contact)
-          print(f"First Name: {new_contact['first_name']}")
-  
-          error = Globals.validate_member_data(new_contact)
-  
-          if error:
-            alert(error, title="Input Error")
-            continue
-  
-          #Set to appropriate string modes
-          new_contact['first_name'] = new_contact['first_name'].title()
-          new_contact['last_name'] = new_contact['last_name'].title()     
-          new_contact['email'] = new_contact['email'].lower()          
-  
-          if not new_contact['signup_name']:
-            new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+
+        if not save_clicked:
+          return  # or break
+          
+        # if save_clicked:
+        #   print(new_contact)
+        print(f"First Name: {new_contact['first_name']}")
+
+        error = Globals.validate_member_data(new_contact)
+
+        if error:
+          alert(error, title="Input Error")
+          continue
+
+        #Set to appropriate string modes
+        new_contact['first_name'] = new_contact['first_name'].title()
+        new_contact['last_name'] = new_contact['last_name'].title()     
+        new_contact['email'] = new_contact['email'].lower()          
+
+        if not new_contact['signup_name']:
+          new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
   
         break
   
