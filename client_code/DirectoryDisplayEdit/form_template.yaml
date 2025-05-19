@@ -1,10 +1,5 @@
 components:
 - components:
-  - event_bindings: {click: button_add_member_click}
-    layout_properties: {grid_position: 'FZMTTA,EMRBGX'}
-    name: button_add_member
-    properties: {align: right, appearance: outlined, icon: 'mi:add', icon_align: left, text: Add New Member, visible: false}
-    type: form:dep_lin1x4oec0ytd:_Components.Button
   - components:
     - name: directory_panel
       properties: {item_template: DirectoryDisplayEdit.DirectoryTemplate}

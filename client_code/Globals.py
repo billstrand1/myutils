@@ -23,6 +23,3 @@ def validate_member_data(member):
   return None
 
 
-
-def say_hello():
-  print("Hello, world")

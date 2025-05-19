@@ -17,13 +17,16 @@ def get_columns_in_user_table():
   
 @anvil.server.callable  
 def has_role(user, role):
-  if user:
-    try:
-      result = role in user['roles']
-      print(f"Checking role '{role}' in {user['roles']} → {result}")
-      return result
-    except Exception as e:
-      print(f"Role check failed: {e}")
-      return False
+  if not user: # or 'roles' not in user:
+    print('No user found.')
+    return False
+
+  try:
+    result = role in user['roles']
+    print(f"Checking role '{role}' in {user['roles']} → {result}")
+    return result
+  except Exception as e:
+    print(f"Role check failed: {e}")
+    return False
   else:
     return False

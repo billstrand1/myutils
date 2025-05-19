@@ -35,106 +35,106 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
     anvil.server.call('delete_member', member)
     self.refresh_directory()
 
-  def button_add_member_click(self, **event_args):
-    user = anvil.users.get_user()
-    if user:
-      print(f" {user['first_name']} {user['last_name']} is adding a new Member")
+  # def button_add_member_click(self, **event_args):
+  #   user = anvil.users.get_user()
+  #   if user:
+  #     print(f" {user['first_name']} {user['last_name']} is adding a new Member")
 
-    new_contact = {'first_name': '',
-                   'last_name': '',
-                   'email': '',
-                   'signup_name': '',
-                   'phone': '',
-                   'birth_month': None,
-                   'birth_day': None}
+  #   new_contact = {'first_name': '',
+  #                  'last_name': '',
+  #                  'email': '',
+  #                  'signup_name': '',
+  #                  'phone': '',
+  #                  'birth_month': None,
+  #                  'birth_day': None}
 
-    player_add_form = DirectoryEdit(item=new_contact)
+  #   player_add_form = DirectoryEdit(item=new_contact)
 
-    while True: # Keep looping until valid input is provided
-      save_clicked = alert(
-        content=player_add_form,
-        title="Add Contact",
-        large=True,
-        buttons=[("Save", True), ("Cancel", False)],
-      )
+  #   while True: # Keep looping until valid input is provided
+  #     save_clicked = alert(
+  #       content=player_add_form,
+  #       title="Add Contact",
+  #       large=True,
+  #       buttons=[("Save", True), ("Cancel", False)],
+  #     )
 
-      if save_clicked:
-        print(new_contact)
-        print(f"First Name: {new_contact['first_name']}")
+  #     if save_clicked:
+  #       print(new_contact)
+  #       print(f"First Name: {new_contact['first_name']}")
 
-        # error = self.validate_member_data(new_contact)
-        error = Globals.validate_member_data(new_contact)
+  #       # error = self.validate_member_data(new_contact)
+  #       error = Globals.validate_member_data(new_contact)
 
-        if error:
-          alert(error, title="Input Error")
-          continue
+  #       if error:
+  #         alert(error, title="Input Error")
+  #         continue
 
-        #Set to appropriate string modes
-        if new_contact['first_name']:
-          new_contact['first_name'] = new_contact['first_name'].title()
-        if new_contact['last_name']:
-          new_contact['last_name'] = new_contact['last_name'].title()
-        if new_contact['email']:
-          new_contact['email'] = new_contact['email'].lower()
+  #       #Set to appropriate string modes
+  #       if new_contact['first_name']:
+  #         new_contact['first_name'] = new_contact['first_name'].title()
+  #       if new_contact['last_name']:
+  #         new_contact['last_name'] = new_contact['last_name'].title()
+  #       if new_contact['email']:
+  #         new_contact['email'] = new_contact['email'].lower()
 
-        # if not new_contact['first_name']:
-        #   alert ("Please enter first name.", title="Input Error")
-        #   continue
+  #       # if not new_contact['first_name']:
+  #       #   alert ("Please enter first name.", title="Input Error")
+  #       #   continue
 
-        # if not new_contact['last_name']:
-        #   alert ("Please enter last name.", title="Input Error")
-        #   continue
+  #       # if not new_contact['last_name']:
+  #       #   alert ("Please enter last name.", title="Input Error")
+  #       #   continue
 
-        # email = new_contact['email']
-        # if not email or not anvil.server.call('is_valid_email', email):
-        #   alert ("Please enter valid email address.", title="Input Error")
-        #   continue
+  #       # email = new_contact['email']
+  #       # if not email or not anvil.server.call('is_valid_email', email):
+  #       #   alert ("Please enter valid email address.", title="Input Error")
+  #       #   continue
 
-        # phone = new_contact['phone']
-        # if phone:
-        #   if not anvil.server.call('is_valid_phone', phone):
-        #     alert ("Please enter a valid 10 digit phone number.", title="Input Error")
-        #     continue
+  #       # phone = new_contact['phone']
+  #       # if phone:
+  #       #   if not anvil.server.call('is_valid_phone', phone):
+  #       #     alert ("Please enter a valid 10 digit phone number.", title="Input Error")
+  #       #     continue
 
-        # birth_month = new_contact['birth_month']
-        # birth_day = new_contact['birth_day']
+  #       # birth_month = new_contact['birth_month']
+  #       # birth_day = new_contact['birth_day']
 
-        # if birth_month:
-        #   if not (1 <= birth_month <= 12):
-        #     alert(content="Birth month must be between 1 and 12.", title="Input Error")
-        #     continue
-        # if birth_day:
-        #   if not (1 <= birth_day <= 31):
-        #     alert(content="Birth day must be between 1 and 31.", title="Input Error")
-        #     continue
-        # if birth_day and not birth_month:
-        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-        #   continue
-        # if not birth_day and  birth_month:
-        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-        #   continue
+  #       # if birth_month:
+  #       #   if not (1 <= birth_month <= 12):
+  #       #     alert(content="Birth month must be between 1 and 12.", title="Input Error")
+  #       #     continue
+  #       # if birth_day:
+  #       #   if not (1 <= birth_day <= 31):
+  #       #     alert(content="Birth day must be between 1 and 31.", title="Input Error")
+  #       #     continue
+  #       # if birth_day and not birth_month:
+  #       #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
+  #       #   continue
+  #       # if not birth_day and  birth_month:
+  #       #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
+  #       #   continue
 
-        if not new_contact['signup_name']:
-          new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+  #       if not new_contact['signup_name']:
+  #         new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
 
-      break
+  #     break
 
-    ##Now work on Server Code to add contacts.
-    new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu'
-    new_contact['roles'] = None
-    new_contact['enabled'] = True
-    # new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
-    new_contact['couple_id'] = new_contact['last_name'].lower()
+  #   ##Now work on Server Code to add contacts.
+  #   new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu'
+  #   new_contact['roles'] = None
+  #   new_contact['enabled'] = True
+  #   # new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+  #   new_contact['couple_id'] = new_contact['last_name'].lower()
 
 
-    anvil.server.call('add_new_member', new_contact)
+    # anvil.server.call('add_new_member', new_contact)
 
-    if user:
-      message = f"{new_contact['first_name']} {new_contact['last_name']}, {new_contact['email']} added by {user['first_name']} {user['last_name']}."
-      anvil.server.call('email_change', message)
-      Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
-    else:
-      message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
-      Notification(f"{new_contact['first_name']} added, thanks.").show()
-      anvil.server.call('email_change', message)
-    self.refresh_directory()
+    # if user:
+    #   message = f"{new_contact['first_name']} {new_contact['last_name']}, {new_contact['email']} added by {user['first_name']} {user['last_name']}."
+    #   anvil.server.call('email_change', message)
+    #   Notification(f"{new_contact['first_name']} added, thanks {user['first_name']}.").show()
+    # else:
+    #   message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
+    #   Notification(f"{new_contact['first_name']} added, thanks.").show()
+    #   anvil.server.call('email_change', message)
+    # self.refresh_directory()
