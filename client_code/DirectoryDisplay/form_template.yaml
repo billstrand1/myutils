@@ -9,7 +9,7 @@ components:
     - name: directory_panel
       properties: {item_template: DirectoryDisplay.DirectoryTemplate}
       type: RepeatingPanel
-    layout_properties: {grid_position: 'EADWRY,CHADRO'}
+    layout_properties: {grid_position: 'MWVQXE,IWDSNA'}
     name: directory_grid
     properties:
       columns:
@@ -27,7 +27,7 @@ components:
         properties: {item_template: DirectoryDisplay.DirectoryTemplate}
         type: RepeatingPanel
       layout_properties: {grid_position: 'MWVQXE,IWDSNA'}
-      name: directory_grid_2
+      name: directory_grid_copy
       properties:
         columns:
         - {data_key: first_name, id: JCQVAD, title: First Name, width: ''}
@@ -38,7 +38,7 @@ components:
         - {data_key: column_1, expand: false, id: MXKQHD, title: Edit, width: '60'}
         - {data_key: column_2, id: WWDTUK, title: Delete, width: '60'}
       type: DataGrid
-    layout_properties: {grid_position: 'OXRUWD,FDSFYC'}
+    layout_properties: {grid_position: 'MWVQXE,HODSJB'}
     name: column_panel_1_copy
     properties: {}
     type: ColumnPanel
