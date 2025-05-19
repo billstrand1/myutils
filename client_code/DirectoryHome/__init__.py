@@ -5,10 +5,12 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+
 import m3.components as m3
-from ..DirectoryEdit import DirectoryEdit
-from ..DirectoryDisplayEdit import DirectoryDisplayEdit
-from ..DirectoryDisplayOnly import DirectoryDisplayOnly
+from .DirectoryEdit import DirectoryEdit
+from .DirectoryDisplayEdit import DirectoryDisplayEdit
+from .DirectoryDisplayOnly import DirectoryDisplayOnly
+
 from .. import Globals
 from m3 import components
 
@@ -18,24 +20,28 @@ class DirectoryHome(DirectoryHomeTemplate):
     self.init_components(**properties)
 
     # #------------------VERIFY FALSE AFTER TESTING
+    #ToDO:  icons for buttons:
+    
     DEBUG = True
     if DEBUG:
       print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
       anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
-    admin = anvil.server.call('has_role', user, 'admin')
+    admin = False
+    if user:
+      admin = anvil.server.call('has_role', user, 'admin')
 
     if admin:
       # --------Menu Items
-      menu_add = m3.MenuItem(text="Add New Member", leading_icon='undo')
-      menu_edit = m3.MenuItem(text="Edit Contact", leading_icon='redo')    
+      menu_add = m3.MenuItem(text="Add New Member", leading_icon='mi:add')
+      menu_edit = m3.MenuItem(text="Edit or Delete Members", leading_icon='mi:edit')    
       self.MultiButton.menu_items = [menu_add, menu_edit]        
       
       menu_add.add_event_handler('click', self.button_add_click)
       menu_edit.add_event_handler('click', self.edit_contacts_click)
     else:
-      menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", tag='edit')
+      menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", leading_icon='mi:edit')
       self.MultiButton.menu_items = [menu_edit_yourself]
       menu_edit_yourself.add_event_handler('click', self.edit_current_contact_click)
 

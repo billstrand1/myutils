@@ -7,8 +7,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 import m3.components as m3
+from ... import Globals
 from ..DirectoryEdit import DirectoryEdit
-from .. import Globals
 
 class DirectoryDisplayEdit(DirectoryDisplayEditTemplate):
   def __init__(self, **properties):
