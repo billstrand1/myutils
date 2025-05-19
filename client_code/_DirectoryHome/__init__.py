@@ -1,41 +1,47 @@
-from ._anvil_designer import DirectoryHomeTemplate
+from ._anvil_designer import _DirectoryHomeTemplate
 from anvil import *
 import anvil.server
 import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+
 import m3.components as m3
-from ..DirectoryEdit import DirectoryEdit
-from ..DirectoryDisplayEdit import DirectoryDisplayEdit
-from ..DirectoryDisplayOnly import DirectoryDisplayOnly
+from .DirectoryEdit import DirectoryEdit
+from .DirectoryDisplayEdit import DirectoryDisplayEdit
+from .DirectoryDisplayOnly import DirectoryDisplayOnly
+
 from .. import Globals
 from m3 import components
 
-class DirectoryHome(DirectoryHomeTemplate):
+class _DirectoryHome(_DirectoryHomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
     # #------------------VERIFY FALSE AFTER TESTING
+    #ToDO:  icons for buttons:
+    
     DEBUG = True
     if DEBUG:
       print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
       anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
-    admin = anvil.server.call('has_role', user, 'admin')
+    admin = False
+    if user:
+      admin = anvil.server.call('has_role', user, 'admin')
 
     if admin:
       # --------Menu Items
-      menu_add = m3.MenuItem(text="Add New Member", leading_icon='undo')
-      menu_edit = m3.MenuItem(text="Edit Contact", leading_icon='redo')    
+      menu_add = m3.MenuItem(text="Add New Member", leading_icon='mi:add')
+      menu_edit = m3.MenuItem(text="Edit or Delete Members", leading_icon='mi:edit')    
       self.MultiButton.menu_items = [menu_add, menu_edit]        
       
       menu_add.add_event_handler('click', self.button_add_click)
       menu_edit.add_event_handler('click', self.edit_contacts_click)
     else:
-      menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", tag='edit')
+      menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", leading_icon='mi:edit')
       self.MultiButton.menu_items = [menu_edit_yourself]
       menu_edit_yourself.add_event_handler('click', self.edit_current_contact_click)
 
@@ -66,24 +72,27 @@ class DirectoryHome(DirectoryHomeTemplate):
           large=True,
           buttons=[("Save", True), ("Cancel", False)],
         )
-  
-        if save_clicked:
-          print(new_contact)
-          print(f"First Name: {new_contact['first_name']}")
-  
-          error = Globals.validate_member_data(new_contact)
-  
-          if error:
-            alert(error, title="Input Error")
-            continue
-  
-          #Set to appropriate string modes
-          new_contact['first_name'] = new_contact['first_name'].title()
-          new_contact['last_name'] = new_contact['last_name'].title()     
-          new_contact['email'] = new_contact['email'].lower()          
-  
-          if not new_contact['signup_name']:
-            new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
+
+        if not save_clicked:
+          return  # or break
+          
+        # if save_clicked:
+        #   print(new_contact)
+        print(f"First Name: {new_contact['first_name']}")
+
+        error = Globals.validate_member_data(new_contact)
+
+        if error:
+          alert(error, title="Input Error")
+          continue
+
+        #Set to appropriate string modes
+        new_contact['first_name'] = new_contact['first_name'].title()
+        new_contact['last_name'] = new_contact['last_name'].title()     
+        new_contact['email'] = new_contact['email'].lower()          
+
+        if not new_contact['signup_name']:
+          new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
   
         break
   
@@ -95,7 +104,7 @@ class DirectoryHome(DirectoryHomeTemplate):
     
       message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
       Notification(f"{new_contact['first_name']} added, thanks.").show()
-      anvil.server.call('email_change', message)
+      anvil.server.call('email_change', message, subject='Member Added')
     
       self.refresh_directory()
       
