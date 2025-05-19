@@ -7,7 +7,7 @@ components:
     type: form:dep_lin1x4oec0ytd:_Components.Button
   - components:
     - name: directory_panel
-      properties: {item_template: DirectoryDisplay.DirectoryTemplate}
+      properties: {item_template: DirectoryDisplayEdit.DirectoryTemplate}
       type: RepeatingPanel
     layout_properties: {grid_position: 'EADWRY,CHADRO'}
     name: directory_grid

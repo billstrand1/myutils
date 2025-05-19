@@ -5,6 +5,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import datetime
 
+
 def validate_member_data(member):
   if not member['first_name']:
     return "Please enter first name."

@@ -1,4 +1,4 @@
-from ._anvil_designer import DirectoryDisplayTemplate
+from ._anvil_designer import DirectoryDisplayEditTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -10,7 +10,7 @@ import m3.components as m3
 from ..DirectoryEdit import DirectoryEdit
 from .. import Globals
 
-class DirectoryDisplay(DirectoryDisplayTemplate):
+class DirectoryDisplayEdit(DirectoryDisplayEditTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
