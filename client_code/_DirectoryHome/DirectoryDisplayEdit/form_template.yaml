@@ -2,7 +2,7 @@ components:
 - components:
   - components:
     - name: directory_panel
-      properties: {item_template: DirectoryHome.DirectoryDisplayEdit.DirectoryTemplate}
+      properties: {item_template: _DirectoryHome.DirectoryDisplayEdit.DirectoryTemplate}
       type: RepeatingPanel
     layout_properties: {grid_position: 'EADWRY,CHADRO'}
     name: directory_grid

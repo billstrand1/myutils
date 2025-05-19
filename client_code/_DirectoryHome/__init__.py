@@ -1,4 +1,4 @@
-from ._anvil_designer import DirectoryHomeTemplate
+from ._anvil_designer import _DirectoryHomeTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -14,7 +14,7 @@ from .DirectoryDisplayOnly import DirectoryDisplayOnly
 from .. import Globals
 from m3 import components
 
-class DirectoryHome(DirectoryHomeTemplate):
+class _DirectoryHome(_DirectoryHomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
