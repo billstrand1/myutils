@@ -19,11 +19,11 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
     # self.directory_panel.set_event_handler('x-refresh_directory', self.refresh_directory)
 
-    # ------------------VERIFY FALSE AFTER TESTING
-    DEBUG = True
-    if DEBUG:
-      print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login_shr_utils')
+    # # ------------------VERIFY FALSE AFTER TESTING
+    # DEBUG = True
+    # if DEBUG:
+    #   print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
+    #   anvil.server.call('force_debug_login_shr_utils')
 
 
   def refresh_directory(self):
