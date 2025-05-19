@@ -35,8 +35,6 @@ components:
         - {data_key: email, expand: false, id: ZTJWNO, title: Email, width: '200'}
         - {data_key: phone, expand: false, id: IDSHQN, title: Phone, width: ''}
         - {data_key: column_1, id: SNZATL, title: 'Signup Name '}
-        - {data_key: column_1, expand: false, id: MXKQHD, title: Edit, width: '60'}
-        - {data_key: column_2, id: WWDTUK, title: Delete, width: '60'}
       type: DataGrid
     layout_properties: {grid_position: 'OXRUWD,FDSFYC'}
     name: column_panel_1_copy
