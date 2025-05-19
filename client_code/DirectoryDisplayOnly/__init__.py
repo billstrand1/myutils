@@ -25,27 +25,6 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
       print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
       anvil.server.call('force_debug_login_shr_utils')
 
-    user = anvil.users.get_user()
-    print(f"DirectoryDisplay user = {user['first_name']}")
-    admin = anvil.server.call('has_role', user, 'admin')
-    self.button_add_member.visible = bool(admin)
-
-
-  # def validate_member_data(self, member):
-  #   if not member['first_name']:
-  #     return "Please enter first name."
-  #   if not member['last_name']:
-  #     return "Please enter last name."
-  #   if not member['email'] or not anvil.server.call('is_valid_email', member['email']):
-  #     return "Please enter a valid email address."
-  #   if member.get('phone') and not anvil.server.call('is_valid_phone', member['phone']):
-  #     return "Please enter a valid 10 digit phone number."
-  #   if (member.get('birth_month') and not (1 <= member['birth_month'] <= 12)) or \
-  #   (member.get('birth_day') and not (1 <= member['birth_day'] <= 31)):
-  #     return "Birth date must be valid."
-  #   if bool(member.get('birth_month')) ^ bool(member.get('birth_day')):
-  #     return "Please enter both birth month & day, or neither."
-  #   return None
 
   def refresh_directory(self):
     self.refresh_data_bindings()

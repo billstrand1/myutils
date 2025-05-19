@@ -5,7 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-# from ...DirectoryEdit import DirectoryEdit
+from ...DirectoryEdit import DirectoryEdit
 from ... import Globals
 
 class DirectoryTemplate(DirectoryTemplateTemplate):
@@ -13,26 +13,20 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.refresh_data_bindings()
+          
+    user = anvil.users.get_user()
     
-    # ------------------VERIFY FALSE AFTER TESTING
-    # DEBUG = True
-    # if DEBUG:
-    #   print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
-    #   anvil.server.call('force_debug_login_shr_utils') 
+    if user:
+      print(f"in DirectoryTemplate, user = {user['email']}")
+      admin = anvil.server.call('has_role', user, 'admin')
+      self.link_edit.visible = bool(admin)  
+      self.link_delete.visible = bool(admin)
       
-    # user = anvil.users.get_user()
-    
-    # if user:
-    #   print(f"in DirectoryTemplate, user = {user['email']}")
-    #   admin = anvil.server.call('has_role', user, 'admin')
-    #   self.link_edit.visible = bool(admin)  
-    #   self.link_delete.visible = bool(admin)
-      
-    #   if user['email'] == self.item['email']:
-    #     print('user found')
-    #     self.link_edit.visible = True
-    # else:
-    #   print('user not found in DirectoryTemplate')
+      if user['email'] == self.item['email']:
+        print('user found')
+        self.link_edit.visible = True
+    else:
+      print('user not found in DirectoryTemplate')
 
   def link_delete_click(self, **event_args):
     user = anvil.users.get_user()

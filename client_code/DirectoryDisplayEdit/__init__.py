@@ -19,10 +19,10 @@ class DirectoryDisplayEdit(DirectoryDisplayEditTemplate):
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
     
     # ------------------VERIFY FALSE AFTER TESTING
-    DEBUG = True
-    if DEBUG:
-      print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login_shr_utils')
+    # DEBUG = True
+    # if DEBUG:
+    #   print("Calling for log-in, DON'T FORGET TO set DEBUG=False")
+    #   anvil.server.call('force_debug_login_shr_utils')
       
     user = anvil.users.get_user()
     print(f"DirectoryDisplay user = {user['first_name']}")
@@ -49,7 +49,8 @@ class DirectoryDisplayEdit(DirectoryDisplayEditTemplate):
                    'signup_name': '',
                    'phone': '',
                    'birth_month': None,
-                   'birth_day': None}
+                   'birth_day': None,
+                   'roles': []}
 
     player_add_form = DirectoryEdit(item=new_contact)
 
