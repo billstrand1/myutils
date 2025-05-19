@@ -75,74 +75,25 @@ class DirectoryTemplate(DirectoryTemplateTemplate):
         if error:
           alert(error, title="Input Error")
           continue
-          
-        if self.member_copy['first_name']:
-          # print('setting First name to Title: ')
-          self.member_copy['first_name'] = self.member_copy['first_name'].title()
-        if self.member_copy['last_name']:
-          print('setting Last name to Title')
-          self.member_copy['last_name'] = self.member_copy['last_name'].title()
-        if self.member_copy['email']:
-          print('setting Email to Lower')
-          self.member_copy['email'] = self.member_copy['email'].lower()          
-
-        # if not self.member_copy['first_name']:
-        #   alert ("Please enter first name.", title="Input Error")
-        #   continue
-
-        # if not self.member_copy['last_name']:
-        #   alert ("Please enter last name.", title="Input Error")
-        #   continue
-
-        # email = self.member_copy['email']
-        # if not email or not anvil.server.call('is_valid_email', email):
-        #   alert ("Please enter valid email address.", title="Input Error")
-        #   continue     
-
-        # phone = self.member_copy['phone']
-        # if phone:
-        #   if not anvil.server.call('is_valid_phone', phone):          
-        #     alert ("Please enter a valid 10 digit phone number.", title="Input Error")
-        #     continue
-
-        # birth_month = self.member_copy['birth_month']
-        # birth_day = self.member_copy['birth_day']
-
-        # if birth_month:
-        #   if not (1 <= birth_month <= 12):
-        #     alert(content="Birth month must be between 1 and 12.", title="Input Error")
-        #     continue
-        # if birth_day:
-        #   if not (1 <= birth_day <= 31):
-        #     alert(content="Birth day must be between 1 and 31.", title="Input Error")
-        #     continue   
-        # if birth_day and not birth_month:
-        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-        #   continue
-        # if not birth_day and  birth_month:
-        #   alert(content="Please enter both birth month & day, or neither.", title="Input Error")
-        #   continue
-
+ 
+        self.member_copy['first_name'] = self.member_copy['first_name'].title()
+        self.member_copy['last_name'] = self.member_copy['last_name'].title()
+        self.member_copy['email'] = self.member_copy['email'].lower()   
         if not self.member_copy['signup_name']:
           self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"       
-          
+
+        anvil.server.call('update_member', self.item, self.member_copy)
+        if user:
+          message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
+          anvil.server.call('email_change', message)
+          Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
+        else: 
+          message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
+          Notification(f"{self.member_copy['first_name']} added, thanks.").show()
+          anvil.server.call('email_change', message)
       break
-    
-    
-    anvil.server.call('update_member', self.item, self.member_copy)
-    print('calling parent refresh')
-    # self.parent.raise_event('x-refresh-directory')
+
     self.refresh_data_bindings()
-
-    if user:
-      message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
-      anvil.server.call('email_change', message)
-      Notification(f"{self.member_copy['first_name']} updated, thanks {user['first_name']}.").show()
-    else: 
-      message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
-      Notification(f"{self.member_copy['first_name']} added, thanks.").show()
-      anvil.server.call('email_change', message)
-
 
 
 

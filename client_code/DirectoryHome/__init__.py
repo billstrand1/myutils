@@ -18,10 +18,10 @@ class DirectoryHome(DirectoryHomeTemplate):
     self.init_components(**properties)
 
     # #------------------VERIFY FALSE AFTER TESTING
-    # DEBUG = True
-    # if DEBUG:
-    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
-    #   anvil.server.call('force_debug_login_shr_utils')
+    DEBUG = True
+    if DEBUG:
+      print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
+      anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
     admin = anvil.server.call('has_role', user, 'admin')
@@ -71,7 +71,6 @@ class DirectoryHome(DirectoryHomeTemplate):
           print(new_contact)
           print(f"First Name: {new_contact['first_name']}")
   
-          # error = self.validate_member_data(new_contact)
           error = Globals.validate_member_data(new_contact)
   
           if error:
@@ -79,12 +78,9 @@ class DirectoryHome(DirectoryHomeTemplate):
             continue
   
           #Set to appropriate string modes
-          if new_contact['first_name']:
-            new_contact['first_name'] = new_contact['first_name'].title()
-          if new_contact['last_name']:
-            new_contact['last_name'] = new_contact['last_name'].title()     
-          if new_contact['email']:
-            new_contact['email'] = new_contact['email'].lower()          
+          new_contact['first_name'] = new_contact['first_name'].title()
+          new_contact['last_name'] = new_contact['last_name'].title()     
+          new_contact['email'] = new_contact['email'].lower()          
   
           if not new_contact['signup_name']:
             new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
@@ -93,10 +89,14 @@ class DirectoryHome(DirectoryHomeTemplate):
   
       ##Now work on Server Code to add contacts.
       new_contact['password_hash'] = '$2a$10$u5ACOKz.JMvf2hP.aC8gNOXxmA17vbcayt0CJFkeE.MpKM5tLMgXu' 
-      # new_contact['roles'] = []
       new_contact['enabled'] = True
       new_contact['couple_id'] = new_contact['last_name'].lower()   
       anvil.server.call('add_new_member', new_contact)
+    
+      message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
+      Notification(f"{new_contact['first_name']} added, thanks.").show()
+      anvil.server.call('email_change', message)
+    
       self.refresh_directory()
       
     
