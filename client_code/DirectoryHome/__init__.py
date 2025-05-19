@@ -101,7 +101,7 @@ class DirectoryHome(DirectoryHomeTemplate):
     
       message = f"{new_contact['first_name']} {new_contact['last_name']} added to directory."
       Notification(f"{new_contact['first_name']} added, thanks.").show()
-      anvil.server.call('email_change', message)
+      anvil.server.call('email_change', message, subject='Member Added')
     
       self.refresh_directory()
       
