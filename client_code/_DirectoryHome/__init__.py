@@ -22,10 +22,10 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     # #------------------VERIFY FALSE AFTER TESTING
     #ToDO:  icons for buttons:
     
-    # DEBUG = True
-    # if DEBUG:
-    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
-    #   anvil.server.call('force_debug_login_shr_utils')
+    DEBUG = True
+    if DEBUG:
+      print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
+      anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
     if not user:
@@ -81,8 +81,18 @@ class _DirectoryHome(_DirectoryHomeTemplate):
           return  # or break
 
         error = Globals.validate_member_data(new_contact)
-
+        player_add_form.first_name_box.error = False
+        player_add_form.last_name_box.error = False
+        player_add_form.email_box.error = False
         if error:
+          if error == "Please enter first name.":
+            player_add_form.first_name_box.error = True
+          elif error == "Please enter last name.":
+            player_add_form.last_name_box.error = True
+          elif error == "Please enter a valid email address.":
+            player_add_form.email_box.error = True
+            
+            
           alert(error, title="Input Error")
           continue
 
