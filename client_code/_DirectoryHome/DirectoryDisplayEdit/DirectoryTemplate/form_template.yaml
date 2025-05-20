@@ -15,5 +15,10 @@ components:
   name: signup_lbl
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
-container: {type: DataRowPanel}
+container:
+  data_bindings: []
+  properties:
+    font_size: 14
+    margin: [0, null, null, null]
+  type: DataRowPanel
 is_package: true

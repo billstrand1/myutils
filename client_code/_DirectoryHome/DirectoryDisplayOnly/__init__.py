@@ -13,7 +13,7 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.refresh_directory()
-
+    # self.directory_panel.role = 'tight-list'
 
   def refresh_directory(self):
     self.refresh_data_bindings()
