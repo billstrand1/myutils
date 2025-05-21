@@ -5,6 +5,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 from datetime import datetime
+from . import admin
 
 @anvil.server.callable
 def add_new_member(contact_dict):
@@ -21,10 +22,10 @@ def update_member(member, member_dict):
 
 
 @anvil.server.callable
-def get_directory():  #gets all users except super_user
-  #Need to add a "no_directory" role for the search.
-  return app_tables.users.search(
+def get_directory():  
+  results = app_tables.users.search(
   tables.order_by("last_name", ascending=True),enabled=True)
+  return [r for r in results if not admin.has_role(r, 'no_directory')]
 
 @anvil.server.callable
 def delete_member(member): 

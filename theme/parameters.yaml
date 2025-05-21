@@ -1,3 +1,4 @@
 roles:
 - components: []
   name: tonal-data-grid
+- {components: null, name: tight-list}

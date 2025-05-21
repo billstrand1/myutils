@@ -16,7 +16,7 @@ class DirectoryDisplayEdit(DirectoryDisplayEditTemplate):
     self.init_components(**properties)
     self.refresh_directory()
     self.directory_panel.set_event_handler('x-delete-member', self.delete_member)
-
+    # self.directory_panel.role = 'tight-list'
   
   def refresh_directory(self):
     self.refresh_data_bindings()
