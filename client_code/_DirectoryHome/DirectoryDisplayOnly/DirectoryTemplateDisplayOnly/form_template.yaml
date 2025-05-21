@@ -3,7 +3,7 @@ components:
   - {code: 'self.item[''signup_name'']', property: text, writeback: false}
   layout_properties: {column: SNZATL}
   name: signup_lbl
-  properties: {}
+  properties: {visible: true}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 container:
   properties: {font_size: 14}
