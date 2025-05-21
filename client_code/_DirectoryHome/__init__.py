@@ -41,15 +41,20 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       # --------Menu Items
       menu_add = m3.MenuItem(text="Add New Member", leading_icon='mi:add')
       menu_edit = m3.MenuItem(text="Edit or Delete Members", leading_icon='mi:edit')    
-      self.MultiButton.menu_items = [menu_add, menu_edit]        
+      menu_email_list = m3.MenuItem(text="Creat Email List", leading_icon='mi:mail')  
+      self.MultiButton.menu_items = [menu_add, menu_edit, menu_email_list]        
       
       menu_add.add_event_handler('click', self.button_add_click)
       menu_edit.add_event_handler('click', self.edit_contacts_click)
+      menu_email_list.add_event_handler('click', self.email_list_click)
     else:
       menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", leading_icon='mi:edit')
-      self.MultiButton.menu_items = [menu_edit_yourself]
+      menu_email_list = m3.MenuItem(text="Creat Email List", leading_icon='mi:mail')  
+      self.MultiButton.menu_items = [menu_edit_yourself, menu_email_list]
+      
       menu_edit_yourself.add_event_handler('click', self.edit_current_contact_click)
-
+      menu_email_list.add_event_handler('click', self.email_list_click)
+      
     self.directory_panel.clear()
     self.directory_panel.add_component(DirectoryDisplayOnly())
 
@@ -190,4 +195,6 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       break
     
 
-    
+  def email_list_click(self, **event_args):
+    email_list_str = (anvil.server.call('get_email_list'))
+    alert(content=email_list_str, title='Copy/Paste')
