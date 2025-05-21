@@ -151,7 +151,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     while True: # Keep looping until valid input is provided
       save_clicked = alert(
         content=member_edit_form,
-        title="Edit Contact",
+        title="Edit Member",
         large=True,
         buttons=[("Save", True), ("Cancel", False)],
       )
