@@ -6,6 +6,7 @@ from anvil.tables import app_tables
 import anvil.server
 from datetime import datetime
 from . import admin
+import pandas as pd
 
 @anvil.server.callable
 def add_new_member(contact_dict):
@@ -33,3 +34,13 @@ def delete_member(member):
     member.delete()
   else:
     raise Exception("Member does not exist")
+
+@anvil.server.callable
+def get_email_list():
+  all_users = get_directory()
+  email_list = []
+  for user in all_users:
+      email_list.append(user['email'])
+  email_df = pd.DataFrame(email_list)
+  email_str = email_df.to_string(index=False, header=False)
+  return email_str
