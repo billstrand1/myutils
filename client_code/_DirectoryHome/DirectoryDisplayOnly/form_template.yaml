@@ -9,8 +9,7 @@ components:
     name: directory_grid
     properties:
       columns:
-      - {data_key: first_name, id: JCQVAD, title: First Name, width: ''}
-      - {data_key: last_name, id: NEBXYB, title: Last Name, width: ''}
+      - {data_key: first_name, id: JCQVAD, title: Name, width: ''}
       - {data_key: email, expand: false, id: ZTJWNO, title: Email, width: '200'}
       - {data_key: phone, expand: false, id: IDSHQN, title: Phone, width: ''}
       - {data_key: signup_name, id: SNZATL, title: 'Signup Name '}
