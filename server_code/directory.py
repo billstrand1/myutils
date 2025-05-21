@@ -29,6 +29,17 @@ def get_directory():
   return [r for r in results if not admin.has_role(r, 'no_directory')]
 
 @anvil.server.callable
+def get_directory_str():  
+  results = app_tables.users.search(
+    tables.order_by("last_name", ascending=True),enabled=True)
+  directory = [r for r in results if not admin.has_role(r, 'no_directory')]
+
+  #Need to make a 
+  directory_df = pd.DataFrame(directory)
+  directory_str = directory_df.to_string(index=False, justify='center', col_space=14)
+  return directory_str
+  
+@anvil.server.callable
 def delete_member(member): 
   if app_tables.users.has_row(member):
     member.delete()

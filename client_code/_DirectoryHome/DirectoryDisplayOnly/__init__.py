@@ -18,5 +18,6 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
   def refresh_directory(self):
     self.refresh_data_bindings()
     self.directory_panel.items = anvil.server.call('get_directory')
+    self.directory_lbl.text = anvil.server.call('get_directory_str')
 
   

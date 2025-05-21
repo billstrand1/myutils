@@ -21,5 +21,9 @@ components:
   name: column_panel_1
   properties: {}
   type: ColumnPanel
+- layout_properties: {grid_position: 'PEFXJU,SEEDDK'}
+  name: directory_lbl
+  properties: {font_family: courier}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
 container: {type: ColumnPanel}
 is_package: true
