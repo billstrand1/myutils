@@ -22,10 +22,10 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     # #------------------VERIFY FALSE AFTER TESTING
     #ToDO:  icons for buttons:
     
-    DEBUG = True
-    if DEBUG:
-      print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login_shr_utils')
+    # DEBUG = True
+    # if DEBUG:
+    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
+    #   anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
     if not user:
@@ -51,6 +51,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", leading_icon='mi:edit')
       menu_email_list = m3.MenuItem(text="Creat Email List", leading_icon='mi:mail')  
       self.MultiButton.menu_items = [menu_edit_yourself, menu_email_list]
+      
       menu_edit_yourself.add_event_handler('click', self.edit_current_contact_click)
       menu_email_list.add_event_handler('click', self.email_list_click)
       
