@@ -37,7 +37,9 @@ def get_directory_str():
   for member in directory:
     name = f"{member['first_name']} {member{'last_name'}}
   
-  #Need to make a 
+  #Need to make a dataframe from the directory objects.
+
+  #Doesn't work.
   directory_df = pd.DataFrame(directory)
   directory_str = directory_df.to_string(index=False, justify='center', col_space=14)
   return directory_str
