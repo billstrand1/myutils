@@ -33,7 +33,10 @@ def get_directory_str():
   results = app_tables.users.search(
     tables.order_by("last_name", ascending=True),enabled=True)
   directory = [r for r in results if not admin.has_role(r, 'no_directory')]
-
+  
+  for member in directory:
+    name = f"{member['first_name']} {member{'last_name'}}
+  
   #Need to make a 
   directory_df = pd.DataFrame(directory)
   directory_str = directory_df.to_string(index=False, justify='center', col_space=14)
