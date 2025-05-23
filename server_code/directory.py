@@ -34,14 +34,22 @@ def get_directory_str():
     tables.order_by("last_name", ascending=True),enabled=True)
   directory = [r for r in results if not admin.has_role(r, 'no_directory')]
   
-  for member in directory:
-    name = f"{member['first_name']} {member{'last_name'}}
+  directory_str = ''
   
-  #Need to make a dataframe from the directory objects.
+  directory_rows = [
+    {
+      'Name': f"{person['first_name']} {person['last_name']}",
+      'Email': person['email'],
+      'Phone': person['phone']
+    }
+    for person in directory
+  ]
+  
 
-  #Doesn't work.
-  directory_df = pd.DataFrame(directory)
-  directory_str = directory_df.to_string(index=False, justify='center', col_space=14)
+  directory_df = pd.DataFrame(directory_rows)
+  directory_df.fillna('', inplace=True)
+  directory_df.columns = ['Name', 'Email Address', 'Phone Number']
+  directory_str = directory_df.to_string(index=False, justify='center', col_space=16)#, max_colwidth=30)
   return directory_str
   
 @anvil.server.callable
@@ -51,6 +59,86 @@ def delete_member(member):
   else:
     raise Exception("Member does not exist")
 
+
+@anvil.server.callable
+def get_directory_markdown():
+  results = app_tables.users.search(
+    tables.order_by("last_name", ascending=True), enabled=True)
+  directory = [r for r in results if not admin.has_role(r, 'no_directory')]
+
+  # Column widths
+  name_width = 20
+  email_width = 30
+  phone_width = 15
+
+  header = f"| {'Name'.ljust(name_width)} | {'Email Address'.ljust(email_width)} | {'Phone Number'.ljust(phone_width)} |"
+  separator = f"|{'-' * (name_width+2)}|{'-' * (email_width+2)}|{'-' * (phone_width+2)}|"
+
+  rows = []
+  for r in directory:
+    name = f"{r['first_name']} {r['last_name']}".ljust(name_width)
+    email = (r['email'] or '').ljust(email_width)
+    phone = (r['phone'] or '').ljust(phone_width)
+    rows.append(f"| {name} | {email} | {phone} |")
+
+  return "\n".join([header, separator] + rows)
+
+@anvil.server.callable
+def get_directory_html():
+  results = app_tables.users.search(enabled=True)
+
+  # Filter first, then sort in Python by last_name, first_name
+  directory = sorted(
+    [r for r in results if not admin.has_role(r, 'no_directory')],
+    key=lambda r: (r['last_name'].lower(), r['first_name'].lower())
+  )
+
+  
+  # results = app_tables.users.search(
+  #   tables.order_by("last_name", ascending=True),
+  #   tables.order_by("first_name", ascending=True),
+  #   enabled=True
+  # )
+  # directory = [r for r in results if not admin.has_role(r, 'no_directory')]
+
+  rows = []
+  for i, r in enumerate(directory):
+    bg = "#f9f9f9" if i % 2 == 0 else "#ffffff"
+    rows.append(f"""
+      <tr style='background-color:{bg};'>
+        <td style='padding:8px; border:1px solid #ccc;'>{r['first_name']} {r['last_name']}</td>
+        <td style='padding:8px; border:1px solid #ccc;'>{r['email'] or ''}</td>
+        <td style='padding:8px; border:1px solid #ccc;'>{r['phone'] or ''}</td>
+      </tr>
+    """)
+
+  html = f"""
+    <table style='width:100%; font-family:Menlo,monospace; border-collapse:collapse;'>
+      <thead>
+        <tr style='background-color:#ddd;'>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Name</strong>
+          </th>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Email Address</strong>
+          </th>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Phone Number</strong>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {''.join(rows)}
+      </tbody>
+    </table>
+  """
+  return html
+
+
+
+
+#--------------------EMAIL LISTS------------------------
 @anvil.server.callable
 def get_email_list():
   all_users = get_directory()

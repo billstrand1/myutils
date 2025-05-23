@@ -22,10 +22,10 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     # #------------------VERIFY FALSE AFTER TESTING
     #ToDO:  icons for buttons:
     
-    # DEBUG = True
-    # if DEBUG:
-    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
-    #   anvil.server.call('force_debug_login_shr_utils')
+    DEBUG = True
+    if DEBUG:
+      print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
+      anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
     if not user:

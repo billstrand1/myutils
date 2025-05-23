@@ -13,11 +13,19 @@ class DirectoryDisplayOnly(DirectoryDisplayOnlyTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.refresh_directory()
-    # self.directory_panel.role = 'tight-list'
 
+    
   def refresh_directory(self):
     self.refresh_data_bindings()
-    self.directory_panel.items = anvil.server.call('get_directory')
-    self.directory_lbl.text = anvil.server.call('get_directory_str')
+    # self.directory_panel.items = anvil.server.call('get_directory')
+    # self.directory_lbl.role = None
+    # self.directory_lbl.display_font = 'menlo'
+    # self.directory_lbl.text = anvil.server.call('get_directory_str')
 
-  
+    # self.rich_text_1.content = anvil.server.call('get_directory_markdown')
+    # self.rich_text_1.content = {"content": anvil.server.call('get_directory_markdown')}
+    # self.rich_text_1.format = 'markdown'
+
+    markdown_table = anvil.server.call('get_directory_markdown')
+    self.rich_text_1.format = "html"
+    self.rich_text_1.content = markdown_table
