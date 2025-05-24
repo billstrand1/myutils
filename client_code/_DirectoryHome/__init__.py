@@ -18,15 +18,7 @@ from m3 import components
 class _DirectoryHome(_DirectoryHomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
-    self.init_components(**properties)
-
-    # #------------------VERIFY FALSE AFTER TESTING
-    #ToDO:  icons for buttons:
-    
-    DEBUG = True
-    if DEBUG:
-      print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
-      anvil.server.call('force_debug_login_shr_utils')
+    self.init_components(**properties) 
 
     user = anvil.users.get_user()
     if not user:
