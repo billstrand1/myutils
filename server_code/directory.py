@@ -21,6 +21,13 @@ def update_member(member, member_dict):
   # member_dict['full_name'] = member_dict['last_name'] + ', ' + member_dict['first_name']
   member.update(**member_dict)
 
+@anvil.server.callable
+def delete_member(member): 
+  if app_tables.users.has_row(member):
+    member.delete()
+  else:
+    raise Exception("Member does not exist")
+
 
 @anvil.server.callable
 def get_directory():  
@@ -29,11 +36,58 @@ def get_directory():
   return [r for r in results if not admin.has_role(r, 'no_directory')]
 
 @anvil.server.callable
+def get_directory_html():
+  results = app_tables.users.search(
+    tables.order_by("last_name", ascending=True),
+    tables.order_by("first_name", ascending=True),
+    enabled=True
+  )
+  directory = [r for r in results if not admin.has_role(r, 'no_directory')]
+
+  rows = []
+  for i, r in enumerate(directory):
+    bg = "#f9f9f9" if i % 2 == 0 else "#ffffff"
+    rows.append(f"""
+      <tr style='background-color:{bg};'>
+        <td style='padding:8px; border:1px solid #ccc;'>{r['first_name']} {r['last_name']}</td>
+        <td style='padding:8px; border:1px solid #ccc;'>
+          <a href='mailto:{r["email"]}' style='color:#0645AD; text-decoration:underline;'>{r["email"] or ''}</a>
+        </td>
+        <td style='padding:8px; border:1px solid #ccc;'>{r['phone'] or ''}</td>
+      </tr>
+    """)
+    
+  html = f"""
+    <table style='width:100%; font-family:Segoe UI, Helvetica, Arial, sans-serif; border-collapse:collapse;'>
+      <thead>
+        <tr style='background-color:#ddd;'>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Name</strong>
+          </th>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Email Address</strong>
+          </th>
+          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
+            <strong>Phone Number</strong>
+          </th>
+          
+        </tr>
+      </thead>
+
+      <tbody>
+        {''.join(rows)}
+      </tbody>
+    </table>
+  """
+  print(html)
+  return html
+
+#Used by ABANDONED FORM    DirectoryDisplayOnly 
+@anvil.server.callable
 def get_directory_str():  
   results = app_tables.users.search(
     tables.order_by("last_name", ascending=True),enabled=True)
-  directory = [r for r in results if not admin.has_role(r, 'no_directory')]
-  
+  directory = [r for r in results if not admin.has_role(r, 'no_directory')]  
   directory_str = ''
   
   directory_rows = [
@@ -51,15 +105,9 @@ def get_directory_str():
   directory_df.columns = ['Name', 'Email Address', 'Phone Number']
   directory_str = directory_df.to_string(index=False, justify='center', col_space=16)#, max_colwidth=30)
   return directory_str
-  
-@anvil.server.callable
-def delete_member(member): 
-  if app_tables.users.has_row(member):
-    member.delete()
-  else:
-    raise Exception("Member does not exist")
 
 
+#. NOT USED 
 @anvil.server.callable
 def get_directory_markdown():
   results = app_tables.users.search(
@@ -83,59 +131,7 @@ def get_directory_markdown():
 
   return "\n".join([header, separator] + rows)
 
-@anvil.server.callable
-def get_directory_html():
-  results = app_tables.users.search(enabled=True)
-
-  # Filter first, then sort in Python by last_name, first_name
-  directory = sorted(
-    [r for r in results if not admin.has_role(r, 'no_directory')],
-    key=lambda r: (r['last_name'].lower(), r['first_name'].lower())
-  )
-
   
-  # results = app_tables.users.search(
-  #   tables.order_by("last_name", ascending=True),
-  #   tables.order_by("first_name", ascending=True),
-  #   enabled=True
-  # )
-  # directory = [r for r in results if not admin.has_role(r, 'no_directory')]
-
-  rows = []
-  for i, r in enumerate(directory):
-    bg = "#f9f9f9" if i % 2 == 0 else "#ffffff"
-    rows.append(f"""
-      <tr style='background-color:{bg};'>
-        <td style='padding:8px; border:1px solid #ccc;'>{r['first_name']} {r['last_name']}</td>
-        <td style='padding:8px; border:1px solid #ccc;'>{r['email'] or ''}</td>
-        <td style='padding:8px; border:1px solid #ccc;'>{r['phone'] or ''}</td>
-      </tr>
-    """)
-
-  html = f"""
-    <table style='width:100%; font-family:Menlo,monospace; border-collapse:collapse;'>
-      <thead>
-        <tr style='background-color:#ddd;'>
-          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
-            <strong>Name</strong>
-          </th>
-          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
-            <strong>Email Address</strong>
-          </th>
-          <th style='text-align:left; padding:8px; border:1px solid #ccc;'>
-            <strong>Phone Number</strong>
-          </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {''.join(rows)}
-      </tbody>
-    </table>
-  """
-  return html
-
-
 
 
 #--------------------EMAIL LISTS------------------------
@@ -148,3 +144,12 @@ def get_email_list():
   email_df = pd.DataFrame(email_list)
   email_str = email_df.to_string(index=False, header=False)
   return email_str
+
+
+'''
+    <table style='width:100%; font-family:Menlo,monospace; border-collapse:collapse;'>
+    <table style='width:100%; font-family:Segoe UI, Helvetica, Arial, sans-serif; border-collapse:collapse;'>
+
+
+
+'''

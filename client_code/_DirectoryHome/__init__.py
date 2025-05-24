@@ -9,7 +9,8 @@ from anvil.tables import app_tables
 import m3.components as m3
 from .DirectoryEdit import DirectoryEdit
 from .DirectoryDisplayEdit import DirectoryDisplayEdit
-from .DirectoryDisplayOnly import DirectoryDisplayOnly
+# DirectoryDisplayOnly is no longer used, but kept for code purposes
+from .DirectoryDisplayHTML import DirectoryDisplayHTML
 
 from .. import Globals
 from m3 import components
@@ -56,7 +57,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       menu_email_list.add_event_handler('click', self.email_list_click)
       
     self.directory_panel.clear()
-    self.directory_panel.add_component(DirectoryDisplayOnly())
+    self.directory_panel.add_component(DirectoryDisplayHTML())
 
   #Only visible to Admin:
   def button_add_click(self, **event_args):
