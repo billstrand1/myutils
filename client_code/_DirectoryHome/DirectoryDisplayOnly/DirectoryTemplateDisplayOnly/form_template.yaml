@@ -12,6 +12,6 @@ components:
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 container:
-  properties: {font_size: 14}
+  properties: {font_size: 14, underline: false}
   type: DataRowPanel
 is_package: true

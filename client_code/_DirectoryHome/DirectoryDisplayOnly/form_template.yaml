@@ -16,10 +16,19 @@ components:
       margin: [0, null, 0, null]
       rows_per_page: 200
       show_page_controls: false
+      visible: false
     type: DataGrid
   layout_properties: {grid_position: 'DQFIFL,XUNFGW'}
   name: column_panel_1
   properties: {}
   type: ColumnPanel
+- layout_properties: {grid_position: 'MRFUMX,TPDJQE'}
+  name: directory_lbl
+  properties: {appearance: outlined, display_font_family: menlo, visible: false}
+  type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextArea
+- layout_properties: {grid_position: 'ZEDZYI,WIUVFK'}
+  name: rich_text_1
+  properties: {align: left, font: courier}
+  type: RichText
 container: {type: ColumnPanel}
 is_package: true
