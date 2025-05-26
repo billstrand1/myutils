@@ -1,0 +1,24 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'WZTHWB,TSFXIV'}
+    name: button_menu_1
+    properties: {text: Friday Options}
+    type: form:dep_lin1x4oec0ytd:_Components.ButtonMenu
+  - components:
+    - name: repeating_panel_tee_times
+      properties: {item_template: SignupHome.TeeTimeTemplate.RowTemplate1}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'PKITXH,QEZDTM'}
+    name: data_grid_tee_times
+    properties:
+      columns:
+      - {data_key: group_no, expand: false, id: WMLBWI, title: Group, width: 120.60516357421875}
+      - {data_key: signup_name, id: EUBDHC, title: Name}
+      - {data_key: comment, id: SYDWIB, title: Comments}
+    type: DataGrid
+  layout_properties: {grid_position: 'OCDDWF,DLGBKZ'}
+  name: tee_time_panel
+  properties: {}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

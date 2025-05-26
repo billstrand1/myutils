@@ -11,6 +11,29 @@ db_schema:
       type: simpleObject
     server: full
     title: comments
+  date_of_play:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: date_friday
+      type: date
+    - admin_ui: {order: 1, width: 200}
+      name: date_saturday
+      type: date
+    - admin_ui: {order: 2, width: 200}
+      name: date_sunday
+      type: date
+    - admin_ui: {order: 3, width: 200}
+      name: comment_friday
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: comment_saturday
+      type: string
+    - admin_ui: {order: 5, width: 200}
+      name: comment_sunday
+      type: string
+    server: full
+    title: date_of_play
   participation:
     client: none
     columns:
@@ -49,6 +72,9 @@ db_schema:
       name: owner
       target: users
       type: link_single
+    - admin_ui: {order: 4, width: 200}
+      name: week_day
+      type: number
     server: full
     title: tee_times
   users:
