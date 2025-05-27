@@ -7,7 +7,9 @@ import anvil.server
 
 @anvil.server.callable
 def get_friday_players():
-  pass
+  print('Calling get friday players')
   
-  
+@anvil.server.callable
+def get_saturday_players():
+  print('Calling get saturday players')
   

@@ -5,6 +5,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import datetime
 
+# day_selected = 'False' #Friday
+
 
 def validate_member_data(member):
   if not member['first_name']:

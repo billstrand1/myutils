@@ -12,7 +12,7 @@ db_schema:
     server: full
     title: comments
   date_of_play:
-    client: none
+    client: full
     columns:
     - admin_ui: {order: 0, width: 200}
       name: date_friday
@@ -54,6 +54,9 @@ db_schema:
     - admin_ui: {order: 4, width: 200}
       name: group_no
       type: number
+    - admin_ui: {order: 5, width: 200}
+      name: day
+      type: string
     server: full
     title: participation
   tee_times:

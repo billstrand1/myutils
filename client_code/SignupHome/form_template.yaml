@@ -1,7 +1,10 @@
 components:
-- layout_properties: {grid_position: 'EVCVKO,PVBBUY'}
+- components: []
+  layout_properties: {grid_position: 'EVCVKO,PVBBUY'}
   name: signup_panel
   properties: {}
   type: ColumnPanel
-container: {type: ColumnPanel}
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
 is_package: true
