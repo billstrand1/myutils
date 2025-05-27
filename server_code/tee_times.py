@@ -7,6 +7,7 @@ import anvil.server
 
 @anvil.server.callable
 def get_friday_players():
+  pass
   
   
   

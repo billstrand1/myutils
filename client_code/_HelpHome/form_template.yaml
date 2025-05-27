@@ -1,0 +1,7 @@
+components:
+- layout_properties: {grid_position: 'WIZESY,KIZMPG'}
+  name: help_panel
+  properties: {}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true
