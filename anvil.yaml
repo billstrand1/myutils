@@ -62,10 +62,10 @@ db_schema:
   tee_times:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {order: 0, width: 130}
       name: date
       type: date
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {order: 1, width: 138}
       name: tee_time
       type: string
     - admin_ui: {order: 2, width: 200}
