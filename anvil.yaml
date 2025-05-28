@@ -66,7 +66,7 @@ db_schema:
       name: date
       type: date
     - admin_ui: {order: 1, width: 200}
-      name: description
+      name: tee_time
       type: string
     - admin_ui: {order: 2, width: 200}
       name: comments
@@ -76,8 +76,11 @@ db_schema:
       target: users
       type: link_single
     - admin_ui: {order: 4, width: 200}
-      name: week_day
+      name: day_number
       type: number
+    - admin_ui: {order: 5, width: 200}
+      name: course
+      type: string
     server: full
     title: tee_times
   users:
