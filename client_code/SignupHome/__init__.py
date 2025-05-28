@@ -17,7 +17,9 @@ class SignupHome(SignupHomeTemplate):
     self.signup_panel.add_component(TeeTimeTemplate())
     # Any code you write here will run before the form opens.
 
-
+# ------------------Comment out before cloning, run from data_functions Server Code
+    print('Calling for log-in')
+    anvil.server.call('force_debug_login_shr_utils')
       
     
 

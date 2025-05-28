@@ -37,9 +37,9 @@ class TeeTimeTemplate(TeeTimeTemplateTemplate):
     if len(date_selected) > 0:
       for date_info in date_selected:
         self.date_this_friday = date_info['date_friday']
-        # self.comment_this_friday = date_info['comment_friday']
+        self.comment_this_friday = date_info['comment_friday']
         self.date_this_saturday = date_info['date_saturday']
-        # self.comment_this_saturday = date_info['comment_saturday']
+        self.comment_this_saturday = date_info['comment_saturday']
 
         # self.friday_date_label_text = 'For: ' + self.date_this_friday.strftime("%A %b %d, '%y")
         # self.saturday_date_label_text = 'For: ' + date_this_saturday.strftime("%A %b %d, '%y")
@@ -50,12 +50,19 @@ class TeeTimeTemplate(TeeTimeTemplateTemplate):
     print (f"day_switch: {self.day_switch.selected}")
     if day == 'Friday':
       self.button_menu.text = 'For: ' + self.date_this_friday.strftime("%A %b %d, '%y")
-      self.friday_comment_box.visible = True
-      self.saturday_comment_box.visible = False
+      # self.friday_comment_box.visible = True
+      # self.saturday_comment_box.visible = False
       
       if self.admin:
         #Set Admin button Menus
+        self.friday_comment_box.visible = True
+        self.friday_comment_label.visible = False
         pass
+      else:
+        #Set User button Menus
+        self.friday_comment_box.visible = False
+        self.friday_comment_label.visible = True
+        
       
     else:
       print (f"day_switch: {self.day_switch.selected}")
@@ -67,6 +74,7 @@ class TeeTimeTemplate(TeeTimeTemplateTemplate):
       
 
     if self.admin:
+      self.friday_comment_box.visible = True
       pass
       
     
@@ -76,6 +84,7 @@ class TeeTimeTemplate(TeeTimeTemplateTemplate):
     if not self.day_switch.selected:
       #Display Friday Stuff
       self.set_button_menus('Friday')
+      self.friday_comment_box.text = self.comment_this_friday
       self.repeating_panel_tee_times.items = anvil.server.call('get_friday_players')      
     else:
       #Display Saturday Stuff

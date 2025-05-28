@@ -27,9 +27,15 @@ components:
     properties: {text: ''}
     type: form:dep_lin1x4oec0ytd:_Components.ButtonMenu
   - data_bindings:
-    - {code: 'self.item[''comment_friday'']', property: text, writeback: false}
-    layout_properties: {width: 223.93041699218747}
+    - {code: 'self.item[''comment_friday'']', property: text, writeback: true}
+    layout_properties: {width: 317.0113466796875}
     name: friday_comment_box
+    properties: {appearance: outlined, label: '', placeholder: Friday Comments, visible: false}
+    type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - data_bindings:
+    - {code: 'self.item[''comment_friday'']', property: text, writeback: false}
+    layout_properties: {width: 170.185352734375}
+    name: friday_comment_label
     properties: {visible: false}
     type: form:dep_lin1x4oec0ytd:_Components.Text
   - data_bindings:
