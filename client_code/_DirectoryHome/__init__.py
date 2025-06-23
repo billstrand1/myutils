@@ -24,7 +24,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     
     # DEBUG = True
     # if DEBUG:
-    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False")
+    #   print("Calling for log-in DirectoryHome, DON'T FORGET TO set DEBUG=False, MyUtils")
     #   anvil.server.call('force_debug_login_shr_utils')
 
     user = anvil.users.get_user()
@@ -46,7 +46,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       menu_add.add_event_handler('click', self.button_add_click)
       menu_edit.add_event_handler('click', self.edit_contacts_click)
     else:
-      menu_edit_yourself = m3.MenuItem(text="Edit Your Conact Info", leading_icon='mi:edit')
+      menu_edit_yourself = m3.MenuItem(text="Edit Your Contact Info", leading_icon='mi:edit')
       self.MultiButton.menu_items = [menu_edit_yourself]
       menu_edit_yourself.add_event_handler('click', self.edit_current_contact_click)
 
