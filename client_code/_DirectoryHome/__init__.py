@@ -119,7 +119,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
   def refresh_directory(self):
     self.refresh_data_bindings()
     self.directory_panel.clear()
-    self.directory_panel.add_component(DirectoryDisplayOnly())
+    self.directory_panel.add_component(DirectoryDisplayHTML())
 
 
   def edit_contacts_click(self, **event_args):
