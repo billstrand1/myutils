@@ -12,3 +12,5 @@ class DirectoryEdit(DirectoryEditTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    #Note: You cannot change your first or last name, only Admin can do that.
+    

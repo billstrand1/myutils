@@ -166,14 +166,16 @@ class _DirectoryHome(_DirectoryHomeTemplate):
         alert(error, title="Input Error")
         continue
 
-      # Keep first/last from changing.  Format email
+      # Keep first/last from changing.  
       self.member_copy['first_name'] = first_name #self.member_copy['first_name'].title()
       self.member_copy['last_name'] = last_name #self.member_copy['last_name'].title()
+
+      # Format email
       self.member_copy['email'] = self.member_copy['email'].lower()   
       if not self.member_copy['signup_name']:
         self.member_copy['signup_name'] = f"{self.member_copy['last_name']}, {self.member_copy['first_name']}"       
     
-        # Save and notify
+      # Save and notify
       anvil.server.call('update_member', user, self.member_copy)
       self.refresh_directory()
       
