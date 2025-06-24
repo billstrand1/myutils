@@ -129,13 +129,6 @@ class _DirectoryHome(_DirectoryHomeTemplate):
 
 
   def edit_current_contact_click(self, **event_args):
-    # alert("Edit button clicked....")
-    # self.directory_panel.clear()
-    # self.directory_panel.add_component(DirectoryDisplayEdit()) 
-
-    # ---------------TRY TO ONLY EDIT EXISTING MEMBER
-    # def link_edit_click(self, **event_args):
-    #   print('entering link_edit_click')
     user = anvil.users.get_user()    
     print(f"Directory Edit accessed by: {user['first_name']} {user['last_name']}")
     
@@ -183,10 +176,6 @@ class _DirectoryHome(_DirectoryHomeTemplate):
       message = f"{self.member_copy['first_name']} {self.member_copy['last_name']}, {self.member_copy['email']} updated by {user['first_name']} {user['last_name']}."
       anvil.server.call('email_change', message, subject='User Directory Edit')
       Notification(f"{self.member_copy['first_name']} updated, thanks.").show()
-      # else: 
-      #   message = f"{self.member_copy['first_name']} {self.member_copy['last_name']} added to directory."
-      #   Notification(f"{self.member_copy['first_name']} added, thanks.").show()
-      #   anvil.server.call('email_change', message, subject='User Directory Edit')
       break
     
 
