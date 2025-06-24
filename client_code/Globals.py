@@ -4,6 +4,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import datetime
+from datetime import date
+
 
 
 def validate_member_data(member):
@@ -22,10 +24,22 @@ def validate_member_data(member):
     return "Please enter both birth month & day, or neither."
   return None
 
+def get_day_number(input_date):
+  return input_date.isoweekday()
 
 '''
 from time import sleep
     sleep(2.5)
+
+| Day        | Number |
+| ---------- | ------ |
+| Monday     | 1      |
+| Tuesday    | 2      |
+| Wednesday  | 3      |
+| Thursday   | 4      |
+| **Friday** | 5      |
+| Saturday   | 6      |
+| Sunday     | 7      |
 
 
 '''

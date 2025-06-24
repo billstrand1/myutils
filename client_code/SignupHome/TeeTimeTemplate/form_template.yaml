@@ -1,9 +1,57 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'WZTHWB,TSFXIV'}
-    name: button_menu_1
-    properties: {text: Friday Options}
+  - layout_properties: {width: 104.40625}
+    name: text_1
+    properties: {align: right, scale: large, text: Friday, visible: true}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  - event_bindings: {change: day_switch_change}
+    layout_properties: {}
+    name: day_switch
+    properties:
+      enabled: true
+      margin: [7, '', 7, '']
+      visible: true
+    type: form:dep_lin1x4oec0ytd:_Components.Switch
+  - layout_properties: {width: 113.3756103515625}
+    name: text_1_copy
+    properties: {align: left, scale: large, text: Saturday, visible: true}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  layout_properties: {grid_position: 'GVFCGB,ROMFAP'}
+  name: flow_panel_1
+  properties: {vertical_align: middle}
+  type: FlowPanel
+- components:
+  - layout_properties: {width: 65.7246814453125}
+    name: text_1_copy_2
+    properties: {align: right, scale: large, text: ''}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  - layout_properties: {}
+    name: friday_button_menu
+    properties: {text: ''}
     type: form:dep_lin1x4oec0ytd:_Components.ButtonMenu
+  - data_bindings:
+    - {code: 'self.item[''comment_friday'']', property: text, writeback: true}
+    layout_properties: {width: 317.0113466796875}
+    name: friday_comment_box
+    properties: {appearance: outlined, label: '', placeholder: Friday Comments, visible: false}
+    type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - data_bindings:
+    - {code: 'self.item[''comment_friday'']', property: text, writeback: false}
+    layout_properties: {width: 170.185352734375}
+    name: friday_comment_label
+    properties: {visible: false}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  - data_bindings:
+    - {code: 'self.item[''comment_saturday'']', property: text, writeback: false}
+    layout_properties: {width: 238.2210693359375}
+    name: saturday_comment_box
+    properties: {visible: false}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  layout_properties: {grid_position: 'TKKDLV,UJVTCE'}
+  name: flow_panel_2
+  properties: {align: left, vertical_align: middle}
+  type: FlowPanel
+- components:
   - components:
     - name: repeating_panel_tee_times
       properties: {item_template: SignupHome.TeeTimeTemplate.RowTemplate1}
@@ -16,7 +64,7 @@ components:
       - {data_key: signup_name, id: EUBDHC, title: Name}
       - {data_key: comment, id: SYDWIB, title: Comments}
     type: DataGrid
-  layout_properties: {grid_position: 'OCDDWF,DLGBKZ'}
+  layout_properties: {grid_position: 'LIQUTU,YWFWDT'}
   name: tee_time_panel
   properties: {}
   type: ColumnPanel

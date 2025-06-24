@@ -12,13 +12,7 @@ class _HelpHome(_HelpHomeTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    
-    #------------------VERIFY FALSE AFTER TESTING
-    # DEBUG = False
-    # if DEBUG:
-    #   print("MyUtils Calling for log-in, DON'T FORGET TO set DEBUG=False")
-    #   anvil.server.call('force_debug_login_shr_utils')
-      
+
     self.help_panel.clear()
     
     user = anvil.users.get_user()

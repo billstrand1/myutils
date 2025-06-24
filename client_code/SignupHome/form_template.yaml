@@ -1,7 +1,24 @@
 components:
-- layout_properties: {grid_position: 'EVCVKO,PVBBUY'}
+- components:
+  - components:
+    - event_bindings: {click: button_add_click}
+      layout_properties: {grid_position: 'DURBXO,BTJRNR'}
+      name: button_add
+      properties: {appearance: tonal, icon: 'mi:add', text: Add a New Tee Time}
+      type: form:dep_lin1x4oec0ytd:_Components.Button
+    - layout_properties: {grid_position: 'PLZOBU,TZNALJ'}
+      name: repeating_panel_times
+      properties: {item_template: SignupHome.TeeTimeTemplate, visible: false}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'TKPREK,VVQGDS'}
+    name: column_panel_1
+    properties: {}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'EVCVKO,PVBBUY'}
   name: signup_panel
   properties: {}
   type: ColumnPanel
-container: {type: ColumnPanel}
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
 is_package: true
