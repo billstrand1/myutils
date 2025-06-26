@@ -41,5 +41,7 @@ from time import sleep
 | Saturday   | 6      |
 | Sunday     | 7      |
 
-
+.strftime("%a %b %d '%y")  #day, month, day, 'year
+.strftime("%a %b %d '%y, %I:%M %p")  adds time am/pm
+.strftime("%a %b %d '%y, %-I:%M %p")  removes leading zero on Hours
 '''
