@@ -30,24 +30,3 @@ def has_role(user, role):
     return False
   else:
     return False
-
-# @anvil.server.callable
-# def has_role(user_row, role):
-#   roles = user_row['roles']
-#   print(f"{user_row['last_name']} roles: {user_row['roles']}, roles2:{roles}")
-  
-#   if isinstance(roles, list):
-#     print('is_instance list True')
-#     print(f"Checking role '{role}' in {user_row['roles']} → True")
-#     return role in roles
-#   elif isinstance(roles, str):
-#     roles = roles.strip()
-#     if roles == "":
-#       return False
-#     elif "," in roles:
-#       return role in [r.strip() for r in roles.split(",")]
-#     else:
-#       return role == roles
-
-#   return False
-  
