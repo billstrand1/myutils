@@ -29,3 +29,7 @@ class SignupOriginal(SignupOriginalTemplate):
       for activity in past_activities:
         anvil.server.call('delete_activity', activity)
     # Any code you write here will run before the form opens.
+
+  def button_add_click(self, **event_args):
+    pass
+    

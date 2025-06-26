@@ -1,9 +1,5 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'IPKRRW,NJLHPQ'}
-    name: label_1
-    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: title, spacing_above: small, spacing_below: small, text: Add New Tee Time, tooltip: '', underline: false, visible: true}
-    type: Label
   - data_bindings: []
     layout_properties: {grid_position: 'DMXQBI,ZNEMBU'}
     name: input_activity_date_picker
@@ -44,21 +40,9 @@ components:
     name: input_activity_comments
     properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', hide_text: false, italic: false, placeholder: Enter Comments, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
     type: TextBox
-  - event_bindings: {click: button_add_activity_click}
-    layout_properties: {grid_position: 'BPEDLW,OAIRDQ'}
-    name: button_add_activity
-    properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: 'fa:plus', icon_align: left, italic: false, role: filled-button, spacing_above: small, spacing_below: small, text: Add Tee Time, tooltip: '', underline: false, visible: true}
-    type: Button
-  - event_bindings: {click: button_cancel_click}
-    layout_properties:
-      col_widths: {}
-      grid_position: SNMGBC,QJMGOF
-    name: button_cancel
-    properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Cancel, tooltip: '', underline: false, visible: true}
-    type: Button
   layout_properties: {grid_position: 'NSDRBS,PWGKRN'}
   name: column_panel
-  properties: {background: '', border: '', col_spacing: medium, col_widths: '{"NJLHPQ":39}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
