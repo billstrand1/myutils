@@ -20,14 +20,20 @@ class _DirectoryHome(_DirectoryHomeTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties) 
 
+    # ------------------Comment out before cloning, run from data_functions Server Code
+    # print('Calling for log-in')
+    # anvil.server.call('force_debug_login_shr_utils')
+    # self.user = anvil.users.get_user()
+    
     user = anvil.users.get_user()
     if not user:
       user = anvil.users.login_with_form()
-      
+    print(f"{user['last_name']} is logged in") 
+    
     admin = False
     if user:
       admin = anvil.server.call('has_role', user, 'admin')
-      print(f'Admin: {admin}')
+      # print(f'Admin: {admin}')
     
 
     if admin:
@@ -64,7 +70,7 @@ class _DirectoryHome(_DirectoryHomeTemplate):
                     'phone': '',
                     'birth_month': None,
                     'birth_day': None,
-                    'roles': None}
+                    'roles': '[]'}
   
       player_add_form = DirectoryEdit(item=new_contact)
   
@@ -96,7 +102,8 @@ class _DirectoryHome(_DirectoryHomeTemplate):
         #Set to appropriate string modes
         new_contact['first_name'] = new_contact['first_name'].title()
         new_contact['last_name'] = new_contact['last_name'].title()     
-        new_contact['email'] = new_contact['email'].lower()          
+        new_contact['email'] = new_contact['email'].lower()
+
 
         if not new_contact['signup_name']:
           new_contact['signup_name'] = f"{new_contact['last_name']}, {new_contact['first_name']}"
