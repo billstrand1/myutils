@@ -1,0 +1,52 @@
+components:
+- components:
+  - data_bindings:
+    - {code: 'self.item[''act_date_time''].strftime("%a %b %d ''%y")', property: text, writeback: false}
+    layout_properties: {grid_position: 'PSVJCS,DDIEGC'}
+    name: label_1
+    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+    type: Label
+  - data_bindings:
+    - {code: 'f"{self.item[''course'']} @ {self.item[''activity'']}"', property: text}
+    layout_properties: {grid_position: 'PSVJCS,NSNQVZ'}
+    name: label_activity
+    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+    type: Label
+  - data_bindings:
+    - {code: 'f" [{self.item[''owner''][''signup_name'']}] " +self.item[''comments'']', property: text, writeback: false}
+    layout_properties: {grid_position: 'PSVJCS,OWPWWR'}
+    name: label_2
+    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+    type: Label
+  - components: []
+    event_bindings: {click: link_edit_click}
+    layout_properties: {grid_position: 'PSVJCS,BQJVNN'}
+    name: link_edit
+    properties: {align: center, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '#77bb41', icon: 'fa:pencil', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    type: Link
+  - components: []
+    event_bindings: {click: link_delete_click}
+    layout_properties: {grid_position: 'PSVJCS,LCEOUZ'}
+    name: link_delete
+    properties: {align: center, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '#ff2600', icon: 'fa:trash-o', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    type: Link
+  - event_bindings: {click: link_signup_click}
+    layout_properties: {grid_position: 'PSVJCS,UBXXHQ'}
+    name: link_signup
+    properties: {align: center, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '#669c35', icon: 'fa:plus-square', icon_align: left, italic: false, role: null, spacing_above: none, spacing_below: none, text: ., tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
+    type: Link
+  - components:
+    - layout_properties: {column: null, grid_position: 'ISMBDH,UKNWTM'}
+      name: repeating_panel_participants
+      properties: {background: '', border: '', foreground: '', item_template: Home.Components.GolfSignupComponent.GolfTemplate.Form1, items: null, role: null, spacing_above: small, spacing_below: small, tooltip: '', visible: true}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'CQWQKE,GUYFTS'}
+    name: outlined_card_1_copy
+    properties: {background: '', border: '', col_spacing: small, col_widths: '{}', foreground: '', role: elevated-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+    type: ColumnPanel
+  layout_properties: {grid_position: ''}
+  name: outlined_card_1
+  properties: {background: '', border: '', col_spacing: small, col_widths: '{}', foreground: '', role: elevated-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

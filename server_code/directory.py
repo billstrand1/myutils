@@ -82,56 +82,6 @@ def get_directory_html():
   # print(html)
   return html
 
-#Used by ABANDONED FORM    DirectoryDisplayOnly 
-# @anvil.server.callable
-# def get_directory_str():  
-#   results = app_tables.users.search(
-#     tables.order_by("last_name", ascending=True),enabled=True)
-#   directory = [r for r in results if not admin.has_role(r, 'no_directory')]  
-#   directory_str = ''
-  
-#   directory_rows = [
-#     {
-#       'Name': f"{person['first_name']} {person['last_name']}",
-#       'Email': person['email'],
-#       'Phone': person['phone']
-#     }
-#     for person in directory
-#   ]
-  
-
-#   directory_df = pd.DataFrame(directory_rows)
-#   directory_df.fillna('', inplace=True)
-#   directory_df.columns = ['Name', 'Email Address', 'Phone Number']
-#   directory_str = directory_df.to_string(index=False, justify='center', col_space=16)#, max_colwidth=30)
-#   return directory_str
-
-
-#. NOT USED 
-# @anvil.server.callable
-# def get_directory_markdown():
-#   results = app_tables.users.search(
-#     tables.order_by("last_name", ascending=True), enabled=True)
-#   directory = [r for r in results if not admin.has_role(r, 'no_directory')]
-
-#   # Column widths
-#   name_width = 20
-#   email_width = 30
-#   phone_width = 15
-
-#   header = f"| {'Name'.ljust(name_width)} | {'Email Address'.ljust(email_width)} | {'Phone Number'.ljust(phone_width)} |"
-#   separator = f"|{'-' * (name_width+2)}|{'-' * (email_width+2)}|{'-' * (phone_width+2)}|"
-
-#   rows = []
-#   for r in directory:
-#     name = f"{r['first_name']} {r['last_name']}".ljust(name_width)
-#     email = (r['email'] or '').ljust(email_width)
-#     phone = (r['phone'] or '').ljust(phone_width)
-#     rows.append(f"| {name} | {email} | {phone} |")
-
-#   return "\n".join([header, separator] + rows)
-
-  
 
 
 #--------------------EMAIL LISTS------------------------
