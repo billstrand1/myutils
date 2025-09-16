@@ -9,6 +9,7 @@ from datetime import date
 
 
 def validate_member_data(member):
+  #Used by _DirectoryHome
   if not member['first_name']:
     return "Please enter first name."
   if not member['last_name']:
