@@ -34,6 +34,23 @@ db_schema:
       type: string
     server: full
     title: date_of_play
+  files:
+    client: search
+    columns:
+    - admin_ui: {width: 200}
+      name: file_name
+      type: string
+    - admin_ui: {width: 277}
+      name: file
+      type: media
+    - admin_ui: {width: 200}
+      name: description
+      type: string
+    - admin_ui: {width: 200}
+      name: comments
+      type: string
+    server: full
+    title: Files
   participation:
     client: none
     columns:
@@ -165,5 +182,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/email.yml
-startup: {module: SignupOriginal, type: form}
+startup: {module: FileBrowserDT, type: form}
 startup_form: null

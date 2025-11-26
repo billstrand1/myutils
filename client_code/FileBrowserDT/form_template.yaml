@@ -1,0 +1,7 @@
+components:
+- layout_properties: {grid_position: 'BADBQV,LPECHE'}
+  name: repeating_panel_files
+  properties: {item_template: FileBrowserDT.FileRowDT}
+  type: RepeatingPanel
+container: {type: ColumnPanel}
+is_package: true
