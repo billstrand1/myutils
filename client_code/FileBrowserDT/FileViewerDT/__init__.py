@@ -5,108 +5,31 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from anvil import *
-import anvil.server
 
 
 class FileViewerDT(FileViewerDTTemplate):
   def __init__(self, file_rows, start_index=0, **properties):
     self.init_components(**properties)
 
-    # Store list + index
+    # Store the list and current index
     self.file_rows = list(file_rows)
     self.index = start_index
 
-    # ---------- BUILD UI ----------
-
-    # Root layout: vertical
-    self.root_panel = ColumnPanel(spacing="medium")
-    self.add_component(self.root_panel)
-
-    # Header row: title, index, X
-    self.header_row = FlowPanel(role=None, spacing="small")
-    self.root_panel.add_component(self.header_row)
-
-    self.label_name = Label(text="", bold=True)
-    self.header_row.add_component(self.label_name)
-
-    # Flexible spacer
-    self.header_row.add_component(Spacer())
-
-    # "N of M" label
-    self.label_index = Label(text="", align="right")
-    self.header_row.add_component(self.label_index)
-
-    # Small space
-    self.header_row.add_component(Spacer(width=10))
-
-    # Top-right Close "X"
-    self.link_close = Link(text="✕", align="right", foreground="red")
-    self.link_close.set_event_handler("click", self.link_close_click)
-    self.header_row.add_component(self.link_close)
-
-    # Content area
-    self.content_panel = ColumnPanel(spacing="small")
-    self.root_panel.add_component(self.content_panel)
-
-    # Info / comments label
-    self.label_info = Label(text="", visible=False)
-    self.content_panel.add_component(self.label_info)
-
-    # Image viewer
-    self.image_preview = Image(visible=False)
-    self.content_panel.add_component(self.image_preview)
-
-    # PDF iframe (via HtmlPanel)
-    self.html_pdf = HtmlPanel(visible=False)
-    self.content_panel.add_component(self.html_pdf)
-
-    # Video player (via HtmlPanel)
-    self.html_video = HtmlPanel(visible=False)
-    self.content_panel.add_component(self.html_video)
-
-    # Text viewer
-    self.textarea_text = TextArea(visible=False)
-    self.textarea_text.auto_expand = True
-    self.content_panel.add_component(self.textarea_text)
-
-    # Footer row: Prev / Next / Download / Close
-    self.footer_row = FlowPanel(spacing="small")
-    self.root_panel.add_component(self.footer_row)
-
-    self.link_previous = Link(text="⟨ Previous", visible=False)
-    self.link_previous.set_event_handler("click", self.link_previous_click)
-    self.footer_row.add_component(self.link_previous)
-
-    self.link_next = Link(text="Next ⟩", visible=False)
-    self.link_next.set_event_handler("click", self.link_next_click)
-    self.footer_row.add_component(self.link_next)
-
-    # Spacer between nav and actions
-    self.footer_row.add_component(Spacer())
-
-    self.link_download = Link(text="Download")
-    self.link_download.set_event_handler("click", self.link_download_click)
-    self.footer_row.add_component(self.link_download)
-
-    self.link_close_bottom = Link(text="Close")
-    self.link_close_bottom.set_event_handler("click", self.link_close_click)
-    self.footer_row.add_component(self.link_close_bottom)
-
-    # ---------- LOAD INITIAL FILE ----------
+    # Load the initial file right away
     self._load_current_file()
 
-  # ------------- CORE LOADER -------------
+  # ----------------- core loader / router -----------------
 
   def _load_current_file(self):
-    # No files
+    # No files? show message and bail
     if not self.file_rows:
       self.label_info.visible = True
       self.label_info.text = "No files to display."
-      self.label_index.text = ""
+      if hasattr(self, "label_index"):
+        self.label_index.text = ""
       return
 
-    # Clamp index
+    # Clamp index just in case
     if self.index < 0:
       self.index = 0
     if self.index >= len(self.file_rows):
@@ -114,30 +37,31 @@ class FileViewerDT(FileViewerDTTemplate):
 
     file_row = self.file_rows[self.index]
 
-    # Hide everything
+    # Hide everything first
     self.image_preview.visible = False
-    self.html_pdf.visible = False
-    self.html_video.visible = False
+    self.iframe_pdf.visible = False
+    self.video_player.visible = False
     self.textarea_text.visible = False
     self.label_info.visible = False
 
-    # Normalize from DT row
+    # Normalize from Data Table row
     self.title = file_row['description']
     self.comments = file_row['comments']
     self.media = file_row['file']
     self.mime_type = self.media.content_type
 
-    # Title
+    # Set the title (top of the alert)
     self.label_name.text = self.title
 
-    # N of M
-    n = self.index + 1
-    m = len(self.file_rows)
-    self.label_index.text = f"{n} of {m}"
+    # 👉 NEW: set "N of M" label
+    if hasattr(self, "label_index"):
+      n = self.index + 1
+      m = len(self.file_rows)
+      self.label_index.text = f"{n} of {m}"
 
     print(f"[FileViewerDT] index={self.index}, mime_type={self.mime_type}")
 
-    # Route by mime type
+    # Route based on mime type
     if self.mime_type.startswith("image/"):
       print("[FileViewerDT] image found")
       self._show_image()
@@ -151,16 +75,18 @@ class FileViewerDT(FileViewerDTTemplate):
       print("[FileViewerDT] text found")
       self._show_text()
     else:
-      print("[FileViewerDT] unsupported type")
+      print("[FileViewerDT] unsupported type found")
       self.label_info.visible = True
-      self.label_info.text = f"Unsupported type: {self.mime_type}"
+      self.label_info.text = f"Unsupported type for now: {self.mime_type}"
 
-    # Update navigation
+    # Update Prev/Next visibility
     self._update_nav_buttons()
 
-  # ------------- NAVIGATION -------------
+
+  # ----------------- navigation buttons -----------------
 
   def _update_nav_buttons(self):
+    # using your link names: link_previous, link_next
     self.link_previous.visible = (self.index > 0)
     self.link_next.visible = (self.index < len(self.file_rows) - 1)
 
@@ -174,63 +100,60 @@ class FileViewerDT(FileViewerDTTemplate):
       self.index += 1
       self._load_current_file()
 
-  # ------------- DISPLAY HELPERS -------------
+  # ----------------- display helpers -----------------
 
   def _show_image(self):
     self.image_preview.source = self.media
     self.image_preview.visible = True
-    if self.comments:
-      self.label_info.text = self.comments
-      self.label_info.visible = True
+    self.label_info.text = self.comments
+    self.label_info.visible = True
 
   def _show_pdf(self):
-    if self.comments:
-      self.label_info.text = self.comments
-      self.label_info.visible = True
+    self.label_info.visible = True
+    self.label_info.text = self.comments
 
-    url = self.media.get_url(False)
-    # Simple iframe filling the width, fixed height
-    self.html_pdf.content = f"""
-      <iframe src="{url}" style="width:100%; height:500px; border:none;"></iframe>
-    """
-    self.html_pdf.visible = True
+    docurl = self.media.get_url(False)
+    self.iframe_pdf.url = docurl
+    self.iframe_pdf.visible = True
 
   def _show_video(self):
-    if self.comments:
-      self.label_info.text = self.comments
-      self.label_info.visible = True
+    self.label_info.visible = True
+    self.label_info.text = self.comments
+
+    self.video_player.height = 500
+    self.video_player.width = 1000
 
     url = self.media.get_url(False)
-    self.html_video.content = f"""
-      <video controls style="width:100%; max-height:500px;">
-        <source src="{url}">
-        Your browser does not support the video tag.
-      </video>
-    """
-    self.html_video.visible = True
+    self.video_player.source = url
+    self.video_player.visible = True
 
   def _show_text(self):
-    if self.comments:
-      self.label_info.text = self.comments
-      self.label_info.visible = True
+    self.label_info.visible = True
+    self.label_info.text = self.comments
 
     text = anvil.server.call('get_text_from_media', self.media)
     self.textarea_text.text = text
+    self.textarea_text.auto_expand = True
     self.textarea_text.visible = True
 
   def _looks_like_text(self, title):
     title = title.lower()
     return (
-      title.endswith(".txt")
-      or title.endswith(".csv")
-      or title.endswith(".md")
-      or title.endswith(".log")
+      title.endswith(".txt") or
+      title.endswith(".csv") or
+      title.endswith(".md") or
+      title.endswith(".log")
     )
 
-  # ------------- DOWNLOAD + CLOSE -------------
+  # ----------------- download + close -----------------
 
   def link_download_click(self, **event_args):
     anvil.media.download(self.media)
 
-  def link_close_click(self, **event_args):
-    alert.close_alert()
+  # def link_to_close_click(self, **event_args):
+  #   # top-right X or bottom "Close" can both call this
+  #   alert.close_alert()
+
+  def link_to_close_click(self, **event_args):
+    # alert.close_alert()
+    self.raise_event("x-close-alert", value=None)

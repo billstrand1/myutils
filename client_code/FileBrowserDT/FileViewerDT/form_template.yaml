@@ -1,3 +1,38 @@
-components: []
+components:
+- components:
+  - layout_properties: {grid_position: 'DJUVIE,LRUNOR'}
+    name: label_name
+    properties: {spacing_above: none, spacing_below: none}
+    type: Label
+  layout_properties: {grid_position: 'OLFHMH,PIRGIZ'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- event_bindings: {click: link_previous_click}
+  layout_properties: {grid_position: 'OLFHMH,RMLQMS'}
+  name: link_previous
+  properties: {align: center, icon: 'fa:arrow-left', text: ''}
+  type: Link
+- event_bindings: {click: link_next_click}
+  layout_properties: {grid_position: 'OLFHMH,HNXMCC'}
+  name: link_next
+  properties: {align: center, icon: 'fa:arrow-right', icon_align: left, text: ''}
+  type: Link
+- components:
+  - components: []
+    event_bindings: {click: link_to_close_click}
+    layout_properties: {}
+    name: link_to_close
+    properties: {icon: 'fa:close'}
+    type: Link
+  layout_properties: {grid_position: 'GRQJZT,IBAIAP'}
+  name: flow_panel_1
+  properties: {}
+  type: FlowPanel
+- event_bindings: {click: link_download_click}
+  layout_properties: {grid_position: 'EIRSTM,VEVWYC'}
+  name: link_download
+  properties: {align: center, icon: 'fa:download', text: ''}
+  type: Link
 container: {type: ColumnPanel}
 is_package: true
