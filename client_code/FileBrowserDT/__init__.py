@@ -6,7 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .FileViewerDT import FileViewerDT
-
+from .FileRowDT import FileRowDT
 
 class FileBrowserDT(FileBrowserDTTemplate):
   def __init__(self, items=None, **properties):
@@ -21,4 +21,9 @@ class FileBrowserDT(FileBrowserDTTemplate):
       print('items is none, searching....')
       items = app_tables.files.search()
 
+    # items = list(items)
+    print(items)
+    print(f'len items = {len(items)}')
+    
+    # self.repeating_panel_files.item_template = FileRowDT
     self.repeating_panel_files.items = items
