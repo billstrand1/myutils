@@ -164,6 +164,9 @@ dependencies:
   dep_id: dep_lin1x4oec0ytd
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}
   version: {version_tag: v1.2.3}
+- dep_id: dep_395w4cry065lv
+  resolution_hints: {app_id: J7WAES5F2O3IZ5FW, name: IFrame component, package_name: IFrames}
+  version: {branch: master}
 name: MyUtils
 native_deps: null
 package_name: MyUtils
