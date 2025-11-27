@@ -34,6 +34,23 @@ db_schema:
       type: string
     server: full
     title: date_of_play
+  files:
+    client: search
+    columns:
+    - admin_ui: {width: 200}
+      name: file_name
+      type: string
+    - admin_ui: {width: 277}
+      name: file
+      type: media
+    - admin_ui: {width: 200}
+      name: description
+      type: string
+    - admin_ui: {width: 200}
+      name: comments
+      type: string
+    server: full
+    title: Files
   participation:
     client: none
     columns:
@@ -147,6 +164,9 @@ dependencies:
   dep_id: dep_lin1x4oec0ytd
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}
   version: {version_tag: v1.2.3}
+- dep_id: dep_395w4cry065lv
+  resolution_hints: {app_id: J7WAES5F2O3IZ5FW, name: IFrame component, package_name: IFrames}
+  version: {branch: master}
 name: MyUtils
 native_deps: null
 package_name: MyUtils
@@ -165,5 +185,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/email.yml
-startup: {module: SignupOriginal, type: form}
+startup: {module: FileBrowserDT, type: form}
 startup_form: null

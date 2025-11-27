@@ -1,0 +1,17 @@
+components:
+- components:
+  - components:
+    - layout_properties: {slot: card-content-container-slot}
+      name: repeating_panel_files
+      properties: {item_template: FileBrowserDT.FileRowDT}
+      type: RepeatingPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_1
+    properties: {}
+    type: form:dep_lin1x4oec0ytd:_Components.Card.CardContentContainer
+  layout_properties: {grid_position: 'EYBXKW,BALTZV'}
+  name: card_1
+  properties: {appearance: outlined}
+  type: form:dep_lin1x4oec0ytd:_Components.Card
+container: {type: ColumnPanel}
+is_package: true

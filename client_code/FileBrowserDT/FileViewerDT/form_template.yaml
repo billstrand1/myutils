@@ -1,0 +1,66 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'DJUVIE,LRUNOR'}
+    name: label_name
+    properties: {spacing_above: none, spacing_below: none}
+    type: Label
+  - components:
+    - event_bindings: {click: link_previous_click}
+      layout_properties: {}
+      name: link_previous
+      properties: {align: center, icon: 'fa:arrow-left', text: ''}
+      type: Link
+    - event_bindings: {click: link_next_click}
+      layout_properties: {}
+      name: link_next
+      properties: {align: center, icon: 'fa:arrow-right', icon_align: left, text: ''}
+      type: Link
+    - event_bindings: {click: link_download_click}
+      layout_properties: {}
+      name: link_download
+      properties: {align: center, icon: 'fa:download', text: ''}
+      type: Link
+    - components: []
+      event_bindings: {click: link_to_close_click}
+      layout_properties: {}
+      name: link_to_close
+      properties: {icon: 'fa:close'}
+      type: Link
+    layout_properties: {grid_position: 'DJUVIE,VMZHLF'}
+    name: flow_panel_1
+    properties: {align: right}
+    type: FlowPanel
+  - layout_properties: {grid_position: 'THCWUS,MWZEFP'}
+    name: label_info
+    properties: {spacing_above: none, spacing_below: none}
+    type: Label
+  - layout_properties: {grid_position: 'THCWUS,WMGVNM'}
+    name: label_index
+    properties: {align: right, spacing_above: none, spacing_below: none}
+    type: Label
+  layout_properties: {grid_position: 'CAZUNZ,ABBZBE'}
+  name: column_panel_1
+  properties: {col_widths: '{"LRUNOR":46,"VMZHLF":14,"MWZEFP":50,"WMGVNM":10}'}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'DOYANL,DZXTSU'}
+  name: image_preview
+  properties: {display_mode: original_size}
+  type: Image
+- layout_properties: {grid_position: 'YUENQA,JHHJWP'}
+  name: textarea_text
+  properties: {auto_expand: true, enabled: false, visible: false}
+  type: TextArea
+- layout_properties: {full_width_row: true, grid_position: 'NKUOEM,OXEEMR'}
+  name: video_player
+  properties: {}
+  type: form:FileBrowserDT.video
+- layout_properties: {grid_position: 'UFRDEM,IVEKOG'}
+  name: iframe_pdf
+  properties: {}
+  type: form:dep_395w4cry065lv:IFrame
+- layout_properties: {grid_position: 'BMBAON,NRMYSW'}
+  name: you_tube_video
+  properties: {visible: false}
+  type: YouTubeVideo
+container: {type: ColumnPanel}
+is_package: true
