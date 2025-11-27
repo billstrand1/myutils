@@ -47,9 +47,27 @@ class FileViewerDT(FileViewerDTTemplate):
     # Normalize from Data Table row
     self.title = file_row['description']
     self.comments = file_row['comments']
+    
+    # self.media = file_row['file']
+    # self.mime_type = self.media.content_type
     self.media = file_row['file']
-    self.mime_type = self.media.content_type
+    
+    if self.media:
+      self.mime_type = self.media.content_type.lower()
+    else:
+      self.mime_type = None
 
+    if not self.media:
+      self.label_info.visible = True
+      self.label_info.text = "No file attached."
+      # Hide all viewer components
+      self.image_preview.visible = False
+      self.iframe_pdf.visible = False
+      self.video_player.visible = False
+      self.textarea_text.visible = False
+      return
+
+    
     # Set the title (top of the alert)
     self.label_name.text = self.title
 
