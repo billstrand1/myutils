@@ -51,7 +51,7 @@ components:
   properties: {auto_expand: true, enabled: false, visible: false}
   type: TextArea
 - layout_properties: {grid_position: 'IYNYWA,ZJIPDE'}
-  name: you_tube_video_1
+  name: you_tube_video
   properties: {}
   type: YouTubeVideo
 container: {type: ColumnPanel}
