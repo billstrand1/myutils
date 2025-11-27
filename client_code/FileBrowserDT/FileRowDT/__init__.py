@@ -58,7 +58,7 @@ class FileRowDT(FileRowDTTemplate):
       display_type = f"Unknown ({mime})" if mime else "Unknown"
       icon = "❓"
 
-    self.label_title.text = f"{description} — {file_name} — {display_type} — {file_size}"    # self.label_type.text = display_type
+    self.label_title.text = f"{description}  ({file_name} — {display_type} — {file_size})"    # self.label_type.text = display_type
     self.label_icon.text = icon
     
   def link_open_click(self, **event_args):
