@@ -1,16 +1,56 @@
 components:
-- layout_properties: {grid_position: 'JKBATT,MCZMSJ'}
-  name: label_title
-  properties: {visible: true}
-  type: Label
-- layout_properties: {grid_position: 'JKBATT,EKAYWB'}
-  name: label_type
-  properties: {spacing_above: none, spacing_below: none}
-  type: Label
-- event_bindings: {click: link_open_click}
-  layout_properties: {grid_position: 'JKBATT,VMCUHP'}
-  name: link_open
-  properties: {align: right, text: Open}
-  type: Link
+- components:
+  - components:
+    - components:
+      - components:
+        - components:
+          - layout_properties: {}
+            name: label_title
+            properties: {visible: true}
+            type: Label
+          layout_properties: {grid_position: 'GKJZGV,WKGGIN'}
+          name: row_main
+          properties: {}
+          type: FlowPanel
+        - layout_properties: {grid_position: 'WYZGJX,VEVZHV'}
+          name: label_type
+          properties: {spacing_above: none, spacing_below: none, visible: false}
+          type: Label
+        - layout_properties: {grid_position: 'GQILKU,DTWEVR'}
+          name: label_comments
+          properties: {}
+          type: form:dep_lin1x4oec0ytd:_Components.Text
+        - components:
+          - layout_properties: {}
+            name: label_icon
+            properties: {align: center}
+            type: form:dep_lin1x4oec0ytd:_Components.Text
+          - components: []
+            event_bindings: {click: link_open_click}
+            layout_properties: {}
+            name: link_open
+            properties: {align: right, icon: '', text: '[Open]', underline: true}
+            type: Link
+          layout_properties: {grid_position: 'NLTXEI,PGIOAS'}
+          name: flow_panel_2
+          properties: {}
+          type: FlowPanel
+        layout_properties: {width: 477.7633056640625}
+        name: column_panel_1
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {slot: card-content-container-slot}
+      name: flow_panel_1
+      properties: {}
+      type: FlowPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_1
+    properties:
+      margin: [0, '10', 0, '10']
+    type: form:dep_lin1x4oec0ytd:_Components.Card.CardContentContainer
+  layout_properties: {grid_position: 'UHYQDD,QMFTBS'}
+  name: card_1
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Card
 container: {type: ColumnPanel}
 is_package: true

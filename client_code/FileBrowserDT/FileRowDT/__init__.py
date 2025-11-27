@@ -10,35 +10,56 @@ from ..FileViewerDT import FileViewerDT
 class FileRowDT(FileRowDTTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
-    # print("labels exist?", hasattr(self, "label_title"), hasattr(self, "label_type"))
-    # if hasattr(self, "label_title"):
-    #   self.label_title.text = "TEST TITLE"
-    # if hasattr(self, "label_type"):
-    #   self.label_type.text = "TEST TYPE"
-    print("Row init; components:",
-          [c.name for c in self.get_components() if hasattr(c, "name")])
+
     row = self.item  # the data table row
 
     # Title
-    self.label_title.text = row["description"]
+    # self.label_title.text = row["description"]
+    description = row["description"]
 
+    # Comments (optional)
+    comments = row.get("comments", "") if isinstance(row, dict) else row['comments']
+    self.label_comments.text = comments or ""
+  
     # MIME / Type
     media = row['file']
     mime = media.content_type.lower() if media else ""
+    file_name = media.name if media else "(no file)"
+    
+    # if mime.startswith("image/"):
+    #   display_type = f"Image ({mime.split('/')[-1].upper()})"
+    # elif mime == "application/pdf":
+    #   display_type = "PDF"
+    # elif mime.startswith("video/"):
+    #   display_type = f"Video ({mime.split('/')[-1].upper()})"
+    # elif mime.startswith("text/"):
+    #   display_type = f"Text ({mime.split('/')[-1].upper()})"
+    # else:
+    #   display_type = f"Unknown ({mime})" if mime else "Unknown"
 
+    # self.label_type.text = display_type
+
+    
+    # Type & icon
     if mime.startswith("image/"):
       display_type = f"Image ({mime.split('/')[-1].upper()})"
+      icon = "🖼"
     elif mime == "application/pdf":
       display_type = "PDF"
+      icon = "📄"
     elif mime.startswith("video/"):
       display_type = f"Video ({mime.split('/')[-1].upper()})"
+      icon = "🎥"
     elif mime.startswith("text/"):
       display_type = f"Text ({mime.split('/')[-1].upper()})"
+      icon = "📝"
     else:
       display_type = f"Unknown ({mime})" if mime else "Unknown"
+      icon = "❓"
 
-    self.label_type.text = display_type
-
+    self.label_title.text = f"{description} — {file_name} — {display_type}"
+    # self.label_type.text = display_type
+    self.label_icon.text = icon
     
   def link_open_click(self, **event_args):
     from anvil import RepeatingPanel

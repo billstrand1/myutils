@@ -38,9 +38,9 @@ components:
     name: label_index
     properties: {align: right, spacing_above: none, spacing_below: none}
     type: Label
-  layout_properties: {grid_position: 'WWFPOX,HIJREA'}
+  layout_properties: {grid_position: 'CAZUNZ,ABBZBE'}
   name: column_panel_1
-  properties: {col_widths: '{"LRUNOR":45,"VMZHLF":15,"MWZEFP":50,"WMGVNM":10}'}
+  properties: {col_widths: '{"LRUNOR":46,"VMZHLF":14,"MWZEFP":50,"WMGVNM":10}'}
   type: ColumnPanel
 - layout_properties: {grid_position: 'DOYANL,DZXTSU'}
   name: image_preview
@@ -50,7 +50,7 @@ components:
   name: textarea_text
   properties: {auto_expand: true, enabled: false, visible: false}
   type: TextArea
-- layout_properties: {grid_position: 'NKUOEM,OXEEMR'}
+- layout_properties: {full_width_row: true, grid_position: 'NKUOEM,OXEEMR'}
   name: video_player
   properties: {}
   type: form:FileBrowserDT.video
