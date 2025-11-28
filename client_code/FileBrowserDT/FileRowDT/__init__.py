@@ -26,20 +26,21 @@ class FileRowDT(FileRowDTTemplate):
     mime = media.content_type.lower() if media else ""
     file_name = media.name if media else "(no file)"
     
-    # if mime.startswith("image/"):
-    #   display_type = f"Image ({mime.split('/')[-1].upper()})"
-    # elif mime == "application/pdf":
-    #   display_type = "PDF"
-    # elif mime.startswith("video/"):
-    #   display_type = f"Video ({mime.split('/')[-1].upper()})"
-    # elif mime.startswith("text/"):
-    #   display_type = f"Text ({mime.split('/')[-1].upper()})"
-    # else:
-    #   display_type = f"Unknown ({mime})" if mime else "Unknown"
+    # --- File size ---
+    size_bytes = media.length if media else 0
+  
+    def format_size(n):
+      if n < 1024:
+        return f"{n} bytes"
+      elif n < 1024 * 1024:
+        return f"{n/1024:.0f} KB"
+      elif n < 1024 * 1024 * 1024:
+        return f"{n/1024/1024:.1f} MB"
+      else:
+        return f"{n/1024/1024/1024:.2f} GB"
+  
+    file_size = format_size(size_bytes)
 
-    # self.label_type.text = display_type
-
-    
     # Type & icon
     if mime.startswith("image/"):
       display_type = f"Image ({mime.split('/')[-1].upper()})"
@@ -57,8 +58,7 @@ class FileRowDT(FileRowDTTemplate):
       display_type = f"Unknown ({mime})" if mime else "Unknown"
       icon = "❓"
 
-    self.label_title.text = f"{description} — {file_name} — {display_type}"
-    # self.label_type.text = display_type
+    self.label_title.text = f"{description}  ({file_name} — {display_type} — {file_size})"    # self.label_type.text = display_type
     self.label_icon.text = icon
     
   def link_open_click(self, **event_args):
@@ -89,31 +89,3 @@ class FileRowDT(FileRowDTTemplate):
       large=True,
       buttons=[]   # viewer's own close link handles closing
     )
-
-  # def form_show(self, **event_args):
-  #   # self.item is a DT Row
-  #   self.label_title.text = self.item["description"]
-
-  # def form_show(self, **event_args):
-  #   # Description
-  #   self.label_title.text = self.item["description"]
-
-  #   # Get MIME type from the Media object
-  #   media = self.item['file']
-  #   mime = media.content_type.lower() if media else ""
-
-  #   # Map MIME → human-readable type
-  #   if mime.startswith("image/"):
-  #     display_type = f"Image ({mime.split('/')[-1].upper()})"
-  #   elif mime == "application/pdf":
-  #     display_type = "PDF"
-  #   elif mime.startswith("video/"):
-  #     display_type = f"Video ({mime.split('/')[-1].upper()})"
-  #   elif mime.startswith("text/"):
-  #     display_type = f"Text ({mime.split('/')[-1].upper()})"
-  #   else:
-  #     display_type = f"Unknown ({mime})" if mime else "Unknown"
-
-  #   self.label_type.text = display_type
-  #   self.label_title.visible = True
-  #   self.label_type.visible = True
