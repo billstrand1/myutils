@@ -49,6 +49,9 @@ db_schema:
     - admin_ui: {width: 200}
       name: comments
       type: string
+    - admin_ui: {order: 4, width: 200}
+      name: youtube_url
+      type: string
     server: full
     title: Files
   participation:
