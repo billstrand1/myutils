@@ -5,6 +5,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from anvil.js import get_dom_node  
 
 
 class FileViewerDT(FileViewerDTTemplate):
@@ -38,6 +39,7 @@ class FileViewerDT(FileViewerDTTemplate):
     file_row = self.file_rows[self.index]
 
     # Hide everything first
+    self.you_tube_video.visible = False
     self.image_preview.visible = False
     self.iframe_pdf.visible = False
     self.video_player.visible = False
@@ -48,26 +50,33 @@ class FileViewerDT(FileViewerDTTemplate):
     self.title = file_row['description']
     self.comments = file_row['comments']
     
-    # self.media = file_row['file']
-    # self.mime_type = self.media.content_type
-    self.media = file_row['file']
-    
+    # Media may be None
+    self.media = file_row['file']    
     if self.media:
       self.mime_type = self.media.content_type.lower()
     else:
       self.mime_type = None
 
-    if not self.media:
-      self.label_info.visible = True
-      self.label_info.text = "No file attached."
-      # Hide all viewer components
-      self.image_preview.visible = False
-      self.iframe_pdf.visible = False
-      self.video_player.visible = False
-      self.textarea_text.visible = False
-      return
+    #Try removing this:
+    # if not self.media:
+    #   self.label_info.visible = True
+    #   self.label_info.text = "No file attached."
+    #   # Hide all viewer components
+    #   self.image_preview.visible = False
+    #   self.iframe_pdf.visible = False
+    #   self.video_player.visible = False
+    #   self.textarea_text.visible = False
+    #   self.you_tube_video.visible = False
+    #   return
 
-    
+    # NEW: YouTube URL (may or may not exist)
+    try:
+      self.youtube_url = file_row['youtube_url']
+      if self.youtube_url:
+        print('YT Url found')
+    except KeyError:
+      self.youtube_url = None  
+      
     # Set the title (top of the alert)
     self.label_name.text = self.title
 
@@ -77,8 +86,25 @@ class FileViewerDT(FileViewerDTTemplate):
       m = len(self.file_rows)
       self.label_index.text = f"{n} of {m}"
 
-    print(f"[FileViewerDT] index={self.index}, mime_type={self.mime_type}")
+    print(f"[FileViewerDT] index={self.index}, mime_type={self.mime_type}, youtube_url={self.youtube_url}")
 
+
+    # ---------- PRIORITY 1: YOUTUBE ----------
+    if self.youtube_url:
+      print('YouTube url found')
+      self._show_youtube()
+      self._update_nav_buttons()
+      return
+
+    # ---------- PRIORITY 2: REGULAR MEDIA ----------
+  
+    # If no media and no YouTube, show placeholder
+    if not self.media:
+      self.label_info.visible = True
+      self.label_info.text = "No file attached."
+      self._update_nav_buttons()
+      return
+    
     # Route based on mime type
     if self.mime_type.startswith("image/"):
       print("[FileViewerDT] image found")
@@ -119,7 +145,38 @@ class FileViewerDT(FileViewerDTTemplate):
       self._load_current_file()
 
   # ----------------- display helpers -----------------
+  def _show_youtube(self):
+    # Optional comments text
+    print('entering show_youtube.')
+    if self.comments:
+      self.label_info.text = self.comments
+      self.label_info.visible = True
+  
+    url = (self.youtube_url or "").strip()
+  
+    # Extract video ID from common YouTube URL formats
+    video_id = None
+    if "watch?v=" in url:
+      video_id = url.split("watch?v=", 1)[1].split("&", 1)[0]
+    elif "youtu.be/" in url:
+      video_id = url.split("youtu.be/", 1)[1].split("?", 1)[0]
+    else:
+      # If user pasted an ID directly, just use it
+      video_id = url
+  
+    print(f"[FileViewerDT] YouTube video_id={video_id}")
 
+    #Code from Forum
+    node = get_dom_node(self.you_tube_video)        # rename to your YouTube component name
+    iframe = node.querySelector("iframe") or node
+    if iframe:
+      iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin")    
+    
+    # Anvil YouTube component expects the VIDEO ID as .source
+    self.you_tube_video.youtube_id = video_id
+    self.you_tube_video.visible = True
+
+  
   def _show_image(self):
     self.image_preview.source = self.media
     self.image_preview.visible = True

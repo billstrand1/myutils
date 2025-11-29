@@ -14,13 +14,12 @@ class FileRowDT(FileRowDTTemplate):
     row = self.item  # the data table row
 
     # Title
-    # self.label_title.text = row["description"]
     description = row["description"]
 
     # Comments (optional)
     comments = row.get("comments", "") if isinstance(row, dict) else row['comments']
     self.label_comments.text = comments or ""
-  
+      
     # MIME / Type
     media = row['file']
     mime = media.content_type.lower() if media else ""
@@ -28,7 +27,13 @@ class FileRowDT(FileRowDTTemplate):
     
     # --- File size ---
     size_bytes = media.length if media else 0
-  
+    
+    # --- YouTube URL (may or may not exist) ---
+    youtube_url = row['youtube_url'] #if 'youtube_url' in row else None
+    # print(f"FileRowDT URL: {youtube_url}")
+    is_youtube = bool(youtube_url)  
+    
+    
     def format_size(n):
       if n < 1024:
         return f"{n} bytes"
@@ -42,7 +47,11 @@ class FileRowDT(FileRowDTTemplate):
     file_size = format_size(size_bytes)
 
     # Type & icon
-    if mime.startswith("image/"):
+    if is_youtube:
+      print('YT found for icon')
+      display_type = "YouTube Video"
+      icon = "▶️"
+    elif mime.startswith("image/"):
       display_type = f"Image ({mime.split('/')[-1].upper()})"
       icon = "🖼"
     elif mime == "application/pdf":
