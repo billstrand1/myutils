@@ -3,7 +3,7 @@ components:
   - components:
     - layout_properties: {slot: card-content-container-slot}
       name: repeating_panel_files
-      properties: {item_template: FileBrowserDT.FileRowDT}
+      properties: {item_template: _FileBrowserDT.FileRowDT}
       type: RepeatingPanel
     layout_properties: {slot: card-content-slot}
     name: card_content_container_1

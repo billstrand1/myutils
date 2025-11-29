@@ -188,5 +188,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/email.yml
-startup: {module: FileBrowserDT, type: form}
+startup: {module: _FileBrowserDT, type: form}
 startup_form: null
