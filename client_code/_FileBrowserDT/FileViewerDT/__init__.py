@@ -45,6 +45,7 @@ class FileViewerDT(FileViewerDTTemplate):
     self.video_player.visible = False
     self.textarea_text.visible = False
     self.label_info.visible = False
+    self.iframe_web.visible = False
 
     # Normalize from Data Table row
     self.title = file_row['description']
@@ -76,7 +77,13 @@ class FileViewerDT(FileViewerDTTemplate):
         print('YT Url found')
     except KeyError:
       self.youtube_url = None  
-      
+
+    # Web URL (may or may not exist)
+    try:
+      self.web_url = file_row['web_url']
+    except (KeyError, TypeError):
+      self.web_url = None
+    
     # Set the title (top of the alert)
     self.label_name.text = self.title
 
@@ -96,7 +103,13 @@ class FileViewerDT(FileViewerDTTemplate):
       self._update_nav_buttons()
       return
 
-    # ---------- PRIORITY 2: REGULAR MEDIA ----------
+    # ---------- PRIORITY 2: WEB URL ----------
+    if self.web_url:
+      self._show_web()
+      self._update_nav_buttons()
+      return
+    
+    # ---------- PRIORITY 3: REGULAR MEDIA ----------
   
     # If no media and no YouTube, show placeholder
     if not self.media:
@@ -219,6 +232,19 @@ class FileViewerDT(FileViewerDTTemplate):
       title.endswith(".md") or
       title.endswith(".log")
     )
+
+  def _show_web(self):
+    # Optional comments text
+    if self.comments:
+      self.label_info.text = self.comments
+      self.label_info.visible = True
+  
+    url = (self.web_url or "").strip()
+    print(f"[FileViewerDT] web_url={url}")
+  
+    # Just load the URL into the iframe
+    self.iframe_web.url = url
+    self.iframe_web.visible = True
 
   # ----------------- download + close -----------------
 
