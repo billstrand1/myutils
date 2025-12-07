@@ -263,6 +263,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # Just load the URL into the iframe
     self.iframe_web.url = url
     self.iframe_web.visible = True
+    self.link_download.icon = "fa:external-link"
 
   # ----------------- download + close -----------------
 
