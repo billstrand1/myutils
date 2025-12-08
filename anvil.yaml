@@ -52,6 +52,9 @@ db_schema:
     - admin_ui: {order: 4, width: 200}
       name: youtube_url
       type: string
+    - admin_ui: {order: 5, width: 200}
+      name: web_url
+      type: string
     server: full
     title: Files
   participation:
@@ -170,6 +173,9 @@ dependencies:
 - dep_id: dep_395w4cry065lv
   resolution_hints: {app_id: J7WAES5F2O3IZ5FW, name: IFrame component, package_name: IFrames}
   version: {branch: published}
+- dep_id: dep_btdqyfbmk7etvc
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
+  version: {version_tag: v3.6.0}
 name: MyUtils
 native_deps: null
 package_name: MyUtils

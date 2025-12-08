@@ -30,9 +30,11 @@ class FileRowDT(FileRowDTTemplate):
     
     # --- YouTube URL (may or may not exist) ---
     youtube_url = row['youtube_url'] #if 'youtube_url' in row else None
-    # print(f"FileRowDT URL: {youtube_url}")
     is_youtube = bool(youtube_url)  
-    
+
+    web_url = row['web_url'] #if 'web_url' in row else None
+    print(f"web_url: {web_url}")
+    has_web = bool(web_url)
     
     def format_size(n):
       if n < 1024:
@@ -48,7 +50,7 @@ class FileRowDT(FileRowDTTemplate):
 
     # Type & icon
     if is_youtube:
-      print('YT found for icon')
+      # print('YT found for icon')
       display_type = "YouTube Video"
       icon = "▶️"
     elif mime.startswith("image/"):
@@ -63,6 +65,12 @@ class FileRowDT(FileRowDTTemplate):
     elif mime.startswith("text/"):
       display_type = f"Text ({mime.split('/')[-1].upper()})"
       icon = "📝"
+    elif has_web:
+      print('weblink found')
+      display_type = "Web Link"
+      icon = "🔗"
+      file_name = "(web link)"
+      file_size = ""
     else:
       display_type = f"Unknown ({mime})" if mime else "Unknown"
       icon = "❓"

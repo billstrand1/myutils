@@ -8,6 +8,14 @@ from anvil.tables import app_tables
 from .FileViewerDT import FileViewerDT
 from .FileRowDT import FileRowDT
 
+'''
+
+
+
+
+'''
+
+
 class _FileBrowserDT(_FileBrowserDTTemplate):
   def __init__(self, items=None, **properties):
     # Set Form properties and Data Bindings.
@@ -17,9 +25,9 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
     print("Opening FileBrowserDT")
     # Any code you write here will run before the form opens.
 
-    # if items is None:
-    #   print('items is none, searching....')
-    #   items = app_tables.files.search()
+    if items is None:
+      print('items is none, searching....')
+      items = app_tables.files.search()
 
     # items = list(items)
     print(items)

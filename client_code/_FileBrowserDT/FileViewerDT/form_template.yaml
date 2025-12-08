@@ -18,7 +18,7 @@ components:
     - event_bindings: {click: link_download_click}
       layout_properties: {}
       name: link_download
-      properties: {align: center, icon: 'fa:download', text: ''}
+      properties: {align: center, icon: 'fa:download', text: '', visible: false}
       type: Link
     - components: []
       event_bindings: {click: link_to_close_click}
@@ -62,5 +62,9 @@ components:
   name: you_tube_video
   properties: {visible: false}
   type: YouTubeVideo
+- layout_properties: {full_width_row: true, grid_position: 'AVZWRJ,VOMIZH'}
+  name: iframe_web
+  properties: {}
+  type: form:dep_395w4cry065lv:IFrame
 container: {type: ColumnPanel}
 is_package: true
