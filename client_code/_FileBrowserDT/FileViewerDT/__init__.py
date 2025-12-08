@@ -6,6 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil.js import get_dom_node  
+import anvil.js
 
 
 class FileViewerDT(FileViewerDTTemplate):
@@ -257,7 +258,7 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "web_url", None):
       url = (self.web_url or "").strip()
       if url:
-        import anvil.js
+        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
@@ -265,7 +266,7 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "youtube_url", None):
       url = (self.youtube_url or "").strip()
       if url:
-        import anvil.js
+        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
