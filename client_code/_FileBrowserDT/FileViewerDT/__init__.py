@@ -33,7 +33,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # Store the list and current index
     self.file_rows = list(file_rows)
     self.index = start_index
-
+    
     # Load the initial file right away
     self._load_current_file()
 
@@ -206,7 +206,6 @@ class FileViewerDT(FileViewerDTTemplate):
     self.you_tube_video.youtube_id = video_id
     self.you_tube_video.visible = True
 
-  
   def _show_image(self):
     self.image_preview.source = self.media
     self.image_preview.visible = True
