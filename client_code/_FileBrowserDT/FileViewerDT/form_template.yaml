@@ -38,6 +38,29 @@ components:
     name: label_index
     properties: {align: right, spacing_above: none, spacing_below: none}
     type: Label
+  - components:
+    - data_bindings:
+      - {code: '', property: role, writeback: false}
+      layout_properties: {width: 28.42575625}
+      name: link_file
+      properties: {role: '', text: File}
+      type: form:dep_lin1x4oec0ytd:_Components.Link
+    - layout_properties: {}
+      name: link_youtube
+      properties: {text: YouTube}
+      type: form:dep_lin1x4oec0ytd:_Components.Link
+    - layout_properties: {}
+      name: link_web
+      properties: {text: Website}
+      type: form:dep_lin1x4oec0ytd:_Components.Link
+    - layout_properties: {}
+      name: link_notes
+      properties: {text: Notes}
+      type: form:dep_lin1x4oec0ytd:_Components.Link
+    layout_properties: {grid_position: 'STJFCR,FLJPUH'}
+    name: toggle_bar
+    properties: {}
+    type: FlowPanel
   layout_properties: {grid_position: 'CAZUNZ,ABBZBE'}
   name: column_panel_1
   properties: {col_widths: '{"LRUNOR":46,"VMZHLF":14,"MWZEFP":50,"WMGVNM":10}'}
