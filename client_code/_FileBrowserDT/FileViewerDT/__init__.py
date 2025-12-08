@@ -8,6 +8,23 @@ from anvil.tables import app_tables
 from anvil.js import get_dom_node  
 import anvil.js
 
+'''
+trips = app_tables.trips.search(trip_id='25-06 Porto')
+for trip in trips:
+  print(f"trip description: {trip['trip_description']}")
+
+  file_row = {
+    'description': trip['trip_description'],   # viewer title
+    'comments': trip['notes'],                 # optional notes under the viewer
+    'file': trip['itinerary'],                 # Media object (may be None)
+    'youtube_url': None,                       # you don't have this column (yet)
+    'web_url': None
+  }
+
+viewer = _FileBrowserDT.FileViewerDT(file_rows=[file_row], start_index=0)
+alert(content=viewer, large=True, buttons=[])
+
+'''
 
 class FileViewerDT(FileViewerDTTemplate):
   def __init__(self, file_rows, start_index=0, **properties):
@@ -16,7 +33,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # Store the list and current index
     self.file_rows = list(file_rows)
     self.index = start_index
-
+    
     # Load the initial file right away
     self._load_current_file()
 
@@ -189,7 +206,6 @@ class FileViewerDT(FileViewerDTTemplate):
     self.you_tube_video.youtube_id = video_id
     self.you_tube_video.visible = True
 
-  
   def _show_image(self):
     self.image_preview.source = self.media
     self.image_preview.visible = True
@@ -258,7 +274,6 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "web_url", None):
       url = (self.web_url or "").strip()
       if url:
-        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
@@ -266,7 +281,6 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "youtube_url", None):
       url = (self.youtube_url or "").strip()
       if url:
-        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
