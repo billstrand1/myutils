@@ -34,5 +34,4 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
     if items:
       print(f'len items = {len(items)}')
     
-    # self.repeating_panel_files.item_template = FileRowDT
     self.repeating_panel_files.items = items

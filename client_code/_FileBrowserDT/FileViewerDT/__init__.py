@@ -6,6 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil.js import get_dom_node  
+import anvil.js
 
 
 class FileViewerDT(FileViewerDTTemplate):
@@ -63,21 +64,12 @@ class FileViewerDT(FileViewerDTTemplate):
     # NEW: YouTube URL (may or may not exist)
     try:
       self.youtube_url = file_row['youtube_url']
-      if self.youtube_url:
-        print('YT Url found')
-        # self.link_download.icon = "fa:external-link"
-        # self.link_download.visible = True
-
     except KeyError:
       self.youtube_url = None  
 
     # Web URL (may or may not exist)
     try:
       self.web_url = file_row['web_url']
-      if self.web_url:
-        print('Web Url found')
-        # self.link_download.icon = "fa:external-link"
-        # self.link_download.visible = True        
     except (KeyError, TypeError):
       self.web_url = None
     
@@ -90,7 +82,7 @@ class FileViewerDT(FileViewerDTTemplate):
       m = len(self.file_rows)
       self.label_index.text = f"{n} of {m}"
 
-    print(f"[FileViewerDT] index={self.index}, mime_type={self.mime_type}, youtube_url={self.youtube_url}")
+    print(f"[FileViewerDT] index={self.index}, mime_type={self.mime_type}, youtube_url={self.youtube_url}, web_url={self.web_url}")
 
 
     # ---------- PRIORITY 1: YOUTUBE ----------
@@ -134,7 +126,6 @@ class FileViewerDT(FileViewerDTTemplate):
       self.label_info.text = f"Unsupported type for now: {self.mime_type}"
 
     # Update Prev/Next visibility
-    # self._update_download_appearance()
     self._update_nav_buttons()
 
 
@@ -156,7 +147,6 @@ class FileViewerDT(FileViewerDTTemplate):
       self.link_download.tooltip = "Download File"
       self.link_download.visible = True      
     
-    # self.link_download.icon = "fa:download"
 
   def link_previous_click(self, **event_args):
     if self.index > 0:
@@ -167,33 +157,6 @@ class FileViewerDT(FileViewerDTTemplate):
     if self.index < len(self.file_rows) - 1:
       self.index += 1
       self._load_current_file()
-
-  # def _update_download_appearance(self):
-  #   pass
-  #   # Default: download a file
-  #   has_file = bool(self.media)
-  #   has_web = bool(getattr(self, "web_url", None))
-  #   has_youtube = bool(getattr(self, "youtube_url", None))
-  
-  #   if has_file:
-  #     print('has file, setting download link')
-  #     # Show as a download control
-  #     self.link_download.visible = True
-  #     # self.link_download.text = "Download"
-  #     # if hasattr(self.link_download, "icon"):
-  #     self.link_download.icon = "fa:download"
-  #     # self.link_download.tooltip = "Download this file"
-  #   if has_web or has_youtube:
-  #     print('has web, setting download link')
-  #     # Show as "Open in new tab"
-  #     self.link_download.visible = True
-  #     # self.link_download.text = ""        # icon-only, or set to "Open"
-  #     # if hasattr(self.link_download, "icon"):
-  #     self.link_download.icon = "fa:external-link"
-  #     # self.link_download.tooltip = "Open in a new tab"
-  #   # else:
-  #   #   # Nothing to do
-  #   #   self.link_download.visible = False
 
   
   # ----------------- display helpers -----------------
@@ -216,10 +179,8 @@ class FileViewerDT(FileViewerDTTemplate):
       # If user pasted an ID directly, just use it
       video_id = url
   
-    print(f"[FileViewerDT] YouTube video_id={video_id}")
-
     #Code from Forum
-    node = get_dom_node(self.you_tube_video)        # rename to your YouTube component name
+    node = get_dom_node(self.you_tube_video)
     iframe = node.querySelector("iframe") or node
     if iframe:
       iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin")    
@@ -227,7 +188,6 @@ class FileViewerDT(FileViewerDTTemplate):
     # Anvil YouTube component expects the VIDEO ID as .source
     self.you_tube_video.youtube_id = video_id
     self.you_tube_video.visible = True
-    # self.link_download.icon = "fa:external-link"
 
   
   def _show_image(self):
@@ -239,7 +199,6 @@ class FileViewerDT(FileViewerDTTemplate):
   def _show_pdf(self):
     self.label_info.visible = True
     self.label_info.text = self.comments
-
     docurl = self.media.get_url(False)
     self.iframe_pdf.url = docurl
     self.iframe_pdf.visible = True
@@ -285,12 +244,10 @@ class FileViewerDT(FileViewerDTTemplate):
     # Just load the URL into the iframe
     self.iframe_web.url = url
     self.iframe_web.visible = True
-    # self.link_download.icon = "fa:external-link"
 
   # ----------------- download + close -----------------
 
   def link_download_click(self, **event_args):
-    # anvil.media.download(self.media)
     #New to handle web/yt/files
     # 1) If we have a file, download it
     if self.media:
@@ -301,7 +258,7 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "web_url", None):
       url = (self.web_url or "").strip()
       if url:
-        import anvil.js
+        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
@@ -309,7 +266,7 @@ class FileViewerDT(FileViewerDTTemplate):
     if getattr(self, "youtube_url", None):
       url = (self.youtube_url or "").strip()
       if url:
-        import anvil.js
+        # import anvil.js
         anvil.js.window.open(url, "_blank")
       return
   
