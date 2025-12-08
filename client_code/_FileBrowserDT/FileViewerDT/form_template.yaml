@@ -18,7 +18,7 @@ components:
     - event_bindings: {click: link_download_click}
       layout_properties: {}
       name: link_download
-      properties: {align: center, icon: 'fa:download', text: ''}
+      properties: {align: center, icon: 'fa:download', text: '', visible: false}
       type: Link
     - components: []
       event_bindings: {click: link_to_close_click}

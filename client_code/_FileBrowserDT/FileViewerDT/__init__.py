@@ -28,6 +28,7 @@ class FileViewerDT(FileViewerDTTemplate):
       self.label_info.text = "No files to display."
       if hasattr(self, "label_index"):
         self.label_index.text = ""
+      self.link_download.visible = False
       return
 
     # Clamp index just in case
@@ -55,6 +56,7 @@ class FileViewerDT(FileViewerDTTemplate):
     self.media = file_row['file']    
     if self.media:
       self.mime_type = self.media.content_type.lower()
+      self.link_download.visible = True
     else:
       self.mime_type = None
 
@@ -63,12 +65,19 @@ class FileViewerDT(FileViewerDTTemplate):
       self.youtube_url = file_row['youtube_url']
       if self.youtube_url:
         print('YT Url found')
+        # self.link_download.icon = "fa:external-link"
+        # self.link_download.visible = True
+
     except KeyError:
       self.youtube_url = None  
 
     # Web URL (may or may not exist)
     try:
       self.web_url = file_row['web_url']
+      if self.web_url:
+        print('Web Url found')
+        # self.link_download.icon = "fa:external-link"
+        # self.link_download.visible = True        
     except (KeyError, TypeError):
       self.web_url = None
     
@@ -125,7 +134,7 @@ class FileViewerDT(FileViewerDTTemplate):
       self.label_info.text = f"Unsupported type for now: {self.mime_type}"
 
     # Update Prev/Next visibility
-    self._update_download_appearance()
+    # self._update_download_appearance()
     self._update_nav_buttons()
 
 
@@ -135,7 +144,19 @@ class FileViewerDT(FileViewerDTTemplate):
     # using your link names: link_previous, link_next
     self.link_previous.visible = (self.index > 0)
     self.link_next.visible = (self.index < len(self.file_rows) - 1)
-    self.link_download.icon = "fa:download"
+    has_file = bool(self.media)
+    has_web = bool(getattr(self, "web_url", None))
+    has_youtube = bool(getattr(self, "youtube_url", None))
+    if has_web or has_youtube:
+      self.link_download.icon = "fa:external-link"
+      self.link_download.tooltip = "Open in New Tab"
+      self.link_download.visible = True
+    if has_file:
+      self.link_download.icon = "fa:download"
+      self.link_download.tooltip = "Download File"
+      self.link_download.visible = True      
+    
+    # self.link_download.icon = "fa:download"
 
   def link_previous_click(self, **event_args):
     if self.index > 0:
@@ -147,32 +168,32 @@ class FileViewerDT(FileViewerDTTemplate):
       self.index += 1
       self._load_current_file()
 
-  def _update_download_appearance(self):
-    pass
-    # Default: download a file
-    # has_file = bool(self.media)
-    # has_web = bool(getattr(self, "web_url", None))
-    # has_youtube = bool(getattr(self, "youtube_url", None))
+  # def _update_download_appearance(self):
+  #   pass
+  #   # Default: download a file
+  #   has_file = bool(self.media)
+  #   has_web = bool(getattr(self, "web_url", None))
+  #   has_youtube = bool(getattr(self, "youtube_url", None))
   
-    # if has_file:
-    #   print('has file, setting download link')
-    #   # Show as a download control
-    #   self.link_download.visible = True
-    #   # self.link_download.text = "Download"
-    #   if hasattr(self.link_download, "icon"):
-    #     self.link_download.icon = "fa:download"
-    #   # self.link_download.tooltip = "Download this file"
-    # if has_web or has_youtube:
-    #   print('has web, setting download link')
-    #   # Show as "Open in new tab"
-    #   self.link_download.visible = True
-    #   # self.link_download.text = ""        # icon-only, or set to "Open"
-    #   # if hasattr(self.link_download, "icon"):
-    #   self.link_download.icon = "fa:external-link"
-    #   self.link_download.tooltip = "Open in a new tab"
-    # else:
-    #   # Nothing to do
-    #   self.link_download.visible = False
+  #   if has_file:
+  #     print('has file, setting download link')
+  #     # Show as a download control
+  #     self.link_download.visible = True
+  #     # self.link_download.text = "Download"
+  #     # if hasattr(self.link_download, "icon"):
+  #     self.link_download.icon = "fa:download"
+  #     # self.link_download.tooltip = "Download this file"
+  #   if has_web or has_youtube:
+  #     print('has web, setting download link')
+  #     # Show as "Open in new tab"
+  #     self.link_download.visible = True
+  #     # self.link_download.text = ""        # icon-only, or set to "Open"
+  #     # if hasattr(self.link_download, "icon"):
+  #     self.link_download.icon = "fa:external-link"
+  #     # self.link_download.tooltip = "Open in a new tab"
+  #   # else:
+  #   #   # Nothing to do
+  #   #   self.link_download.visible = False
 
   
   # ----------------- display helpers -----------------
@@ -206,6 +227,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # Anvil YouTube component expects the VIDEO ID as .source
     self.you_tube_video.youtube_id = video_id
     self.you_tube_video.visible = True
+    # self.link_download.icon = "fa:external-link"
 
   
   def _show_image(self):
@@ -263,7 +285,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # Just load the URL into the iframe
     self.iframe_web.url = url
     self.iframe_web.visible = True
-    self.link_download.icon = "fa:external-link"
+    # self.link_download.icon = "fa:external-link"
 
   # ----------------- download + close -----------------
 
