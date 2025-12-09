@@ -27,11 +27,16 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
 
     if items is None:
       print('items is none, searching....')
+      # items = app_tables.files.search(description='Rick Roll')
       items = app_tables.files.search()
+      expanded_rows = anvil.server.call('expand_file_rows', items)
+      
+      #Try new expanded file rows:
 
     # items = list(items)
     print(items)
     if items:
       print(f'len items = {len(items)}')
+
     
-    self.repeating_panel_files.items = items
+    self.repeating_panel_files.items = expanded_rows #items

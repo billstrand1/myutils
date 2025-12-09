@@ -2,6 +2,10 @@ components:
 - components:
   - components:
     - layout_properties: {slot: card-content-container-slot}
+      name: text_heading
+      properties: {align: center, text: File Browser}
+      type: form:dep_lin1x4oec0ytd:_Components.Text
+    - layout_properties: {slot: card-content-container-slot}
       name: repeating_panel_files
       properties: {item_template: _FileBrowserDT.FileRowDT}
       type: RepeatingPanel
