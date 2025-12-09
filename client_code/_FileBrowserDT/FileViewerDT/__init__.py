@@ -73,7 +73,8 @@ class FileViewerDT(FileViewerDTTemplate):
     #New, adding the notes field
     notes_text = file_row.get('notes') or ''
     self.notes_panel.visible = bool(notes_text)
-    self.lbl_notes.text = notes_text
+    self.label_notes.text = notes_text
+    self.label_notes.visible = True
     
     # Media may be None
     self.media = file_row['file']    
