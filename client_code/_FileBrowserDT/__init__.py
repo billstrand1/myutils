@@ -7,6 +7,9 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .FileViewerDT import FileViewerDT
 from .FileRowDT import FileRowDT
+# from file_utils import *
+from .. import file_utils as fu
+
 
 '''
 
@@ -29,7 +32,8 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
       print('items is none, searching....')
       # items = app_tables.files.search(description='Rick Roll')
       items = app_tables.files.search()
-      expanded_rows = anvil.server.call('expand_file_rows', items)
+      expanded_rows = fu.expand_file_rows(items)
+      # expanded_rows = anvil.server.call('expand_file_rows', items)
       
       #Try new expanded file rows:
 
