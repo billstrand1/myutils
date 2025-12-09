@@ -81,12 +81,14 @@ class FileViewerDT(FileViewerDTTemplate):
     if self.media:
       self.mime_type = self.media.content_type.lower()
       self.link_download.visible = True
+      # self.label_notes.visible = False
     else:
       self.mime_type = None
 
     # NEW: YouTube URL (may or may not exist)
     try:
       self.youtube_url = file_row['youtube_url']
+      # self.label_notes.visible = False
     except KeyError:
       self.youtube_url = None  
 
@@ -111,12 +113,14 @@ class FileViewerDT(FileViewerDTTemplate):
     # ---------- PRIORITY 1: YOUTUBE ----------
     if self.youtube_url:
       print('YouTube url found')
+      # self.label_notes.visible = False
       self._show_youtube()
       self._update_nav_buttons()
       return
 
     # ---------- PRIORITY 2: WEB URL ----------
     if self.web_url:
+      # self.label_notes.visible = False
       self._show_web()
       self._update_nav_buttons()
       return
@@ -162,10 +166,12 @@ class FileViewerDT(FileViewerDTTemplate):
     has_web = bool(getattr(self, "web_url", None))
     has_youtube = bool(getattr(self, "youtube_url", None))
     if has_web or has_youtube:
+      self.label_notes.visible = False
       self.link_download.icon = "fa:external-link"
       self.link_download.tooltip = "Open in New Tab"
       self.link_download.visible = True
     if has_file:
+      self.label_notes.visible = False
       self.link_download.icon = "fa:download"
       self.link_download.tooltip = "Download File"
       self.link_download.visible = True      
