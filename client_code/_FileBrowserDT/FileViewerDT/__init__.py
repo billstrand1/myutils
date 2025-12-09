@@ -43,7 +43,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # No files? show message and bail
     if not self.file_rows:
       self.label_info.visible = True
-      self.label_info.text = "No files to display."
+      # self.label_info.text = "No files to display."
       if hasattr(self, "label_index"):
         self.label_index.text = ""
       self.link_download.visible = False
