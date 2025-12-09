@@ -166,12 +166,12 @@ class FileViewerDT(FileViewerDTTemplate):
     has_web = bool(getattr(self, "web_url", None))
     has_youtube = bool(getattr(self, "youtube_url", None))
     if has_web or has_youtube:
-      self.label_notes.visible = False
+      self.notes_panel.visible = False
       self.link_download.icon = "fa:external-link"
       self.link_download.tooltip = "Open in New Tab"
       self.link_download.visible = True
     if has_file:
-      self.label_notes.visible = False
+      self.notes_panel.visible = False
       self.link_download.icon = "fa:download"
       self.link_download.tooltip = "Download File"
       self.link_download.visible = True      
