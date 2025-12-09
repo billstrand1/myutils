@@ -38,15 +38,6 @@ components:
     name: label_index
     properties: {align: right, spacing_above: none, spacing_below: none}
     type: Label
-  - layout_properties: {grid_position: 'HDHBEE,SBXCBM'}
-    name: text_1
-    properties:
-      bold: true
-      font_size: 16
-      text: |2-
-
-        NOTES:
-    type: form:dep_lin1x4oec0ytd:_Components.Text
   - components:
     - layout_properties: {width: 736.234375}
       name: label_notes
