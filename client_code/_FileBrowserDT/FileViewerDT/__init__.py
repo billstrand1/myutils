@@ -67,7 +67,7 @@ class FileViewerDT(FileViewerDTTemplate):
     self.iframe_web.visible = False
 
     # Normalize from Data Table row
-    self.title = file_row['description']
+    self.title = file_row['title']
     self.comments = file_row['comments']
 
     #New, adding the notes field
