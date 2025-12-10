@@ -7,7 +7,7 @@ from anvil.tables import app_tables
 
 def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
   """
-  Expand base rows (which may contain file, youtube_url, web_url) into
+  Expand base rows (which may contain file, youtube_url, web_url, notes) into
   multiple rows suitable for FileBrowserDT / FileViewerDT.
 
   Output rows have:
@@ -20,12 +20,9 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
     - 'source_row'
     + any extra fields from copy_fields
 
-  map_fields example for Trips:
-    {
-      'trip_id': 'title',
-      'trip_description': 'comments',
-      'notes': 'notes'
-    }
+  For rows with 'notes':
+    - A FIRST item is created that is **notes-only** (no file/youtube/web).
+    - Subsequent media items for that row have notes cleared (notes="").
   """
   if copy_fields is None:
     copy_fields = []
@@ -43,7 +40,7 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
           return row.get(field_name, default)
         return default
 
-    # Base payload
+    # Base payload with possible notes
     base = {
       "title": None,
       "comments": get_val("comments", ""),
@@ -54,7 +51,7 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
       "source_row": row,
     }
 
-    # Apply mapping from source fields → target fields (title/comments/notes)
+    # Apply mapping from Trips fields → viewer fields (title/comments/notes)
     for src, dest in map_fields.items():
       base[dest] = get_val(src)
 
@@ -68,34 +65,138 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
     for field_name in copy_fields:
       base[field_name] = get_val(field_name)
 
-    # Media / URLs
+    # Media / URLs from the base row
     file_obj = get_val("file", None)
     youtube_url = get_val("youtube_url", None)
     web_url = get_val("web_url", None)
 
-    # 1) NOTES ROW? (only if you still want a separate notes-only item)
-    # If you prefer notes always in header only and not as an item, comment this block out.
-    if base["notes"]:
-      item = dict(base)
-      expanded.append(item)
+    # ---------- 1) NOTES-ONLY ROW (if notes exist) ----------
+    base_notes = dict(base)
+    has_notes = bool((base_notes.get("notes") or "").strip())
+    if has_notes:
+      # Notes-only item: no media/urls
+      base_notes["file"] = None
+      base_notes["youtube_url"] = None
+      base_notes["web_url"] = None
+      expanded.append(base_notes)
 
-    # 2) FILE / YOUTUBE / WEB rows
+      # For media items, we do NOT carry notes forward
+      base_no_notes = dict(base)
+      base_no_notes["notes"] = ""
+    else:
+      base_no_notes = base
+
+    # ---------- 2) FILE / YOUTUBE / WEB rows (no notes) ----------
     if file_obj:
-      item = dict(base)
+      item = dict(base_no_notes)
       item["file"] = file_obj
       expanded.append(item)
 
     if youtube_url:
-      item = dict(base)
+      item = dict(base_no_notes)
       item["youtube_url"] = youtube_url
       expanded.append(item)
 
     if web_url:
-      item = dict(base)
+      item = dict(base_no_notes)
       item["web_url"] = web_url
       expanded.append(item)
 
   return expanded
+
+
+
+# def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
+#   """
+#   Expand base rows (which may contain file, youtube_url, web_url) into
+#   multiple rows suitable for FileBrowserDT / FileViewerDT.
+
+#   Output rows have:
+#     - 'title'
+#     - 'comments'
+#     - 'notes'
+#     - 'file'
+#     - 'youtube_url'
+#     - 'web_url'
+#     - 'source_row'
+#     + any extra fields from copy_fields
+
+#   map_fields example for Trips:
+#     {
+#       'trip_id': 'title',
+#       'trip_description': 'comments',
+#       'notes': 'notes'
+#     }
+#   """
+#   if copy_fields is None:
+#     copy_fields = []
+#   if map_fields is None:
+#     map_fields = {}
+
+#   expanded = []
+
+#   for row in base_rows:
+#     def get_val(field_name, default=None):
+#       try:
+#         return row[field_name]
+#       except Exception:
+#         if isinstance(row, dict):
+#           return row.get(field_name, default)
+#         return default
+
+#     # Base payload
+#     base = {
+#       "title": None,
+#       "comments": get_val("comments", ""),
+#       "notes": get_val("notes", ""),
+#       "file": None,
+#       "youtube_url": None,
+#       "web_url": None,
+#       "source_row": row,
+#     }
+
+#     # Apply mapping from source fields → target fields (title/comments/notes)
+#     for src, dest in map_fields.items():
+#       base[dest] = get_val(src)
+
+#     # If title/comments were not supplied via mapping, fall back to native fields
+#     if base["title"] is None:
+#       base["title"] = get_val("title", "")
+#     if not base["comments"]:
+#       base["comments"] = get_val("comments", "")
+
+#     # Copy any extra passthrough fields
+#     for field_name in copy_fields:
+#       base[field_name] = get_val(field_name)
+
+#     # Media / URLs
+#     file_obj = get_val("file", None)
+#     youtube_url = get_val("youtube_url", None)
+#     web_url = get_val("web_url", None)
+
+#     # 1) NOTES ROW? (only if you still want a separate notes-only item)
+#     # If you prefer notes always in header only and not as an item, comment this block out.
+#     if base["notes"]:
+#       item = dict(base)
+#       expanded.append(item)
+
+#     # 2) FILE / YOUTUBE / WEB rows
+#     if file_obj:
+#       item = dict(base)
+#       item["file"] = file_obj
+#       expanded.append(item)
+
+#     if youtube_url:
+#       item = dict(base)
+#       item["youtube_url"] = youtube_url
+#       expanded.append(item)
+
+#     if web_url:
+#       item = dict(base)
+#       item["web_url"] = web_url
+#       expanded.append(item)
+
+#   return expanded
 
 
 # def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
