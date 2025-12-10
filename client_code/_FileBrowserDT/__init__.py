@@ -30,7 +30,7 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
 
     if items is None:
       print('items is none, searching....')
-      # items = app_tables.files.search(description='Rick Roll')
+      # items = app_tables.files.search(title='Rick Roll')
       items = app_tables.files.search()
       expanded_rows = fu.expand_file_rows(items)
       # expanded_rows = anvil.server.call('expand_file_rows', items)

@@ -65,7 +65,7 @@ NEW:   Args:
     # Build the base payload
     # Base payload
     base = {
-      "description": None,
+      "title": get_val("title"),
       "comments": get_val("comments"),
       "notes": get_val("notes"),   # 👈 NEW: pull trip notes
       "file": None,

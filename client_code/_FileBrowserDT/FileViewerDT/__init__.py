@@ -11,10 +11,10 @@ import anvil.js
 '''
 trips = app_tables.trips.search(trip_id='25-06 Porto')
 for trip in trips:
-  print(f"trip description: {trip['trip_description']}")
+  print(f"trip title: {trip['trip_description']}")
 
   file_row = {
-    'description': trip['trip_description'],   # viewer title
+    'title': trip['trip_description'],   # viewer title
     'comments': trip['notes'],                 # optional notes under the viewer
     'file': trip['itinerary'],                 # Media object (may be None)
     'youtube_url': None,                       # you don't have this column (yet)

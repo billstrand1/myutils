@@ -14,10 +14,13 @@ class FileRowDT(FileRowDTTemplate):
     row = self.item  # the data table row
 
     # Title
-    description = row["description"]
+    title = row["title"]
 
     # Comments (optional)
     comments = row.get("comments", "") if isinstance(row, dict) else row['comments']
+    notes = row.get("notes", "") if isinstance(row, dict) else row['notes']
+    if notes:
+      comments = comments + "\n" + notes
     self.label_comments.text = comments or ""
       
     # MIME / Type
@@ -75,7 +78,7 @@ class FileRowDT(FileRowDTTemplate):
       display_type = f"Unknown ({mime})" if mime else "Unknown"
       icon = "❓"
 
-    self.label_title.text = f"{description}  ({file_name} — {display_type} — {file_size})"    # self.label_type.text = display_type
+    self.label_title.text = f"{title}  ({file_name} — {display_type} — {file_size})"    # self.label_type.text = display_type
     self.label_icon.text = icon
     
   def link_open_click(self, **event_args):
