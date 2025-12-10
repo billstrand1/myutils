@@ -5,6 +5,11 @@ components:
     properties: {spacing_above: none, spacing_below: none}
     type: Label
   - components:
+    - event_bindings: {click: link_download_click}
+      layout_properties: {}
+      name: link_download
+      properties: {align: center, icon: 'fa:download', text: '', visible: false}
+      type: Link
     - event_bindings: {click: link_previous_click}
       layout_properties: {}
       name: link_previous
@@ -14,11 +19,6 @@ components:
       layout_properties: {}
       name: link_next
       properties: {align: center, icon: 'fa:arrow-right', icon_align: left, text: ''}
-      type: Link
-    - event_bindings: {click: link_download_click}
-      layout_properties: {}
-      name: link_download
-      properties: {align: center, icon: 'fa:download', text: '', visible: false}
       type: Link
     - components: []
       event_bindings: {click: link_to_close_click}
