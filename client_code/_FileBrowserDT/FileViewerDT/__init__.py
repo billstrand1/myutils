@@ -73,7 +73,7 @@ class FileViewerDT(FileViewerDTTemplate):
     #New, adding the notes field
     notes_text = file_row.get('notes') or ''
     if notes_text:
-      notes_text = '\nNOTES: \n\n' + notes_text
+      notes_text = '\nNOTES: \n' + notes_text
     self.notes_panel.visible = bool(notes_text)
     self.label_notes.text = notes_text
     self.label_notes.visible = True
@@ -132,7 +132,7 @@ class FileViewerDT(FileViewerDTTemplate):
     # If no media and no YouTube, show placeholder
     if not self.media:
       self.label_info.visible = True
-      self.label_info.text = "No file attached."
+      self.label_info.text = self.comments #"No file attached."
       self._update_nav_buttons()
       return
     
