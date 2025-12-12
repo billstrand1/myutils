@@ -106,7 +106,10 @@ class FileRowDT(FileRowDTTemplate):
       extra = "(Notes)"
     else:
       title_display = title
-      extra = f"({file_name} — {display_type} — {file_size})".strip()
+      extra = f"({file_name} — {display_type})".strip()# — {file_size})".strip()
+
+    #New Title - Test
+    # self.label_title.text = f"[{display_type}] {title}  ({file_name} — {file_size})"
 
     self.label_title.text = f"{title_display}  {extra}".strip()
     self.label_icon.text = icon
@@ -114,7 +117,7 @@ class FileRowDT(FileRowDTTemplate):
   # ----------------- open in viewer -----------------
 
   def link_open_click(self, **event_args):
-    from anvil import RepeatingPanel
+    # from anvil import RepeatingPanel
     # from .FileViewerDT import FileViewerDT  # adjust if needed
 
     # Walk up the parent chain until we find a RepeatingPanel
