@@ -4,19 +4,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
-  """
-  Expand base rows into multiple rows suitable for FileBrowserDT / FileViewerDT.
-
-  Output rows have:
-    - title, comments, notes
-    - file, youtube_url, web_url
-    - source_row
-    + any extra fields from copy_fields
-
-  Supports mapping of source fields to target fields, including media:
-    e.g. itinerary -> file
-  """
+def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty=False):
   if copy_fields is None:
     copy_fields = []
   if map_fields is None:
@@ -33,7 +21,6 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
           return row.get(field_name, default)
         return default
 
-    # Build base payload with default field names
     base = {
       "title": get_val("title", ""),
       "comments": get_val("comments", ""),
@@ -44,52 +31,149 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
       "source_row": row,
     }
 
-    # Apply mappings (Trips -> Viewer schema)
-    # Example: trip_id->title, trip_description->comments, itinerary->file
     for src, dest in map_fields.items():
       base[dest] = get_val(src)
 
-    # Copy passthrough fields
     for field_name in copy_fields:
       base[field_name] = get_val(field_name)
 
-    # Pull media/urls from the (possibly mapped) base
     file_obj = base.get("file")
     youtube_url = base.get("youtube_url")
     web_url = base.get("web_url")
     notes_text = (base.get("notes") or "").strip()
 
-    # 1) Notes-only row first (if notes exist)
+    made_any = False
+
+    # Notes-only row
     if notes_text:
       notes_item = dict(base)
       notes_item["file"] = None
       notes_item["youtube_url"] = None
       notes_item["web_url"] = None
       expanded.append(notes_item)
+      made_any = True
 
-      # Do NOT carry notes into subsequent media rows
       base_no_notes = dict(base)
       base_no_notes["notes"] = ""
     else:
       base_no_notes = base
 
-    # 2) Media rows (no notes)
+    # Media rows
     if file_obj:
       item = dict(base_no_notes)
       item["file"] = file_obj
       expanded.append(item)
+      made_any = True
 
     if youtube_url:
       item = dict(base_no_notes)
       item["youtube_url"] = youtube_url
       expanded.append(item)
+      made_any = True
 
     if web_url:
       item = dict(base_no_notes)
       item["web_url"] = web_url
       expanded.append(item)
+      made_any = True
+
+    # Placeholder row if nothing exists
+    if include_empty and not made_any:
+      placeholder = dict(base_no_notes)
+      placeholder["notes"] = ""        # no notes
+      placeholder["file"] = None
+      placeholder["youtube_url"] = None
+      placeholder["web_url"] = None
+      expanded.append(placeholder)
 
   return expanded
+
+# def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
+#   """
+#   Expand base rows into multiple rows suitable for FileBrowserDT / FileViewerDT.
+
+#   Output rows have:
+#     - title, comments, notes
+#     - file, youtube_url, web_url
+#     - source_row
+#     + any extra fields from copy_fields
+
+#   Supports mapping of source fields to target fields, including media:
+#     e.g. itinerary -> file
+#   """
+#   if copy_fields is None:
+#     copy_fields = []
+#   if map_fields is None:
+#     map_fields = {}
+
+#   expanded = []
+
+#   for row in base_rows:
+#     def get_val(field_name, default=None):
+#       try:
+#         return row[field_name]
+#       except Exception:
+#         if isinstance(row, dict):
+#           return row.get(field_name, default)
+#         return default
+
+#     # Build base payload with default field names
+#     base = {
+#       "title": get_val("title", ""),
+#       "comments": get_val("comments", ""),
+#       "notes": get_val("notes", ""),
+#       "file": get_val("file", None),
+#       "youtube_url": get_val("youtube_url", None),
+#       "web_url": get_val("web_url", None),
+#       "source_row": row,
+#     }
+
+#     # Apply mappings (Trips -> Viewer schema)
+#     # Example: trip_id->title, trip_description->comments, itinerary->file
+#     for src, dest in map_fields.items():
+#       base[dest] = get_val(src)
+
+#     # Copy passthrough fields
+#     for field_name in copy_fields:
+#       base[field_name] = get_val(field_name)
+
+#     # Pull media/urls from the (possibly mapped) base
+#     file_obj = base.get("file")
+#     youtube_url = base.get("youtube_url")
+#     web_url = base.get("web_url")
+#     notes_text = (base.get("notes") or "").strip()
+
+#     # 1) Notes-only row first (if notes exist)
+#     if notes_text:
+#       notes_item = dict(base)
+#       notes_item["file"] = None
+#       notes_item["youtube_url"] = None
+#       notes_item["web_url"] = None
+#       expanded.append(notes_item)
+
+#       # Do NOT carry notes into subsequent media rows
+#       base_no_notes = dict(base)
+#       base_no_notes["notes"] = ""
+#     else:
+#       base_no_notes = base
+
+#     # 2) Media rows (no notes)
+#     if file_obj:
+#       item = dict(base_no_notes)
+#       item["file"] = file_obj
+#       expanded.append(item)
+
+#     if youtube_url:
+#       item = dict(base_no_notes)
+#       item["youtube_url"] = youtube_url
+#       expanded.append(item)
+
+#     if web_url:
+#       item = dict(base_no_notes)
+#       item["web_url"] = web_url
+#       expanded.append(item)
+
+#   return expanded
 
 
 
