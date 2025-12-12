@@ -37,7 +37,7 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
 
     # IMPORTANT: Always bind the repeater to *items*
     items = list(items) if items else []
-    print(f"len(items) = {len(items)}")
+    print(f"from FileBrowserDT: len(items) = {len(items)}")
 
     self.repeating_panel_files.items = items
 
