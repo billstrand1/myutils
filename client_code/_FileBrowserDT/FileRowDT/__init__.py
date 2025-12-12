@@ -9,6 +9,7 @@ from ..FileViewerDT import FileViewerDT
 from anvil import RepeatingPanel
 # from .FileViewerDT import FileViewerDT  # adjust import if needed
 
+
 class FileRowDT(FileRowDTTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
@@ -30,7 +31,6 @@ class FileRowDT(FileRowDTTemplate):
     media = get_val("file", None)
     mime = media.content_type.lower() if media else ""
     file_name = media.name if media else ""
-    size_bytes = media.length if media else 0
 
     youtube_url = get_val("youtube_url", None)
     web_url = get_val("web_url", None)
@@ -44,7 +44,7 @@ class FileRowDT(FileRowDTTemplate):
     # Placeholder trip row: no notes, no media, no links
     is_trip_placeholder = (not notes.strip()) and (not media) and (not is_youtube) and (not has_web)
 
-    # ---------- Comments label text ----------
+    # ---------- Comments label ----------
     if is_notes_only:
       combined = ""
       if comments:
@@ -55,74 +55,180 @@ class FileRowDT(FileRowDTTemplate):
         combined += notes
       self.label_comments.text = combined
     else:
-      # Placeholder and media rows show comments only
       self.label_comments.text = comments
 
-    # ---------- File size ----------
-    def format_size(n):
-      if n < 1024:
-        return f"{n} bytes"
-      elif n < 1024 * 1024:
-        return f"{n/1024:.0f} KB"
-      elif n < 1024 * 1024 * 1024:
-        return f"{n/1024/1024:.1f} MB"
-      else:
-        return f"{n/1024/1024/1024:.2f} GB"
-
-    file_size = format_size(size_bytes) if media else ""
-
-    # ---------- Type & icon ----------
+    # ---------- Type, icon, title ----------
     if is_notes_only:
       icon = "📝"
       display_type = "Notes"
-      file_name = ""
-      file_size = ""
-
-      # Title line: show (Notes)
-      self.label_title.text = f"{title or 'Notes'}  (Notes)".strip()
+      self.label_title.text = f"{title or 'Notes'}  (Notes)"
 
     elif is_trip_placeholder:
-      # ✅ New behavior: show a map icon and NO extra parenthetical text
-      icon = "🗺️"
-      self.label_title.text = title  # just the trip_id/title, nothing else
+      # 🗺 Placeholder trip row
+      icon = "fa:map-marker"
+      self.label_title.text = f"<b>{title}</b>"
+      self.label_title.role = None
+      self.label_title.html = True
 
     else:
-      # Media rows and web/youtube
+      # ---- Media / Web / YouTube rows ----
       if is_youtube:
-        display_type = "YouTube Video"
         icon = "▶️"
+        display_type = "YouTube Video"
+        name_part = "YouTube"
       elif mime.startswith("image/"):
-        display_type = f"Image ({mime.split('/')[-1].upper()})"
         icon = "🖼"
+        display_type = "Image"
+        name_part = file_name
       elif mime == "application/pdf":
-        display_type = "PDF"
         icon = "📄"
+        display_type = "PDF"
+        name_part = file_name
       elif mime.startswith("video/"):
-        display_type = f"Video ({mime.split('/')[-1].upper()})"
         icon = "🎥"
+        display_type = "Video"
+        name_part = file_name
       elif mime.startswith("text/"):
-        display_type = f"Text ({mime.split('/')[-1].upper()})"
         icon = "📝"
+        display_type = "Text"
+        name_part = file_name
       elif has_web:
-        display_type = "Web Link"
         icon = "🔗"
-        file_name = "(web link)"
-        file_size = ""
+        display_type = "Web Link"
+
+        # Extract base URL (domain only)
+        url = web_url.strip()
+        try:
+          base = url.split("//", 1)[1]
+        except IndexError:
+          base = url
+        base = base.split("/", 1)[0]
+
+        name_part = base
       else:
-        # If we ever reach here, treat it like a placeholder too
+        icon = "fa:map-marker"
         display_type = ""
-        icon = "🗺️"
+        name_part = ""
 
-      # Build the standard title line
-      extra = f"({file_name} — {display_type} — {file_size})".strip()
+      if display_type:
+        self.label_title.te_
 
-      # Clean up extra if display_type/file_size are empty-ish
-      # (prevents ugly dashes)
-      extra = extra.replace(" —  — ", " — ").replace("— )", ")")
 
-      self.label_title.text = f"{title}  {extra}".strip()
 
-    self.label_icon.text = icon
+# class FileRowDT(FileRowDTTemplate):
+#   def __init__(self, **properties):
+#     self.init_components(**properties)
+
+#     row = self.item
+
+#     def get_val(name, default=None):
+#       try:
+#         return row[name]
+#       except Exception:
+#         if isinstance(row, dict):
+#           return row.get(name, default)
+#         return default
+
+#     title = get_val("title", "") or ""
+#     comments = get_val("comments", "") or ""
+#     notes = get_val("notes", "") or ""
+
+#     media = get_val("file", None)
+#     mime = media.content_type.lower() if media else ""
+#     file_name = media.name if media else ""
+#     size_bytes = media.length if media else 0
+
+#     youtube_url = get_val("youtube_url", None)
+#     web_url = get_val("web_url", None)
+
+#     is_youtube = bool(youtube_url)
+#     has_web = bool(web_url)
+
+#     # Notes-only detection
+#     is_notes_only = bool(notes.strip()) and not (media or is_youtube or has_web)
+
+#     # Placeholder trip row: no notes, no media, no links
+#     is_trip_placeholder = (not notes.strip()) and (not media) and (not is_youtube) and (not has_web)
+
+#     # ---------- Comments label text ----------
+#     if is_notes_only:
+#       combined = ""
+#       if comments:
+#         combined += comments
+#       if notes:
+#         if combined:
+#           combined += "\n"
+#         combined += notes
+#       self.label_comments.text = combined
+#     else:
+#       # Placeholder and media rows show comments only
+#       self.label_comments.text = comments
+
+#     # ---------- File size ----------
+#     def format_size(n):
+#       if n < 1024:
+#         return f"{n} bytes"
+#       elif n < 1024 * 1024:
+#         return f"{n/1024:.0f} KB"
+#       elif n < 1024 * 1024 * 1024:
+#         return f"{n/1024/1024:.1f} MB"
+#       else:
+#         return f"{n/1024/1024/1024:.2f} GB"
+
+#     file_size = format_size(size_bytes) if media else ""
+
+#     # ---------- Type & icon ----------
+#     if is_notes_only:
+#       icon = "📝"
+#       display_type = "Notes"
+#       file_name = ""
+#       file_size = ""
+
+#       # Title line: show (Notes)
+#       self.label_title.text = f"{title or 'Notes'}  (Notes)".strip()
+
+#     elif is_trip_placeholder:
+#       # ✅ New behavior: show a map icon and NO extra parenthetical text
+#       icon = "🗺️"
+#       self.label_title.text = title  # just the trip_id/title, nothing else
+
+#     else:
+#       # Media rows and web/youtube
+#       if is_youtube:
+#         display_type = "YouTube Video"
+#         icon = "▶️"
+#       elif mime.startswith("image/"):
+#         display_type = f"Image ({mime.split('/')[-1].upper()})"
+#         icon = "🖼"
+#       elif mime == "application/pdf":
+#         display_type = "PDF"
+#         icon = "📄"
+#       elif mime.startswith("video/"):
+#         display_type = f"Video ({mime.split('/')[-1].upper()})"
+#         icon = "🎥"
+#       elif mime.startswith("text/"):
+#         display_type = f"Text ({mime.split('/')[-1].upper()})"
+#         icon = "📝"
+#       elif has_web:
+#         display_type = "Web Link"
+#         icon = "🔗"
+#         file_name = "(web link)"
+#         file_size = ""
+#       else:
+#         # If we ever reach here, treat it like a placeholder too
+#         display_type = ""
+#         icon = "🗺️"
+
+#       # Build the standard title line
+#       extra = f"({file_name} — {display_type} — {file_size})".strip()
+
+#       # Clean up extra if display_type/file_size are empty-ish
+#       # (prevents ugly dashes)
+#       extra = extra.replace(" —  — ", " — ").replace("— )", ")")
+
+#       self.label_title.text = f"{title}  {extra}".strip()
+
+#     self.label_icon.text = icon
 
 
 
