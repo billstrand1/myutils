@@ -61,15 +61,19 @@ class FileRowDT(FileRowDTTemplate):
     if is_notes_only:
       self.label_icon.text = "📝"
       self.label_title.text = f"{title or 'Notes'}  (Notes)"
-
+      
     elif is_trip_placeholder:
-      # 🗺 Placeholder trip row
+    # Placeholder trip row (safe, no HTML, no M3 role usage)
       self.label_icon.text = "🗺️"
-      if hasattr(self.label_title, "html"):
-        self.label_title.html = True
-        self.label_title.text = f"<b>{title}</b>"
-      else:
-        self.label_title.text = title
+      self.label_title.text = title
+    # elif is_trip_placeholder:
+    #   # 🗺 Placeholder trip row
+    #   self.label_icon.text = "🗺️"
+    #   if hasattr(self.label_title, "html"):
+    #     self.label_title.html = True
+    #     self.label_title.text = f"<b>{title}</b>"
+    #   else:
+    #     self.label_title.text = title
 
     else:
       # Media / Web / YouTube rows
