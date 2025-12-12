@@ -111,8 +111,11 @@ class FileRowDT(FileRowDTTemplate):
         name_part = ""
 
       if display_type:
-        self.label_title.te_
+        self.label_title.text = f"{title}  ({name_part} — {display_type})"
+      else:
+        self.label_title.text = title
 
+    self.label_icon.text = icon
 
 
 # class FileRowDT(FileRowDTTemplate):
