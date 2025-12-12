@@ -5,6 +5,16 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty=False):
+  """
+  Expand base rows into multiple rows suitable for FileBrowserDT / FileViewerDT.
+
+  Guarantees each expanded row contains exactly ONE media type:
+    - file OR youtube_url OR web_url
+  Notes-only rows contain none of those three.
+
+  map_fields can map Trips columns to viewer columns, including:
+    itinerary -> file
+  """
   if copy_fields is None:
     copy_fields = []
   if map_fields is None:
@@ -21,6 +31,7 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty
           return row.get(field_name, default)
         return default
 
+    # Start with the viewer schema keys
     base = {
       "title": get_val("title", ""),
       "comments": get_val("comments", ""),
@@ -31,12 +42,15 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty
       "source_row": row,
     }
 
+    # Apply mappings (Trips -> Viewer schema)
     for src, dest in map_fields.items():
       base[dest] = get_val(src)
 
+    # Copy passthrough fields (e.g., trip_id)
     for field_name in copy_fields:
       base[field_name] = get_val(field_name)
 
+    # Pull values from the mapped base
     file_obj = base.get("file")
     youtube_url = base.get("youtube_url")
     web_url = base.get("web_url")
@@ -44,7 +58,7 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty
 
     made_any = False
 
-    # Notes-only row
+    # ---------- 1) NOTES-ONLY ROW ----------
     if notes_text:
       notes_item = dict(base)
       notes_item["file"] = None
@@ -53,40 +67,103 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty
       expanded.append(notes_item)
       made_any = True
 
-      base_no_notes = dict(base)
-      base_no_notes["notes"] = ""
-    else:
-      base_no_notes = base
+    # For subsequent media rows: do not carry notes forward
+    base_media = dict(base)
+    base_media["notes"] = ""
 
-    # Media rows
-    if file_obj:
-      item = dict(base_no_notes)
-      item["file"] = file_obj
-      expanded.append(item)
-      made_any = True
+    # Helper to make a “pure” item (only one field set)
+    def make_item(kind):
+      item = dict(base_media)
+      item["file"] = None
+      item["youtube_url"] = None
+      item["web_url"] = None
+      if kind ==
 
-    if youtube_url:
-      item = dict(base_no_notes)
-      item["youtube_url"] = youtube_url
-      expanded.append(item)
-      made_any = True
 
-    if web_url:
-      item = dict(base_no_notes)
-      item["web_url"] = web_url
-      expanded.append(item)
-      made_any = True
+      
+# def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty=False):
+#   if copy_fields is None:
+#     copy_fields = []
+#   if map_fields is None:
+#     map_fields = {}
 
-    # Placeholder row if nothing exists
-    if include_empty and not made_any:
-      placeholder = dict(base_no_notes)
-      placeholder["notes"] = ""        # no notes
-      placeholder["file"] = None
-      placeholder["youtube_url"] = None
-      placeholder["web_url"] = None
-      expanded.append(placeholder)
+#   expanded = []
 
-  return expanded
+#   for row in base_rows:
+#     def get_val(field_name, default=None):
+#       try:
+#         return row[field_name]
+#       except Exception:
+#         if isinstance(row, dict):
+#           return row.get(field_name, default)
+#         return default
+
+#     base = {
+#       "title": get_val("title", ""),
+#       "comments": get_val("comments", ""),
+#       "notes": get_val("notes", ""),
+#       "file": get_val("file", None),
+#       "youtube_url": get_val("youtube_url", None),
+#       "web_url": get_val("web_url", None),
+#       "source_row": row,
+#     }
+
+#     for src, dest in map_fields.items():
+#       base[dest] = get_val(src)
+
+#     for field_name in copy_fields:
+#       base[field_name] = get_val(field_name)
+
+#     file_obj = base.get("file")
+#     youtube_url = base.get("youtube_url")
+#     web_url = base.get("web_url")
+#     notes_text = (base.get("notes") or "").strip()
+
+#     made_any = False
+
+#     # Notes-only row
+#     if notes_text:
+#       notes_item = dict(base)
+#       notes_item["file"] = None
+#       notes_item["youtube_url"] = None
+#       notes_item["web_url"] = None
+#       expanded.append(notes_item)
+#       made_any = True
+
+#       base_no_notes = dict(base)
+#       base_no_notes["notes"] = ""
+#     else:
+#       base_no_notes = base
+
+#     # Media rows
+#     if file_obj:
+#       item = dict(base_no_notes)
+#       item["file"] = file_obj
+#       expanded.append(item)
+#       made_any = True
+
+#     if youtube_url:
+#       item = dict(base_no_notes)
+#       item["youtube_url"] = youtube_url
+#       expanded.append(item)
+#       made_any = True
+
+#     if web_url:
+#       item = dict(base_no_notes)
+#       item["web_url"] = web_url
+#       expanded.append(item)
+#       made_any = True
+
+#     # Placeholder row if nothing exists
+#     if include_empty and not made_any:
+#       placeholder = dict(base_no_notes)
+#       placeholder["notes"] = ""        # no notes
+#       placeholder["file"] = None
+#       placeholder["youtube_url"] = None
+#       placeholder["web_url"] = None
+#       expanded.append(placeholder)
+
+#   return expanded
 
 # def expand_file_rows(base_rows, copy_fields=None, map_fields=None):
 #   """
