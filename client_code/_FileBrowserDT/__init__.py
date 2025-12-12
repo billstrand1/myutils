@@ -12,6 +12,7 @@ from .. import file_utils as fu
 # from anvil import app_tables
 # import MyUtils.utils as fu  # adjust path if needed
 
+
 '''
 
 
@@ -27,8 +28,8 @@ class _FileBrowserDT(_FileBrowserDTTemplate):
 
     # If caller didn't pass items, load Files table by default
     if items is None:
-      from anvil.tables import app_tables
-      import MyUtils.utils as fu  # adjust if needed
+      # from anvil.tables import app_tables
+      # import MyUtils.utils as fu  # adjust if needed
 
       print("items is None, searching app_tables.files...")
       base_rows = app_tables.files.search()
