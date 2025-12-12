@@ -13,9 +13,8 @@ class FileRowDT(FileRowDTTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-    row = self.item  # may be a dict or a Data Table Row
+    row = self.item
 
-    # Safe getter for both dict and Row
     def get_val(name, default=None):
       try:
         return row[name]
@@ -39,12 +38,14 @@ class FileRowDT(FileRowDTTemplate):
     is_youtube = bool(youtube_url)
     has_web = bool(web_url)
 
-    # Detect a NOTES-ONLY row:
+    # Notes-only detection
     is_notes_only = bool(notes.strip()) and not (media or is_youtube or has_web)
 
-    # ----- Comments label text -----
+    # Placeholder trip row: no notes, no media, no links
+    is_trip_placeholder = (not notes.strip()) and (not media) and (not is_youtube) and (not has_web)
+
+    # ---------- Comments label text ----------
     if is_notes_only:
-      # For notes-only item, show comments + notes
       combined = ""
       if comments:
         combined += comments
@@ -54,10 +55,10 @@ class FileRowDT(FileRowDTTemplate):
         combined += notes
       self.label_comments.text = combined
     else:
-      # For media items, show comments only
+      # Placeholder and media rows show comments only
       self.label_comments.text = comments
 
-    # ----- File size formatter -----
+    # ---------- File size ----------
     def format_size(n):
       if n < 1024:
         return f"{n} bytes"
@@ -70,81 +71,197 @@ class FileRowDT(FileRowDTTemplate):
 
     file_size = format_size(size_bytes) if media else ""
 
-    # ----- Type & icon -----
+    # ---------- Type & icon ----------
     if is_notes_only:
-      display_type = "Notes"
       icon = "📝"
+      display_type = "Notes"
       file_name = ""
       file_size = ""
-    elif is_youtube:
-      display_type = "YouTube Video"
-      icon = "▶️"
-    elif mime.startswith("image/"):
-      display_type = f"Image ({mime.split('/')[-1].upper()})"
-      icon = "🖼"
-    elif mime == "application/pdf":
-      display_type = "PDF"
-      icon = "📄"
-    elif mime.startswith("video/"):
-      display_type = f"Video ({mime.split('/')[-1].upper()})"
-      icon = "🎥"
-    elif mime.startswith("text/"):
-      display_type = f"Text ({mime.split('/')[-1].upper()})"
-      icon = "📝"
-    elif has_web:
-      display_type = "Web Link"
-      icon = "🔗"
-      file_name = "(web link)"
-      file_size = ""
+
+      # Title line: show (Notes)
+      self.label_title.text = f"{title or 'Notes'}  (Notes)".strip()
+
+    elif is_trip_placeholder:
+      # ✅ New behavior: show a map icon and NO extra parenthetical text
+      icon = "🗺️"
+      self.label_title.text = title  # just the trip_id/title, nothing else
+
     else:
-      display_type = f"Unknown ({mime})" if mime else "Unknown"
-      icon = "❓"
+      # Media rows and web/youtube
+      if is_youtube:
+        display_type = "YouTube Video"
+        icon = "▶️"
+      elif mime.startswith("image/"):
+        display_type = f"Image ({mime.split('/')[-1].upper()})"
+        icon = "🖼"
+      elif mime == "application/pdf":
+        display_type = "PDF"
+        icon = "📄"
+      elif mime.startswith("video/"):
+        display_type = f"Video ({mime.split('/')[-1].upper()})"
+        icon = "🎥"
+      elif mime.startswith("text/"):
+        display_type = f"Text ({mime.split('/')[-1].upper()})"
+        icon = "📝"
+      elif has_web:
+        display_type = "Web Link"
+        icon = "🔗"
+        file_name = "(web link)"
+        file_size = ""
+      else:
+        # If we ever reach here, treat it like a placeholder too
+        display_type = ""
+        icon = "🗺️"
 
-    # Title text (no emoji here; icon lives in label_icon)
-    if is_notes_only:
-      title_display = title or "Notes"
-      extra = "(Notes)"
-    else:
-      title_display = title
-      extra = f"({file_name} — {display_type})".strip()# — {file_size})".strip()
+      # Build the standard title line
+      extra = f"({file_name} — {display_type} — {file_size})".strip()
 
-    #New Title - Test
-    # self.label_title.text = f"[{display_type}] {title}  ({file_name} — {file_size})"
+      # Clean up extra if display_type/file_size are empty-ish
+      # (prevents ugly dashes)
+      extra = extra.replace(" —  — ", " — ").replace("— )", ")")
 
-    self.label_title.text = f"{title_display}  {extra}".strip()
+      self.label_title.text = f"{title}  {extra}".strip()
+
     self.label_icon.text = icon
 
-  # ----------------- open in viewer -----------------
 
-  def link_open_click(self, **event_args):
-    # from anvil import RepeatingPanel
-    # from .FileViewerDT import FileViewerDT  # adjust if needed
 
-    # Walk up the parent chain until we find a RepeatingPanel
-    p = self.parent
-    rp = None
-    while p is not None:
-      if isinstance(p, RepeatingPanel):
-        rp = p
-        break
-      p = p.parent
+# class FileRowDT(FileRowDTTemplate):
+#   def __init__(self, **properties):
+#     self.init_components(**properties)
 
-    if rp is None:
-      print("ERROR: Could not find RepeatingPanel ancestor for FileRowDT")
-      return
+#     row = self.item  # may be a dict or a Data Table Row
 
-    # Full list of file rows shown in the browser
-    file_rows = list(rp.items)
-    start_index = file_rows.index(self.item)
-    print(f"[FileRowDT] start_index = {start_index}")
+#     # Safe getter for both dict and Row
+#     def get_val(name, default=None):
+#       try:
+#         return row[name]
+#       except Exception:
+#         if isinstance(row, dict):
+#           return row.get(name, default)
+#         return default
 
-    viewer = FileViewerDT(file_rows=file_rows, start_index=start_index)
+#     title = get_val("title", "") or ""
+#     comments = get_val("comments", "") or ""
+#     notes = get_val("notes", "") or ""
 
-    alert(
-      content=viewer,
-      large=True,
-      buttons=[]  # viewer's own close link handles closing
-    )
+#     media = get_val("file", None)
+#     mime = media.content_type.lower() if media else ""
+#     file_name = media.name if media else ""
+#     size_bytes = media.length if media else 0
+
+#     youtube_url = get_val("youtube_url", None)
+#     web_url = get_val("web_url", None)
+
+#     is_youtube = bool(youtube_url)
+#     has_web = bool(web_url)
+
+#     # Detect a NOTES-ONLY row:
+#     is_notes_only = bool(notes.strip()) and not (media or is_youtube or has_web)
+
+#     # ----- Comments label text -----
+#     if is_notes_only:
+#       # For notes-only item, show comments + notes
+#       combined = ""
+#       if comments:
+#         combined += comments
+#       if notes:
+#         if combined:
+#           combined += "\n"
+#         combined += notes
+#       self.label_comments.text = combined
+#     else:
+#       # For media items, show comments only
+#       self.label_comments.text = comments
+
+#     # ----- File size formatter -----
+#     def format_size(n):
+#       if n < 1024:
+#         return f"{n} bytes"
+#       elif n < 1024 * 1024:
+#         return f"{n/1024:.0f} KB"
+#       elif n < 1024 * 1024 * 1024:
+#         return f"{n/1024/1024:.1f} MB"
+#       else:
+#         return f"{n/1024/1024/1024:.2f} GB"
+
+#     file_size = format_size(size_bytes) if media else ""
+
+#     # ----- Type & icon -----
+#     if is_notes_only:
+#       display_type = "Notes"
+#       icon = "📝"
+#       file_name = ""
+#       file_size = ""
+#     elif is_youtube:
+#       display_type = "YouTube Video"
+#       icon = "▶️"
+#     elif mime.startswith("image/"):
+#       display_type = f"Image ({mime.split('/')[-1].upper()})"
+#       icon = "🖼"
+#     elif mime == "application/pdf":
+#       display_type = "PDF"
+#       icon = "📄"
+#     elif mime.startswith("video/"):
+#       display_type = f"Video ({mime.split('/')[-1].upper()})"
+#       icon = "🎥"
+#     elif mime.startswith("text/"):
+#       display_type = f"Text ({mime.split('/')[-1].upper()})"
+#       icon = "📝"
+#     elif has_web:
+#       display_type = "Web Link"
+#       icon = "🔗"
+#       file_name = "(web link)"
+#       file_size = ""
+#     else:
+#       display_type = f"Unknown ({mime})" if mime else "Unknown"
+#       icon = "❓"
+
+#     # Title text (no emoji here; icon lives in label_icon)
+#     if is_notes_only:
+#       title_display = title or "Notes"
+#       extra = "(Notes)"
+#     else:
+#       title_display = title
+#       extra = f"({file_name} — {display_type})".strip()# — {file_size})".strip()
+
+#     #New Title - Test
+#     # self.label_title.text = f"[{display_type}] {title}  ({file_name} — {file_size})"
+
+#     self.label_title.text = f"{title_display}  {extra}".strip()
+#     self.label_icon.text = icon
+
+#   # ----------------- open in viewer -----------------
+
+#   def link_open_click(self, **event_args):
+#     # from anvil import RepeatingPanel
+#     # from .FileViewerDT import FileViewerDT  # adjust if needed
+
+#     # Walk up the parent chain until we find a RepeatingPanel
+#     p = self.parent
+#     rp = None
+#     while p is not None:
+#       if isinstance(p, RepeatingPanel):
+#         rp = p
+#         break
+#       p = p.parent
+
+#     if rp is None:
+#       print("ERROR: Could not find RepeatingPanel ancestor for FileRowDT")
+#       return
+
+#     # Full list of file rows shown in the browser
+#     file_rows = list(rp.items)
+#     start_index = file_rows.index(self.item)
+#     print(f"[FileRowDT] start_index = {start_index}")
+
+#     viewer = FileViewerDT(file_rows=file_rows, start_index=start_index)
+
+#     alert(
+#       content=viewer,
+#       large=True,
+#       buttons=[]  # viewer's own close link handles closing
+#     )
 
 
 # class FileRowDT(FileRowDTTemplate):
