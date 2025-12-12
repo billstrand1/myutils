@@ -4,6 +4,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
+
 def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty=False):
   """
   Expand base rows into multiple rows suitable for FileBrowserDT / FileViewerDT.
@@ -77,10 +78,38 @@ def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty
       item["file"] = None
       item["youtube_url"] = None
       item["web_url"] = None
-      if kind ==
+      if kind == "file":
+        item["file"] = file_obj
+      elif kind == "youtube":
+        item["youtube_url"] = youtube_url
+      elif kind == "web":
+        item["web_url"] = web_url
+      return item
+
+    # ---------- 2) FILE / YOUTUBE / WEB ROWS (pure) ----------
+    if file_obj:
+      expanded.append(make_item("file"))
+      made_any = True
+
+    if youtube_url:
+      expanded.append(make_item("youtube"))
+      made_any = True
+
+    if web_url:
+      expanded.append(make_item("web"))
+      made_any = True
+
+    # ---------- 3) PLACEHOLDER (optional) ----------
+    if include_empty and not made_any:
+      placeholder = dict(base_media)
+      placeholder["file"] = None
+      placeholder["youtube_url"] = None
+      placeholder["web_url"] = None
+      expanded.append(placeholder)
+
+  return expanded
 
 
-      
 # def expand_file_rows(base_rows, copy_fields=None, map_fields=None, include_empty=False):
 #   if copy_fields is None:
 #     copy_fields = []
