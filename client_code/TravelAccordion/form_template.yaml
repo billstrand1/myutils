@@ -1,7 +1,11 @@
 components:
+- layout_properties: {grid_position: 'AHSHJE,DPDIZY'}
+  name: label_debug
+  properties: {visible: false}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
 - layout_properties: {grid_position: 'XWQOQY,LXOQKV'}
   name: repeating_panel_trips
-  properties: {item_template: TravelAccordion.TripGroupRow}
+  properties: {item_template: TravelAccordion.TripGroupRow, visible: true}
   type: RepeatingPanel
 container: {type: ColumnPanel}
 is_package: true
