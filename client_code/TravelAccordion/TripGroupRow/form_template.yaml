@@ -17,10 +17,19 @@ components:
     properties: {}
     type: form:dep_lin1x4oec0ytd:_Components.Text
   - components: []
-    layout_properties: {grid_position: 'GDHLYU,GHAGNC'}
+    layout_properties: {grid_position: 'NLYFSO,TBJOHU'}
     name: link_toggle
     properties: {}
     type: form:dep_lin1x4oec0ytd:_Components.Link
+  - components:
+    - layout_properties: {grid_position: 'CIZXIQ,QGWRSZ'}
+      name: repeating_panel_assets
+      properties: {item_template: TravelAccordion.TripGroupRow.ItemTemplate2}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'POIRIF,XRDWWS'}
+    name: panel_body
+    properties: {}
+    type: ColumnPanel
   layout_properties: {grid_position: 'RMWOYF,VSAVKO'}
   name: column_panel_1
   properties: {col_widths: '{"HCXQFM":17,"PGDSNO":33,"BPUUIO":30}'}
