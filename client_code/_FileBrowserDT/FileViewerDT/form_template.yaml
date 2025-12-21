@@ -49,7 +49,7 @@ components:
     type: FlowPanel
   - layout_properties: {grid_position: 'PFSMYF,IIUTZM'}
     name: label_iframe_warning
-    properties: {italic: true, visible: false}
+    properties: {background_color: '', italic: true, text_color: 'theme:Error', visible: false}
     type: form:dep_lin1x4oec0ytd:_Components.Text
   layout_properties: {grid_position: 'CAZUNZ,ABBZBE'}
   name: column_panel_1

@@ -129,7 +129,7 @@ class FileViewerDT(FileViewerDTTemplate):
       if self._is_iframe_blocked(self.web_url):
         self.label_iframe_warning.text = (
         "This site does not allow embedded viewing. "
-        "Please click “Open in New Tab” above."
+        "Please click the “Open in New Tab” link above."
         )
         self.label_iframe_warning.visible = True
         
