@@ -18,6 +18,7 @@ class TravelAccordion(TravelAccordionTemplate):
     start = datetime.date(self.year, 1, 1)
     end   = datetime.date(self.year + 1, 1, 1)
 
+    print('TravelAccordian about to call trips search')
     trips = list(app_tables.trips.search(
       tables.order_by("start_date", ascending=True),
       start_date=q.between(start, end)
