@@ -26,6 +26,9 @@ class FileViewerDT(FileViewerDTTemplate):
   # ----------------- core loader / router -----------------
 
   def _load_current_file(self):
+    self.label_iframe_warning.visible = False
+    self.label_iframe_warning.text = ""
+    
     if not self.file_rows:
       self.label_info.visible = True
       self.label_info.text = ""
@@ -118,11 +121,35 @@ class FileViewerDT(FileViewerDTTemplate):
       self._update_nav_buttons()
       return
 
-    # ---- PRIORITY 2: WEB URL ----
+    # ---- PRIORITY 2: WEB URL ----    
     if self.web_url:
+      #Let's try to set iframe warning message:
+      self.label_iframe_warning.visible = False
+      self.label_iframe_warning.text = ""
+      if self._is_iframe_blocked(self.web_url):
+        self.label_iframe_warning.text = (
+        "This site does not allow embedded viewing. "
+        "Please click “Open in New Tab” above."
+        )
+        self.label_iframe_warning.visible = True
+        
       self._show_web()
       self._update_nav_buttons()
       return
+
+    # ---------- PRIORITY 2: WEB URL ----------
+    #This is for the CannotEmbed websites.  Maybe come back to this, but it disrupts
+    #the flow of the FileViewer by auto-opening the websites....
+    # if self.web_url:
+    #   url = self.web_url.lower()
+    #   if self._is_iframe_blocked(url):
+    #     anvil.js.window.open(url, "_blank")
+    #     return
+  
+    #   self._show_web()
+    #   self._update_nav_buttons()
+    #   return
+
 
     # ---- PRIORITY 3: REGULAR MEDIA ----
     if not self.media:
@@ -273,6 +300,18 @@ class FileViewerDT(FileViewerDTTemplate):
 
     self.iframe_web.url = url
     self.iframe_web.visible = True
+
+  def _is_iframe_blocked(self, url):
+    if not url:
+      return False
+      
+    blocked_domains = [
+      "tripit.com",
+      "google.com",
+      "docs.google.com",
+      "drive.google.com"
+    ]
+    return any(d in url.lower() for d in blocked_domains)
 
   # ----------------- download + close -----------------
 

@@ -47,6 +47,10 @@ components:
     name: notes_panel
     properties: {visible: true}
     type: FlowPanel
+  - layout_properties: {grid_position: 'PFSMYF,IIUTZM'}
+    name: label_iframe_warning
+    properties: {italic: true, visible: false}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
   layout_properties: {grid_position: 'CAZUNZ,ABBZBE'}
   name: column_panel_1
   properties: {col_widths: '{"LRUNOR":46,"VMZHLF":14,"MWZEFP":50,"WMGVNM":10}'}
