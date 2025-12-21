@@ -1,0 +1,7 @@
+components:
+- layout_properties: {grid_position: 'XWQOQY,LXOQKV'}
+  name: repeating_panel_trips
+  properties: {item_template: TravelAccordion.TripGroupRow}
+  type: RepeatingPanel
+container: {type: ColumnPanel}
+is_package: true
