@@ -9,7 +9,7 @@ components:
       type: form:dep_lin1x4oec0ytd:_Components.Link
     - layout_properties: {width: 164.0544375}
       name: label_trip_title
-      properties: {}
+      properties: {align: left}
       type: form:dep_lin1x4oec0ytd:_Components.Text
     - layout_properties: {}
       name: label_trip_dates
@@ -23,6 +23,10 @@ components:
     name: flow_panel_1
     properties: {}
     type: FlowPanel
+  - layout_properties: {grid_position: 'CHLJBK,ENSTCE'}
+    name: text_1
+    properties: {}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
   - layout_properties: {grid_position: 'CHLJBK,VYVXWT'}
     name: label_trip_description
     properties: {}
@@ -41,7 +45,7 @@ components:
     type: ColumnPanel
   layout_properties: {grid_position: 'RMWOYF,VSAVKO'}
   name: column_panel_1
-  properties: {col_widths: '{}'}
+  properties: {col_widths: '{"ENSTCE":5,"VYVXWT":55}'}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

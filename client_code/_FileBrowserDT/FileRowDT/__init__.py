@@ -50,7 +50,7 @@ class FileRowDT(FileRowDTTemplate):
         combined += comments
       if notes:
         if combined:
-          combined += "\n"
+          combined += "\nNotes: "
         combined += notes
       self.label_comments.text = combined
     else:
