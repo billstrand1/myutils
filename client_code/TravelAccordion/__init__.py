@@ -19,14 +19,14 @@ class TravelAccordion(TravelAccordionTemplate):
     start_2023 = datetime.date(2023, 1, 1)
     end_2023   = datetime.date(2024, 1, 1)   # exclusive upper bound
 
-    trips = app_tables.trips.search(
-      tables.order_by("start_date", ascending=True),
-      start_date = q.between(start_2023, end_2023)
-    )
-    print("Trips found:", len(trips))    
+    # trips = app_tables.trips.search(
+    #   tables.order_by("start_date", ascending=True),
+    #   start_date = q.between(start_2023, end_2023)
+    # )
+    # print("Trips found:", len(trips))    
 
-    # trips = list(app_tables.trips.search(trip_id="25-06 Porto"))
-    # print("Trips found:", len(trips))
+    trips = list(app_tables.trips.search())
+    print("Trips found:", len(trips))
     
     self.repeating_panel_trips.items = trips
 

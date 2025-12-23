@@ -39,6 +39,8 @@ class TripGroupRow(TripGroupRowTemplate):
     self.panel_body.visible = False
     self.link_toggle.text = "▶"
 
+    self._load_thumbnail()
+
   # ---------------- accordion toggle ----------------
 
   def link_toggle_click(self, **event_args):
@@ -94,6 +96,27 @@ class TripGroupRow(TripGroupRowTemplate):
 
     self._items = items
     self.repeating_panel_assets.items = items
+
+
+  def _load_thumbnail(self):
+    """
+    Load the 64x64 thumbnail image for this trip, if one exists.
+    """
+    trip = self.item
+  
+    thumb_rows = app_tables.trip_data.search(
+      trip_link=trip,
+      is_thumbnail=True
+    )
+  
+    thumb_row = next(iter(thumb_rows), None)
+  
+    if thumb_row and thumb_row['file']:
+      self.image_thumbnail.source = thumb_row['file']
+      self.image_thumbnail.visible = True
+    else:
+      self.image_thumbnail.source = None
+      self.image_thumbnail.visible = False
 
   # ---------------- item factories ----------------
 
