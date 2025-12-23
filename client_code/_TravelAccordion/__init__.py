@@ -6,49 +6,77 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-
 import datetime
 
-from anvil.tables import app_tables
 
 class _TravelAccordion(_TravelAccordionTemplate):
-  def __init__(self, **properties):
+  def __init__(self, year=None, **properties):
     self.init_components(**properties)
-    print("TravelAccordion __init__")
+    # print("TravelAccordion __init__")
+    # self.label_status.text = "Loading trips…"
+    current_year = datetime.date.today().year
+    
+    # Build year list (adjust range as desired)
+    years = list(range(current_year, current_year - 10, -1))
+    
+    trips = anvil.server.call("get_trips_for_year", year)
+  
+    self._all_trips = trips
+    self.repeating_panel_trips.items = trips
+  
+    self.label_status.text = ""
+
 
     # start_2023 = datetime.date(2023, 1, 1)
     # end_2023   = datetime.date(2024, 1, 1)   # exclusive upper bound
 
-    start_2024 = datetime.date(2024, 1, 1)
-    end_2024   = datetime.date(2025, 1, 1)   # exclusive upper bound
+    # start_2024 = datetime.date(2024, 1, 1)
+    # end_2024   = datetime.date(2025, 1, 1)   # exclusive upper bound
 
-    trips = app_tables.trips.search(
-      tables.order_by("start_date", ascending=True),
-      start_date = q.between(start_2024, end_2024)
-    )
+    # trips = app_tables.trips.search(
+    #   tables.order_by("start_date", ascending=True),
+    #   start_date = q.between(start_2024, end_2024)
+    # )
     print("Trips found:", len(trips))    
 
     # trips = list(app_tables.trips.search())
     # print("Trips found:", len(trips))
     
+    self._all_trips = list(trips)
+    self.repeating_panel_trips.items = self._all_trips    
     self.repeating_panel_trips.items = trips
 
-# class TravelAccordion(TravelAccordionTemplate):
-#   def __init__(self, **properties):
-#     self.init_components(**properties)
-#     print("TravelAccordion __init__")
+  def text_box_search_change(self, **event_args):
+    term = (self.text_box_search.text or "").strip().lower()
 
-#   def form_show(self, **event_args):
-#     print("TravelAccordion form_show")
+    if not term:
+      self.repeating_panel_trips.items = self._all_trips
+      return
+  
+    def matches(trip):
+      return (
+        term in (trip['trip_id'] or "").lower() or
+        term in (trip['trip_description'] or "").lower()
+      )
+  
+    filtered = [t for t in self._all_trips if matches(t)]
+    self.repeating_panel_trips.items = filtered
 
-#     trips = list(app_tables.trips.search(trip_id="25-06 Porto"))
-#     print("Trips found:", len(trips))
+  #---------Trying Expand All / Collapse All---------
+  @handle("link_expand_all", "click")
+  def link_expand_all_click(self, **event_args):
+    print('ExpandAll clicked')
+    for row in self.repeating_panel_trips.get_components():
+      if hasattr(row, "expand"):
+        row.expand()
 
-#     # VERY visible proof
-#     if not trips:
-#       self.label_debug.text = "NO TRIPS FOUND"
-#     else:
-#       self.label_debug.text = f"FOUND {len(trips)} TRIP(S): {trips[0]['trip_id']}"
+  @handle("link_collapse_all", "click")
+  def link_collapse_all_click(self, **event_args):
+    print('CollapseAll clicked')
+    for row in self.repeating_panel_trips.get_components():
+      if hasattr(row, "collapse"):
+        row.collapse()
 
-#     self.repeating_panel_trips.items = trips
-
+  @handle("text_box_search", "pressed_enter")
+  def text_box_search_pressed_enter(self, **event_args):
+    self.text_box_search_change()
