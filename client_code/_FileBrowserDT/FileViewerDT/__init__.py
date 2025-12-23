@@ -65,6 +65,8 @@ class FileViewerDT(FileViewerDTTemplate):
     self.title = get_val("title", "") or ""
     self.comments = get_val("comments", "") or ""
     notes_text = get_val("notes", "") or ""
+    if notes_text.strip():
+      notes_text = f"Notes: {notes_text}"
 
     # Media/URLs
     self.media = get_val("file", None)
@@ -128,27 +130,14 @@ class FileViewerDT(FileViewerDTTemplate):
       self.label_iframe_warning.text = ""
       if self._is_iframe_blocked(self.web_url):
         self.label_iframe_warning.text = (
-        "This site does not allow embedded viewing. "
-        "Please click “Open in New Tab” above."
+        "ℹ️ This site does not allow embedded viewing. "
+        "Please click the “Open in New Tab” link above."
         )
         self.label_iframe_warning.visible = True
         
       self._show_web()
       self._update_nav_buttons()
       return
-
-    # ---------- PRIORITY 2: WEB URL ----------
-    #This is for the CannotEmbed websites.  Maybe come back to this, but it disrupts
-    #the flow of the FileViewer by auto-opening the websites....
-    # if self.web_url:
-    #   url = self.web_url.lower()
-    #   if self._is_iframe_blocked(url):
-    #     anvil.js.window.open(url, "_blank")
-    #     return
-  
-    #   self._show_web()
-    #   self._update_nav_buttons()
-    #   return
 
 
     # ---- PRIORITY 3: REGULAR MEDIA ----
