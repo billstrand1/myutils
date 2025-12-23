@@ -16,17 +16,20 @@ class _TravelAccordion(_TravelAccordionTemplate):
     self.init_components(**properties)
     print("TravelAccordion __init__")
 
-    start_2023 = datetime.date(2023, 1, 1)
-    end_2023   = datetime.date(2024, 1, 1)   # exclusive upper bound
+    # start_2023 = datetime.date(2023, 1, 1)
+    # end_2023   = datetime.date(2024, 1, 1)   # exclusive upper bound
 
-    # trips = app_tables.trips.search(
-    #   tables.order_by("start_date", ascending=True),
-    #   start_date = q.between(start_2023, end_2023)
-    # )
-    # print("Trips found:", len(trips))    
+    start_2024 = datetime.date(2024, 1, 1)
+    end_2024   = datetime.date(2025, 1, 1)   # exclusive upper bound
 
-    trips = list(app_tables.trips.search())
-    print("Trips found:", len(trips))
+    trips = app_tables.trips.search(
+      tables.order_by("start_date", ascending=True),
+      start_date = q.between(start_2024, end_2024)
+    )
+    print("Trips found:", len(trips))    
+
+    # trips = list(app_tables.trips.search())
+    # print("Trips found:", len(trips))
     
     self.repeating_panel_trips.items = trips
 
