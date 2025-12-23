@@ -4,11 +4,10 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import datetime
 
 @anvil.server.callable
 def get_trips_for_year(year):
-  import datetime
-
   start = datetime.date(year, 1, 1)
   end   = datetime.date(year + 1, 1, 1)
 

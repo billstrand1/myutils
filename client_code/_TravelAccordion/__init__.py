@@ -15,36 +15,16 @@ class _TravelAccordion(_TravelAccordionTemplate):
     # print("TravelAccordion __init__")
     # self.label_status.text = "Loading trips…"
     current_year = datetime.date.today().year
+
+    self.drop_down_year.items = [(str(y), y) for y in range(current_year, current_year - 30, -1)]
     
-    # Build year list (adjust range as desired)
-    years = list(range(current_year, current_year - 10, -1))
+    # Force a valid default year
+    selected_year = year or current_year
+    self.drop_down_year.selected_value = selected_year
+
+    # Load trips for selected year
+    self._load_year(selected_year)
     
-    trips = anvil.server.call("get_trips_for_year", year)
-  
-    self._all_trips = trips
-    self.repeating_panel_trips.items = trips
-  
-    self.label_status.text = ""
-
-
-    # start_2023 = datetime.date(2023, 1, 1)
-    # end_2023   = datetime.date(2024, 1, 1)   # exclusive upper bound
-
-    # start_2024 = datetime.date(2024, 1, 1)
-    # end_2024   = datetime.date(2025, 1, 1)   # exclusive upper bound
-
-    # trips = app_tables.trips.search(
-    #   tables.order_by("start_date", ascending=True),
-    #   start_date = q.between(start_2024, end_2024)
-    # )
-    print("Trips found:", len(trips))    
-
-    # trips = list(app_tables.trips.search())
-    # print("Trips found:", len(trips))
-    
-    self._all_trips = list(trips)
-    self.repeating_panel_trips.items = self._all_trips    
-    self.repeating_panel_trips.items = trips
 
   def text_box_search_change(self, **event_args):
     term = (self.text_box_search.text or "").strip().lower()
@@ -80,3 +60,28 @@ class _TravelAccordion(_TravelAccordionTemplate):
   @handle("text_box_search", "pressed_enter")
   def text_box_search_pressed_enter(self, **event_args):
     self.text_box_search_change()
+
+  @handle("drop_down_year", "change")
+  def drop_down_year_change(self, **event_args):
+    year = self.drop_down_year.selected_value
+    if year:
+      self._load_year(year)
+
+  
+  def _load_year(self, year):
+    # Clear UI
+    self.repeating_panel_trips.items = []
+    self.text_box_search.text = ""
+  
+    # Optional: show loading message
+    if hasattr(self, "label_status"):
+      self.label_status.text = f"Loading {year} trips…"
+  
+    trips = anvil.server.call("get_trips_for_year", year)
+  
+    self._all_trips = trips
+    self.repeating_panel_trips.items = trips
+  
+    if hasattr(self, "label_status"):
+      self.label_status.text = ""
+
