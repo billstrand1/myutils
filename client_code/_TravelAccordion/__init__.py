@@ -1,4 +1,4 @@
-from ._anvil_designer import TravelAccordionTemplate
+from ._anvil_designer import _TravelAccordionTemplate
 from anvil import *
 import anvil.server
 import m3.components as m3
@@ -11,7 +11,7 @@ import datetime
 
 from anvil.tables import app_tables
 
-class TravelAccordion(TravelAccordionTemplate):
+class _TravelAccordion(_TravelAccordionTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     print("TravelAccordion __init__")
