@@ -31,7 +31,7 @@ components:
   type: form:dep_lin1x4oec0ytd:_Components.Text
 - layout_properties: {grid_position: 'XWQOQY,LXOQKV'}
   name: repeating_panel_trips
-  properties: {item_template: _TravelAccordion.TripGroupRow, visible: true}
+  properties: {item_template: Travel._TravelAccordion.TripGroupRow, visible: true}
   type: RepeatingPanel
 container: {type: ColumnPanel}
 is_package: true
