@@ -54,6 +54,3 @@ def update_trip(trip_id, data):
     country_code=(data.get("country_code") or "").strip(),
   )
 
-
-
-

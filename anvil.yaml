@@ -106,6 +106,116 @@ db_schema:
       type: string
     server: full
     title: tee_times
+  trip_data:
+    client: search
+    columns:
+    - admin_ui: {width: 146}
+      name: trip_link
+      target: trips
+      type: link_single
+    - admin_ui: {width: 167}
+      name: trip_id
+      type: string
+    - admin_ui: {width: 200}
+      name: file
+      type: media
+    - admin_ui: {width: 136}
+      name: youtube_url
+      type: string
+    - admin_ui: {width: 124}
+      name: web_url
+      type: string
+    - admin_ui: {width: 200}
+      name: is_thumbnail
+      type: bool
+    - admin_ui: {width: 200}
+      name: asset_type
+      type: string
+    - admin_ui: {width: 200}
+      name: description
+      type: string
+    - admin_ui: {width: 200}
+      name: notes
+      type: string
+    - admin_ui: {width: 200}
+      name: sort_order
+      type: number
+    - admin_ui: {width: 200}
+      name: created_ts
+      type: datetime
+    - admin_ui: {width: 200}
+      name: updated_ts
+      type: datetime
+    server: full
+    title: trip_data
+  trips:
+    client: search
+    columns:
+    - admin_ui: {width: 200}
+      name: trip_id
+      type: string
+    - admin_ui: {width: 78}
+      name: qb_tags
+      type: bool
+    - admin_ui: {width: 102}
+      name: qb_reports
+      type: bool
+    - admin_ui: {width: 134}
+      name: cost
+      type: number
+    - admin_ui: {width: 200}
+      name: miles
+      type: bool
+    - admin_ui: {width: 128}
+      name: start_date
+      type: date
+    - admin_ui: {width: 200}
+      name: end_date
+      type: date
+    - admin_ui: {width: 208}
+      name: trip_description
+      type: string
+    - admin_ui: {width: 178}
+      name: itinerary
+      type: media
+    - admin_ui: {width: 153}
+      name: web_url
+      type: string
+    - admin_ui: {width: 138}
+      name: youtube_url
+      type: string
+    - admin_ui: {width: 263}
+      name: notes
+      type: string
+    - admin_ui: {width: 99}
+      name: pam_only
+      type: bool
+    - admin_ui: {width: 200}
+      name: bill_only
+      type: bool
+    - admin_ui: {width: 149}
+      name: tripit_edit
+      type: string
+    - admin_ui: {width: 423}
+      name: tripit_read
+      type: string
+    - admin_ui: {width: 97}
+      name: tripit
+      type: bool
+    - admin_ui: {width: 99}
+      name: complete
+      type: bool
+    - admin_ui: {width: 200}
+      name: country
+      type: string
+    - admin_ui: {width: 200}
+      name: city
+      type: string
+    - admin_ui: {width: 200}
+      name: country_code
+      type: string
+    server: full
+    title: trips
   users:
     client: none
     columns:
