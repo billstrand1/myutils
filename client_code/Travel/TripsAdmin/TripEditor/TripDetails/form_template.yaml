@@ -24,5 +24,29 @@ components:
   name: text_trip_id_copy
   properties: {text: ''}
   type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'RQOMUA,IDDXWS'}
+  name: date_start_date
+  properties: {placeholder: Start Date}
+  type: DatePicker
+- layout_properties: {grid_position: 'RQOMUA,LAVVTL'}
+  name: date_end_date
+  properties: {placeholder: End Date}
+  type: DatePicker
+- layout_properties: {grid_position: 'AGWDMY,VZATRR'}
+  name: text_notes
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextArea
+- layout_properties: {grid_position: 'OHERFR,QZOPBH'}
+  name: text_web_url
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'BLPDGM,SVITYV'}
+  name: text_youtube_url
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'FNFMLR,JRFIXT'}
+  name: checkbox_complete
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Checkbox
 container: {type: ColumnPanel}
 is_package: true

@@ -12,11 +12,26 @@ class TripsAdmin(TripsAdminTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+
+    # Load trips into the repeating panel
     self.load_trips()
 
-    def load_trips(self):
-      self.rp_trips.items = anvil.server.call("get_all_trips")
+  def load_trips(self):
+    """
+    Fetch trips from the server and bind them to the repeating panel.
+    """
+    trips = anvil.server.call("get_all_trips_admin")
+    # alert(f"Loaded {len(trips)} trips")
+    self.rp_trips.items = trips
+    # trips = anvil.server.call("get_all_trips_admin")
+    # self.rp_trips.items = trips
 
-    def btn_new_trip_click(self, **e):
+
+  @handle("btn_new_trip", "click")
+  def btn_new_trip_click(self, **e):
+      """
+      Open TripEditor in 'new trip' mode.
+      """
+      print('New trip button clicked')
       open_form("TripEditor", trip_row=None)
-      
+

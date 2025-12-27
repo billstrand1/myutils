@@ -26,3 +26,8 @@ class TripEditor(TripEditorTemplate):
 
     self.trip_assets_manager.set_trip(self.trip_row)
     alert("Trip saved")
+
+  @handle("button_cancel", "click")
+  def button_cancel_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    pass

@@ -1,6 +1,7 @@
 import anvil.email
 import anvil.users
 import anvil.tables as tables
+from anvil.tables import order_by
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
@@ -8,26 +9,27 @@ import datetime
 
 
 @anvil.server.callable
-def get_all_trips():
+def get_all_trips_admin():
+  print('getting all trips admin')
   # return list(app_tables.trips.search(order_by="start_date"))
   # tables.order_by("name", ascending=False)
   # return list(app_tables.trips.search(tables.order_by("start_date", ascending=False)))
-  return (get_trips_for_year(2025))
+  return list(get_trips_for_year(2025))
+
+
 
 
 @anvil.server.callable
 def get_trips_for_year(year):
+  print(f'getting trips for year {year}')
   start = datetime.date(year, 1, 1)
   end   = datetime.date(year + 1, 1, 1)
 
   rows = app_tables.trips.search(
-    tables.order_by("start_date", ascending=True),
+    tables.order_by("start_date", ascending=False),
     start_date=q.between(start, end)
   )
-
-  # rows = app_tables.trips.get(trip_id='25-06 Porto')
-
-  # Return rows directly (LiveObjects are fine)
+  
   return list(rows)
 
 @anvil.server.callable
