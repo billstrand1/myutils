@@ -6,6 +6,12 @@ from anvil.tables import app_tables
 import anvil.server
 import datetime
 
+
+@anvil.server.callable
+def get_all_trips():
+  return list(app_tables.trips.search(order_by="start_date"))
+
+
 @anvil.server.callable
 def get_trips_for_year(year):
   start = datetime.date(year, 1, 1)
