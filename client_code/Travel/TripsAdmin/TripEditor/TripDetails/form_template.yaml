@@ -1,3 +1,28 @@
-components: []
+components:
+- components:
+  - layout_properties: {grid_position: 'UJOZFB,YSYGBM'}
+    name: text_trip_id
+    properties: {text: ''}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  - layout_properties: {grid_position: 'LFKBUW,XOSIUR'}
+    name: text_trip_description
+    properties: {text: ''}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  layout_properties: {grid_position: 'DEGGXJ,WWQBBW'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'CIDBXM,RYOPDA'}
+  name: text_country
+  properties: {text: ''}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'RMXRZO,IETHXF'}
+  name: text_city
+  properties: {text: ''}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'SBDSPE,AWZQEY'}
+  name: text_trip_id_copy
+  properties: {text: ''}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
 container: {type: ColumnPanel}
 is_package: true

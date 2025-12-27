@@ -7,10 +7,22 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-
 class TripEditor(TripEditorTemplate):
-  def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
+  def __init__(self, trip_row=None, **properties):
     self.init_components(**properties)
+    self.trip_row = trip_row
 
-    # Any code you write here will run before the form opens.
+    self.trip_details.load_trip(trip_row)
+    self.trip_assets_manager.load_trip(trip_row)
+
+  @handle("button_save", "click")
+  def button_save_click(self, **event_args):
+    trip_data = self.trip_details.collect_data()
+
+    if self.trip_row:
+      anvil.server.call("update_trip", self.trip_row['id'], trip_data)
+    else:
+      self.trip_row = anvil.server.call("create_trip", trip_data)
+
+    self.trip_assets_manager.set_trip(self.trip_row)
+    alert("Trip saved")

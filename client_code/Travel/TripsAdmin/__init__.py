@@ -12,10 +12,10 @@ class TripsAdmin(TripsAdminTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    # self.load_trips()
+    self.load_trips()
 
-    # def load_trips(self):
-    self.rp_trips.items = anvil.server.call("get_all_trips")
+    def load_trips(self):
+      self.rp_trips.items = anvil.server.call("get_all_trips")
 
     def btn_new_trip_click(self, **e):
       open_form("TripEditor", trip_row=None)
