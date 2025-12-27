@@ -9,7 +9,10 @@ import datetime
 
 @anvil.server.callable
 def get_all_trips():
-  return list(app_tables.trips.search(order_by="start_date"))
+  # return list(app_tables.trips.search(order_by="start_date"))
+  # tables.order_by("name", ascending=False)
+  # return list(app_tables.trips.search(tables.order_by("start_date", ascending=False)))
+  return (get_trips_for_year(2025))
 
 
 @anvil.server.callable

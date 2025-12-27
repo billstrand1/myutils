@@ -1,3 +1,12 @@
-components: []
+components:
+- components:
+  - layout_properties: {grid_position: 'IWGGTV,XMGCRR'}
+    name: label_trip_edit_new
+    properties: {}
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  layout_properties: {grid_position: 'XLORAH,USGLCC'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
