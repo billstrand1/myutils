@@ -16,6 +16,8 @@ def get_trips_for_year(year):
     start_date=q.between(start, end)
   )
 
+  # rows = app_tables.trips.get(trip_id='25-06 Porto')
+
   # Return rows directly (LiveObjects are fine)
   return list(rows)
 
