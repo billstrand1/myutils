@@ -9,7 +9,7 @@ components:
   properties: {}
   type: ColumnPanel
 - layout_properties: {grid_position: 'PCALUP,UGQXPM'}
-  name: trip_details_panel
+  name: trip_details
   properties: {}
   type: ColumnPanel
 - layout_properties: {grid_position: 'RQIZQE,DZIAFZ'}
