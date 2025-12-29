@@ -13,8 +13,8 @@ def get_all_trips_admin():
   print('getting all trips admin')
   # return list(app_tables.trips.search(order_by="start_date"))
   # tables.order_by("name", ascending=False)
-  # return list(app_tables.trips.search(tables.order_by("start_date", ascending=False)))
-  return list(get_trips_for_year(2025))
+  return list(app_tables.trips.search(tables.order_by("start_date", ascending=False)))
+  # return list(get_trips_for_year(2025))
 
 
 @anvil.server.callable
