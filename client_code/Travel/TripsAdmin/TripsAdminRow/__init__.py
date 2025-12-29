@@ -29,12 +29,16 @@ class TripsAdminRow(TripsAdminRowTemplate):
     city = trip['city']
     state = trip['state']
 
-    if country and city:
+    if country and city and state:
       self.lbl_location.text = f"{city}, {state} {country}"
+    elif city and state:
+      self.lbl_location.text = f"{city}, {state}"
+    elif country and state:
+      self.lbl_location.text = f"{state} {country}"
+    elif country and city:
+      self.lbl_location.text = f"{city}, {country}"
     elif country:
       self.lbl_location.text = country
-    elif city:
-      self.lbl_location.text = city
     else:
       self.lbl_location.text = ""
 

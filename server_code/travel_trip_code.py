@@ -53,7 +53,7 @@ def create_trip(data):
 
 @anvil.server.callable
 def update_trip(trip_row, data):
-  app_tables.trips.add_row(**data)
+  trip_row.update(**data)
   
   # trip_row.update(
   #   trip_description=data["trip_description"],

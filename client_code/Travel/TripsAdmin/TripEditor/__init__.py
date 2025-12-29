@@ -30,7 +30,8 @@ class TripEditor(TripEditorTemplate):
       self.trip_row = anvil.server.call("create_trip", trip_data)
 
     # self.trip_assets_manager.set_trip(self.trip_row)
-    alert("Trip saved")
+    n=Notification("Trip Saved",  title= 'Success.')#("Trip saved")
+    n.show()
     open_form("Travel.TripsAdmin")
     
 
