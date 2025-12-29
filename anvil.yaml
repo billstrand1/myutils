@@ -205,14 +205,17 @@ db_schema:
     - admin_ui: {width: 99}
       name: complete
       type: bool
-    - admin_ui: {order: 0.054931640625, width: 200}
+    - admin_ui: {order: 0.054931640625, width: 95}
       name: country
       type: string
-    - admin_ui: {width: 200}
+    - admin_ui: {order: 2.625, width: 66}
       name: city
       type: string
-    - admin_ui: {width: 200}
+    - admin_ui: {order: 5.625, width: 200}
       name: country_code
+      type: string
+    - admin_ui: {order: 4.625, width: 53}
+      name: state
       type: string
     server: full
     title: trips

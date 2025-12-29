@@ -6,7 +6,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
-from ..TripEditor import TripEditor
+# from ..TripEditor import TripEditor
 
 class TripsAdminRow(TripsAdminRowTemplate):
   def __init__(self, **properties):
@@ -27,9 +27,10 @@ class TripsAdminRow(TripsAdminRowTemplate):
     # Location
     country = trip['country']
     city = trip['city']
+    state = trip['state']
 
     if country and city:
-      self.lbl_location.text = f"{city}, {country}"
+      self.lbl_location.text = f"{city}, {state} {country}"
     elif country:
       self.lbl_location.text = country
     elif city:

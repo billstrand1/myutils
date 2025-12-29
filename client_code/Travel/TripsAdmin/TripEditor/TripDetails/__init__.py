@@ -22,9 +22,11 @@ class TripDetails(TripDetailsTemplate):
     self.dp_start.date = trip['start_date']
     self.dp_end.date = trip['end_date']
     self.txt_notes.text = trip['notes']
+    self.txt_state.text = trip['state']
 
   def collect_data(self):
     if not self.txt_country.text:
+      alert('Country is required')
       raise Exception("Country is required")
 
     return {
@@ -35,4 +37,5 @@ class TripDetails(TripDetailsTemplate):
       "start_date": self.dp_start.date,
       "end_date": self.dp_end.date,
       "notes": self.txt_notes.text,
+      "state": self.txt_state.text,
     }

@@ -7,7 +7,6 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-
 class TripsAdmin(TripsAdminTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -33,5 +32,6 @@ class TripsAdmin(TripsAdminTemplate):
       Open TripEditor in 'new trip' mode.
       """
       print('New trip button clicked')
-      open_form("TripEditor", trip_row=None)
+      # open_form("TripEditor", trip_row=None)
+      open_form("Travel.TripsAdmin.TripEditor", trip_row=None)
 

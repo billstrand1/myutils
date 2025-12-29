@@ -12,7 +12,11 @@ components:
     name: txt_city
     properties: {placeholder: City}
     type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
-  - layout_properties: {grid_position: 'LXQFRW,UQSEEG'}
+  - layout_properties: {grid_position: 'OPSKAN,ZRHPID'}
+    name: txt_state
+    properties: {placeholder: State}
+    type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - layout_properties: {grid_position: 'OPSKAN,IZHNVO'}
     name: txt_country
     properties: {placeholder: Country}
     type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox

@@ -3,15 +3,20 @@ from anvil import *
 import anvil.server
 import m3.components as m3
 import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
+# import anvil.tables as tables
+# import anvil.tables.query as q
+# from anvil.tables import app_tables
 
 class TripEditor(TripEditorTemplate):
   def __init__(self, trip_row=None, **properties):
     self.init_components(**properties)
     self.trip_row = trip_row
 
+    if trip_row:
+      self.lbl_title.text = 'Edit Trip'
+    else:
+      self.lbl_title.text = 'New Trip'
+      
     self.trip_details.load_trip(trip_row)
     # self.trip_assets_manager.load_trip(trip_row)
 
@@ -26,7 +31,9 @@ class TripEditor(TripEditorTemplate):
 
     # self.trip_assets_manager.set_trip(self.trip_row)
     alert("Trip saved")
+    open_form("Travel.TripsAdmin")
+    
 
   @handle("button_cancel", "click")
   def button_cancel_click(self, **event_args):
-    open_form("TripsAdmin")
+    open_form("Travel.TripsAdmin")
