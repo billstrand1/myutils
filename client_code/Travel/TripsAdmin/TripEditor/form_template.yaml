@@ -1,23 +1,25 @@
 components:
 - components:
   - layout_properties: {grid_position: 'IWGGTV,XMGCRR'}
-    name: label_trip_edit_new
-    properties: {}
+    name: lbl_title
+    properties: {bold: true, font_size: 18, text: Trip Editor}
     type: form:dep_lin1x4oec0ytd:_Components.Text
-  layout_properties: {grid_position: 'XLORAH,USGLCC'}
+  - layout_properties: {grid_position: 'EJJONW,CJLJMP'}
+    name: trip_details
+    properties: {}
+    type: form:Travel.TripsAdmin.TripEditor.TripDetails
+  - layout_properties: {grid_position: 'FBTJGY,QVRKTN'}
+    name: divider_1
+    properties: {}
+    type: form:dep_lin1x4oec0ytd:_Components.Divider
+  - layout_properties: {grid_position: 'MPAMGC,NLKWYF'}
+    name: lbl_assets_placeholder
+    properties:
+      text: |
+        Assets will be managed after saving trip
+    type: form:dep_lin1x4oec0ytd:_Components.Text
+  layout_properties: {grid_position: 'SXIVJM,KSSTXX'}
   name: column_panel_1
-  properties: {}
-  type: ColumnPanel
-- layout_properties: {grid_position: 'PCALUP,UGQXPM'}
-  name: trip_details
-  properties: {}
-  type: ColumnPanel
-- layout_properties: {grid_position: 'RQIZQE,DZIAFZ'}
-  name: divider_1
-  properties: {}
-  type: form:dep_lin1x4oec0ytd:_Components.Divider
-- layout_properties: {grid_position: 'YRJJQW,POVQJG'}
-  name: trip_assets_panel
   properties: {}
   type: ColumnPanel
 - components:
@@ -31,7 +33,7 @@ components:
     name: button_cancel
     properties: {text: Cancel}
     type: form:dep_lin1x4oec0ytd:_Components.Button
-  layout_properties: {grid_position: 'XJEFHY,KVDKIV'}
+  layout_properties: {grid_position: 'EVIOEK,TGIRWI'}
   name: flow_panel_1
   properties: {}
   type: FlowPanel

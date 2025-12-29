@@ -13,21 +13,20 @@ class TripEditor(TripEditorTemplate):
     self.trip_row = trip_row
 
     self.trip_details.load_trip(trip_row)
-    self.trip_assets_manager.load_trip(trip_row)
+    # self.trip_assets_manager.load_trip(trip_row)
 
   @handle("button_save", "click")
   def button_save_click(self, **event_args):
     trip_data = self.trip_details.collect_data()
 
     if self.trip_row:
-      anvil.server.call("update_trip", self.trip_row['id'], trip_data)
+      anvil.server.call("update_trip", self.trip_row, trip_data)
     else:
       self.trip_row = anvil.server.call("create_trip", trip_data)
 
-    self.trip_assets_manager.set_trip(self.trip_row)
+    # self.trip_assets_manager.set_trip(self.trip_row)
     alert("Trip saved")
 
   @handle("button_cancel", "click")
   def button_cancel_click(self, **event_args):
-    """This method is called when the component is clicked."""
-    pass
+    open_form("TripsAdmin")

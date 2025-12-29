@@ -49,21 +49,12 @@ def create_trip(data):
 
 
 @anvil.server.callable
-def update_trip(trip_id, data):
-  trip = app_tables.trips.get(id=trip_id)
-  if not trip:
-    raise Exception("Trip not found")
-
-  if not data.get("country"):
-    raise Exception("Country is required")
-
-  trip.update(
-    trip_title=data.get("trip_title"),
-    trip_description=data.get("trip_description"),
-    start_date=data.get("start_date"),
-    end_date=data.get("end_date"),
-    country=data.get("country").strip(),
-    city=(data.get("city") or "").strip(),
-    country_code=(data.get("country_code") or "").strip(),
+def update_trip(trip_row, data):
+  trip_row.update(
+    trip_description=data["trip_description"],
+    country=data["country"],
+    city=data["city"],
+    start_date=data["start_date"],
+    end_date=data["end_date"],
+    notes=data["notes"],
   )
-
