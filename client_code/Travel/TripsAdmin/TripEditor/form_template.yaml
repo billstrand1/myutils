@@ -8,6 +8,10 @@ components:
     name: trip_details
     properties: {}
     type: form:Travel.TripsAdmin.TripEditor.TripDetails
+  - layout_properties: {grid_position: 'QXRCPJ,LUCJDP'}
+    name: trip_assets_manager
+    properties: {}
+    type: form:Travel.TripsAdmin.TripEditor.TripAssetsManager
   - layout_properties: {grid_position: 'FBTJGY,QVRKTN'}
     name: divider_1
     properties: {}
