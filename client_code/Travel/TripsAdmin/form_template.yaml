@@ -4,6 +4,8 @@ components:
     - layout_properties: {width: 214.51958125}
       name: lbl_title
       properties:
+        bold: true
+        font_size: 18
         text: |
           Trips Admin
       type: form:dep_lin1x4oec0ytd:_Components.Text
