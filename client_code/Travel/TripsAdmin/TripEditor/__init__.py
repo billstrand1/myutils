@@ -16,7 +16,7 @@ class TripEditor(TripEditorTemplate):
       self.lbl_title.text = 'New Trip'
       
     self.trip_details.load_trip(trip_row)
-    # self.trip_assets_manager.load_trip(trip_row)
+    self.trip_assets_manager.load_trip(trip_row)
 
   @handle("button_save", "click")
   def button_save_click(self, **event_args):

@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'UUKMIV,PDRRQG'}
     name: lbl_title
-    properties: {text: Trip Assets}
+    properties: {bold: true, font_size: 18, text: Trip Assets}
     type: form:dep_lin1x4oec0ytd:_Components.Text
   - layout_properties: {grid_position: 'JATWXT,QPGTQF'}
     name: lbl_hint
@@ -12,9 +12,10 @@ components:
     type: form:dep_lin1x4oec0ytd:_Components.Text
   - layout_properties: {grid_position: 'LNQCWK,NAQOQW'}
     name: rp_assets
-    properties: {item_template: Travel.TripsAdmin.TripEditor.TripAssetsManager.ItemTemplate2, visible: false}
+    properties: {item_template: Travel.TripsAdmin.TripEditor.TripAssetsManager.TripAssetRow, visible: false}
     type: RepeatingPanel
-  - layout_properties: {grid_position: 'HVRWOE,WZLEMY'}
+  - event_bindings: {}
+    layout_properties: {grid_position: 'HVRWOE,WZLEMY'}
     name: btn_add_asset
     properties: {text: Add Asset, visible: false}
     type: form:dep_lin1x4oec0ytd:_Components.Button

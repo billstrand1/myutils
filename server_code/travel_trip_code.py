@@ -38,29 +38,7 @@ def create_trip(data):
   print(f"data to add to trips row:\n{data}")
   return app_tables.trips.add_row(**data)
   
-  # return app_tables.trips.add_row(
-  #   trip_id=data.get("trip_id"),
-  #   trip_description=data.get("trip_description"),
-  #   notes=data.get("notes"),
-  #   start_date=data.get("start_date"),
-  #   end_date=data.get("end_date"),
-  #   country=data.get("country").strip(),
-  #   city=(data.get("city") or "").strip(),
-  #   country_code=(data.get("country_code") or "").strip(),
-  #   state=(data.get("state") or "").strip(),
-  # )
-
 
 @anvil.server.callable
 def update_trip(trip_row, data):
   trip_row.update(**data)
-  
-  # trip_row.update(
-  #   trip_description=data["trip_description"],
-  #   country=data["country"],
-  #   city=data["city"],
-  #   start_date=data["start_date"],
-  #   end_date=data["end_date"],
-  #   notes=data["notes"],
-  #   state=data['state']
-  # )
