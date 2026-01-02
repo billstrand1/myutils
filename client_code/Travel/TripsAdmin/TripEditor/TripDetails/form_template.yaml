@@ -54,7 +54,7 @@ components:
   type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
 - layout_properties: {grid_position: 'RGMKDE,MCDFHQ'}
   name: file_itinerary
-  properties: {}
+  properties: {text: Itinerary File upload}
   type: form:dep_lin1x4oec0ytd:_Components.FileLoader
 - layout_properties: {grid_position: 'RGMKDE,UNTRIW'}
   name: lbl_filename
