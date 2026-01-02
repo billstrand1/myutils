@@ -11,6 +11,11 @@ class TripDetails(TripDetailsTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.trip_row = None
+
+    # self.link_download.icon = "fa:external-link"
+    # self.link_download.tooltip = "Open in New Tab"
+    # self.link_download.visible = True
+
     
   def load_trip(self, trip):
     self.trip_row = trip
@@ -33,6 +38,12 @@ class TripDetails(TripDetailsTemplate):
     self.txt_youtube_url.text = trip['youtube_url']
 
     self._update_itinerary_status()
+
+    self.btn_open_web_url.visible = bool(trip['web_url'])
+    self.btn_open_youtube_url.visible = bool(trip['youtube_url'])
+    self.btn_open_tripit_edit.visible = bool(trip['tripit_edit'])
+    self.btn_open_tripit_read.visible = bool(trip['tripit_read'])
+
 
   def collect_data(self):
     if not self.txt_country.text:
@@ -81,3 +92,28 @@ class TripDetails(TripDetailsTemplate):
   @handle("file_itinerary", "change")
   def file_itinerary_change(self, file, **event_args):
     self._update_itinerary_status()
+
+  def _open_url(self, url):
+    if not url:
+      alert("No URL to open")
+      return
+    open_form("UrlRedirect", url=url)
+
+  @handle("btn_open_web_url", "click")
+  def btn_open_web_url_click(self, **e):
+    self._open_url(self.txt_web_url.text)
+  
+  @handle("btn_open_youtube_url", "click")
+  def btn_open_youtube_url_click(self, **e):
+    self._open_url(self.txt_youtube_url.text)
+  
+  @handle("btn_open_tripit_edit", "click")
+  def btn_open_tripit_edit_click(self, **e):
+    self._open_url(self.txt_tripit_edit.text)
+  
+  @handle("btn_open_tripit_read", "click")
+  def btn_open_tripit_read_click(self, **e):
+    self._open_url(self.txt_tripit_read.text)
+
+
+

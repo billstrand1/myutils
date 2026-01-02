@@ -33,3 +33,29 @@ class TripAssetRow(TripAssetRowTemplate):
     )
     alert(editor, large=True, buttons=[])
     self.parent.raise_event("x-refresh")
+
+  @handle("link_delete", "click")
+  def link_delete_click(self, **event_args):
+    asset = self.item
+    if not asset:
+      return
+
+    desc = asset['description'] or "this asset"
+
+    confirmed = confirm(
+      f"Are you sure you want to delete {desc}?",
+      title="Delete Asset",
+      buttons=[
+        ("Delete", True),
+        ("Cancel", False),
+      ],
+      large=False
+    )
+
+    if not confirmed:
+      return
+
+    anvil.server.call("delete_asset", asset)
+
+    # Tell TripAssetsManager to refresh
+    self.parent.raise_event("x-refresh")

@@ -118,4 +118,12 @@ def update_asset(asset_row, data):
     asset_type=asset_type,
     is_thumbnail=data['is_thumbnail']
   )
-  
+
+
+@anvil.server.callable
+def delete_asset(asset_row):
+  # Defensive check
+  if not asset_row:
+    raise Exception("Asset not found")
+
+  asset_row.delete()

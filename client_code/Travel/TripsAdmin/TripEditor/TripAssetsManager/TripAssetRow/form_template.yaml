@@ -16,7 +16,12 @@ components:
   name: link_edit
   properties: {icon: 'mi:edit', icon_size: 20, text: Edit}
   type: form:dep_lin1x4oec0ytd:_Components.Link
+- event_bindings: {}
+  layout_properties: {grid_position: 'QCBRBY,EUSBED'}
+  name: link_delete
+  properties: {background_color: '', icon: 'mi:delete', icon_color: 'theme:Error', icon_size: 20, text: Delete}
+  type: form:dep_lin1x4oec0ytd:_Components.Link
 container:
-  properties: {col_widths: '{"KCJRLL":15,"RKTRFN":15,"RJKIFX":20,"KOAIRZ":10}'}
+  properties: {col_widths: '{"KCJRLL":15,"RKTRFN":15,"RJKIFX":15,"KOAIRZ":10,"EUSBED":17}'}
   type: ColumnPanel
 is_package: true
