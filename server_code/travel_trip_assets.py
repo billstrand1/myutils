@@ -48,6 +48,16 @@ def get_assets_for_trip(trip_row):
 #   )
 @anvil.server.callable
 def add_asset(trip_row, data):
+  inputs = [
+    bool(data.get("file")),
+    bool(data.get("web_url")),
+    bool(data.get("youtube_url")),
+  ]
+
+  if sum(inputs) != 1:
+    raise Exception("Exactly one asset input is required")
+
+  
   asset_type = infer_asset_type(
     data.get("file"),
     data.get("web_url"),
@@ -80,6 +90,15 @@ def add_asset(trip_row, data):
 
 @anvil.server.callable
 def update_asset(asset_row, data):
+  inputs = [
+    bool(data.get("file")),
+    bool(data.get("web_url")),
+    bool(data.get("youtube_url")),
+  ]
+
+  if sum(inputs) != 1:
+    raise Exception("Exactly one asset input is required")
+
   asset_type = infer_asset_type(
     data.get("file") or asset_row['file'],
     data.get("web_url"),

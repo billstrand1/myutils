@@ -52,12 +52,13 @@ components:
   name: txt_tripit_read
   properties: {placeholder: TripIt Read Only Link}
   type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
-- layout_properties: {grid_position: 'RGMKDE,MCDFHQ'}
+- event_bindings: {}
+  layout_properties: {grid_position: 'RGMKDE,MCDFHQ'}
   name: file_itinerary
   properties: {text: Itinerary File upload}
   type: form:dep_lin1x4oec0ytd:_Components.FileLoader
 - layout_properties: {grid_position: 'RGMKDE,UNTRIW'}
-  name: lbl_filename
+  name: lbl_itinerary_status
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 - layout_properties: {grid_position: 'XLZRFO,TPZVMM'}

@@ -32,6 +32,8 @@ class TripDetails(TripDetailsTemplate):
     self.txt_web_url.text = trip['web_url']
     self.txt_youtube_url.text = trip['youtube_url']
 
+    self._update_itinerary_status()
+
   def collect_data(self):
     if not self.txt_country.text:
       alert('Country is required')
@@ -60,3 +62,22 @@ class TripDetails(TripDetailsTemplate):
         else (self.trip_row['itinerary'] if self.trip_row else None)
       ),
     }
+
+  def _update_itinerary_status(self):
+    # New file selected in this session
+      if self.file_itinerary.file:
+        name = getattr(self.file_itinerary.file, "name", None) or "(selected file)"
+        self.lbl_itinerary_status.text = f"Selected: {name}"
+        return
+
+    # Existing file on the trip
+      if self.trip_row and self.trip_row['itinerary']:
+        existing = self.trip_row['itinerary']
+        name = getattr(existing, "name", None) or "(existing file)"
+        self.lbl_itinerary_status.text = f"Current: {name}"
+      else:
+        self.lbl_itinerary_status.text = "No itinerary file"
+
+  @handle("file_itinerary", "change")
+  def file_itinerary_change(self, file, **event_args):
+    self._update_itinerary_status()

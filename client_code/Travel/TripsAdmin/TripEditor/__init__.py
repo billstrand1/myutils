@@ -17,6 +17,14 @@ class TripEditor(TripEditorTemplate):
       
     self.trip_details.load_trip(trip_row)
     self.trip_assets_manager.load_trip(trip_row)
+    
+    # TripIt links: ONLY visible for new trips
+    is_new = trip_row is None
+    self.trip_details.txt_tripit_edit.visible = is_new
+    self.trip_details.txt_tripit_read.visible = is_new
+    self.trip_details.txt_tripit_edit.enabled = is_new
+    self.trip_details.txt_tripit_read.enabled = is_new
+
 
   @handle("button_save", "click")
   def button_save_click(self, **event_args):

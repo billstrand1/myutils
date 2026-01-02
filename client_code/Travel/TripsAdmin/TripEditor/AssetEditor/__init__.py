@@ -41,32 +41,26 @@ class AssetEditor(AssetEditorTemplate):
     self.txt_youtube_url.text = asset['youtube_url']
     self._update_file_status()
     
+  def _count_asset_inputs(self):
+    return sum([
+      bool(self.file_loader.file),
+      bool(self.txt_web_url.text),
+      bool(self.txt_youtube_url.text),
+    ])
 
-  # def _show_existing_file_status(self):
-  #   """
-  #   Updates the status label to reflect whether we have an existing file (edit mode)
-  #   or whether a new file has been selected.
-  #   """
-  #   # If user has selected a new file in this session, show that first
-  #   new_file = self.file_loader.file
-  #   if new_file is not None:
-  #     name = getattr(new_file, "name", None) or "(selected file)"
-  #     self.lbl_file_status.text = f"Selected: {name}"
-  #     return
-  
-  #   # Otherwise show existing file (edit mode)
-  #   if self.asset_row is not None and self.asset_row['file'] is not None:
-  #     existing = self.asset_row['file']
-  #     name = getattr(existing, "name", None) or "(existing file)"
-  #     self.lbl_file_status.text = f"Current: {name}"
-  #   else:
-  #     self.lbl_file_status.text = "No file selected"
       
   @handle("btn_save", "click")
   def btn_save_click(self, **e):
-    if not (self.file_loader.file or self.txt_web_url.text or self.txt_youtube_url.text):
-      alert("Provide a file or a URL")
+    count = self._count_asset_inputs()
+
+    if count == 0:
+      alert("Provide exactly one: file, web URL, or YouTube URL")
       return
+    
+    if count > 1:
+      alert("Only ONE asset type is allowed (file OR web URL OR YouTube URL)")
+      return
+
 
     data = {
       "file": self.file_loader.file,
