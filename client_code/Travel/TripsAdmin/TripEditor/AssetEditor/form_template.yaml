@@ -17,13 +17,6 @@ components:
     name: txt_notes
     properties: {placeholder: Notes}
     type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextArea
-  - layout_properties: {grid_position: 'ATZUAH,QTWYSF'}
-    name: dd_asset_type
-    properties:
-      items: []
-      placeholder: Asset Type
-      visible: false
-    type: form:dep_lin1x4oec0ytd:_Components.DropdownMenu
   - layout_properties: {grid_position: 'HOMKOE,CFXGBF'}
     name: txt_web_url
     properties: {placeholder: Website URL}
