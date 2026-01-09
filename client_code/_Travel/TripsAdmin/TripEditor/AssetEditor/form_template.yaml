@@ -1,6 +1,11 @@
 components:
 - components:
   - event_bindings: {}
+    layout_properties: {grid_position: 'CMEPCY,EWHIAI'}
+    name: btn_remove_itinerary
+    properties: {icon: 'mi:cancel', icon_color: 'theme:Error', text: Remove File}
+    type: form:dep_lin1x4oec0ytd:_Components.Link
+  - event_bindings: {}
     layout_properties: {grid_position: 'CMEPCY,MMHOYM'}
     name: file_loader
     properties: {}
@@ -21,10 +26,20 @@ components:
     name: txt_web_url
     properties: {placeholder: Website URL}
     type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - event_bindings: {}
+    layout_properties: {grid_position: 'HOMKOE,LLQJSJ'}
+    name: btn_open_web_url
+    properties: {appearance: tonal, icon: 'mi:exit_to_app', tooltip: Open Link}
+    type: form:dep_lin1x4oec0ytd:_Components.Button
   - layout_properties: {grid_position: 'EJHJZV,EQCLPF'}
     name: txt_youtube_url
     properties: {placeholder: YouTube URL}
     type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - event_bindings: {}
+    layout_properties: {grid_position: 'EJHJZV,VROBXV'}
+    name: btn_open_youtube_url
+    properties: {appearance: tonal, icon: 'mi:exit_to_app', tooltip: Open Link}
+    type: form:dep_lin1x4oec0ytd:_Components.Button
   - layout_properties: {grid_position: 'KGSKJT,EIANGE'}
     name: chk_thumbnail
     properties: {text: 'Thumbnail?'}
@@ -39,7 +54,7 @@ components:
     type: form:dep_lin1x4oec0ytd:_Components.Button
   layout_properties: {grid_position: 'HZZFDG,MUUPPN'}
   name: column_panel_1
-  properties: {col_widths: '{"BBNRPK":10,"ZUWRDV":50,"MMHOYM":20,"SLSDWK":40}'}
+  properties: {col_widths: '{"BBNRPK":10,"ZUWRDV":50,"MMHOYM":20,"SLSDWK":40,"CFXGBF":51,"LLQJSJ":9,"EQCLPF":51,"VROBXV":9}'}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

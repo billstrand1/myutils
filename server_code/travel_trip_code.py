@@ -41,4 +41,9 @@ def create_trip(data):
 
 @anvil.server.callable
 def update_trip(trip_row, data):
-  trip_row.update(**data)
+  # trip_row.update(**data)
+  #From 2A.3:
+  clear_itin = data.pop("_clear_itinerary", False)
+  if clear_itin:
+    data["itinerary"] = None
+    trip_row.update(**data)

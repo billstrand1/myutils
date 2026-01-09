@@ -19,11 +19,11 @@ class TripEditor(TripEditorTemplate):
     self.trip_assets_manager.load_trip(trip_row)
     
     # TripIt links: ONLY visible for new trips
-    is_new = trip_row is None
-    self.trip_details.txt_tripit_edit.visible = is_new
-    self.trip_details.txt_tripit_read.visible = is_new
-    self.trip_details.txt_tripit_edit.enabled = is_new
-    self.trip_details.txt_tripit_read.enabled = is_new
+    # is_new = trip_row is None
+    # self.trip_details.txt_tripit_edit.visible = is_new
+    # self.trip_details.txt_tripit_read.visible = is_new
+    # self.trip_details.txt_tripit_edit.enabled = is_new
+    # self.trip_details.txt_tripit_read.enabled = is_new
 
 
   @handle("button_save", "click")
@@ -38,9 +38,9 @@ class TripEditor(TripEditorTemplate):
     # self.trip_assets_manager.set_trip(self.trip_row)
     n=Notification("Trip Saved",  title= 'Success.')#("Trip saved")
     n.show()
-    open_form("Travel.TripsAdmin")
+    open_form("_Travel.TripsAdmin")
     
 
   @handle("button_cancel", "click")
   def button_cancel_click(self, **event_args):
-    open_form("Travel.TripsAdmin")
+    open_form("_Travel.TripsAdmin")

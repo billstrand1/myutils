@@ -70,6 +70,11 @@ components:
   properties: {appearance: tonal, icon: 'mi:exit_to_app', tooltip: Open Link}
   type: form:dep_lin1x4oec0ytd:_Components.Button
 - event_bindings: {}
+  layout_properties: {grid_position: 'RGMKDE,DZBOTY'}
+  name: btn_remove_itinerary
+  properties: {icon: 'mi:cancel', icon_color: 'theme:Error', text: Remove File}
+  type: form:dep_lin1x4oec0ytd:_Components.Link
+- event_bindings: {}
   layout_properties: {grid_position: 'RGMKDE,MCDFHQ'}
   name: file_itinerary
   properties: {text: Itinerary File upload}

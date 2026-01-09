@@ -33,5 +33,5 @@ class TripsAdmin(TripsAdminTemplate):
       """
       print('New trip button clicked')
       # open_form("TripEditor", trip_row=None)
-      open_form("Travel.TripsAdmin.TripEditor", trip_row=None)
+      open_form("_Travel.TripsAdmin.TripEditor", trip_row=None)
 

@@ -6,19 +6,19 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from ..... import _Travel
 
 class TripDetails(TripDetailsTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.trip_row = None
-
-    # self.link_download.icon = "fa:external-link"
-    # self.link_download.tooltip = "Open in New Tab"
-    # self.link_download.visible = True
-
+    self._clear_itinerary = False
+    
     
   def load_trip(self, trip):
     self.trip_row = trip
+    self._clear_itinerary = False
+    
     if trip is None:
       return
       
@@ -50,6 +50,14 @@ class TripDetails(TripDetailsTemplate):
       alert('Country is required')
       raise Exception("Country is required")
 
+    itinerary_value = None
+    if self._clear_itinerary:
+      itinerary_value = None
+    elif self.file_itinerary.file is not None:
+      itinerary_value = self.file_itinerary.file
+    elif self.trip_row:
+      itinerary_value = self.trip_row['itinerary']
+    
     return {
       "trip_id": self.txt_trip_id.text,
       "trip_description": self.txt_description.text,
@@ -66,11 +74,16 @@ class TripDetails(TripDetailsTemplate):
       "web_url": self.txt_web_url.text,
       "youtube_url": self.txt_youtube_url.text,
 
+      #From 2A2 Update.
+      "_clear_itinerary": self._clear_itinerary,
       # itinerary file (keep existing if not replaced)
       "itinerary": (
-        self.file_itinerary.file
-        if self.file_itinerary.file is not None
-        else (self.trip_row['itinerary'] if self.trip_row else None)
+        itinerary_value
+
+        # self.file_itinerary.file
+        # if self.file_itinerary.file is not None
+        # else (self.trip_row['itinerary'] if self.trip_row else None)
+        
       ),
     }
 
@@ -101,11 +114,29 @@ class TripDetails(TripDetailsTemplate):
 
   @handle("btn_open_web_url", "click")
   def btn_open_web_url_click(self, **e):
-    self._open_url(self.txt_web_url.text)
+    url = (self.txt_web_url.text or "").strip()
+    if not url:
+      alert("No web URL to open")
+      return
+  
+    _Travel.open_in_file_viewer_dt(
+      title=self.txt_description.text or "Trip Web Link",
+      web_url=url,
+      comments="Web link"
+    )
   
   @handle("btn_open_youtube_url", "click")
   def btn_open_youtube_url_click(self, **e):
-    self._open_url(self.txt_youtube_url.text)
+    url = (self.txt_youtube_url.text or "").strip()
+    if not url:
+      alert("No YouTube URL to open")
+      return
+  
+    _Travel.open_in_file_viewer_dt(
+      title=self.txt_description.text or "Trip YouTube Link",
+      youtube_url=url,
+      comments="YouTube link"
+    )
   
   @handle("btn_open_tripit_edit", "click")
   def btn_open_tripit_edit_click(self, **e):
@@ -114,6 +145,16 @@ class TripDetails(TripDetailsTemplate):
   @handle("btn_open_tripit_read", "click")
   def btn_open_tripit_read_click(self, **e):
     self._open_url(self.txt_tripit_read.text)
+
+  @handle("btn_remove_itinerary", "click")
+  def btn_remove_itinerary_click(self, **event_args):
+    if not (self.trip_row and self.trip_row['itinerary']):
+      alert("No itinerary file to remove")
+      return
+
+    if confirm("Remove the itinerary file? This cannot be undone.", title="Remove File"):
+      self._clear_itinerary = True
+      self.lbl_itinerary_status.text = "Will remove itinerary file on Save"
 
 
 

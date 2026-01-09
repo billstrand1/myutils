@@ -59,7 +59,7 @@ class TripsAdminRow(TripsAdminRowTemplate):
   def btn_edit_click(self, **event_args):
     # open_form("TripEditor", trip_row=self.item)
 
-    open_form("Travel.TripsAdmin.TripEditor", trip_row=self.item)
+    open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item)
 
 
 
