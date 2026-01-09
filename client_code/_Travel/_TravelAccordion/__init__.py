@@ -78,7 +78,8 @@ class _TravelAccordion(_TravelAccordionTemplate):
       self.label_status.text = f"Loading {year} trips…"
   
     trips = anvil.server.call("get_trips_for_year", year)
-  
+    # trips = app_tables.trips.get(trip_id='25-06 Porto')
+    
     self._all_trips = trips
     self.repeating_panel_trips.items = trips
   
