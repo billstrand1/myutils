@@ -43,7 +43,26 @@ def create_trip(data):
 def update_trip(trip_row, data):
   # trip_row.update(**data)
   #From 2A.3:
-  clear_itin = data.pop("_clear_itinerary", False)
-  if clear_itin:
-    data["itinerary"] = None
-    trip_row.update(**data)
+  # clear_itin = data.pop("_clear_itinerary", False)
+  # if clear_itin:
+  #   data["itinerary"] = None
+  #   trip_row.update(**data)
+
+  #Step 2 of fix:
+  ## Defensive: ensure Media overwrite is respected
+  trip_row.update(
+    trip_id=data.get("trip_id"),
+    trip_description=data.get("trip_description"),
+    country=data.get("country"),
+    city=data.get("city"),
+    state=data.get("state"),
+    start_date=data.get("start_date"),
+    end_date=data.get("end_date"),
+    notes=data.get("notes"),
+    tripit_edit=data.get("tripit_edit"),
+    tripit_read=data.get("tripit_read"),
+    miles=data.get("miles"),
+    web_url=data.get("web_url"),
+    youtube_url=data.get("youtube_url"),
+    itinerary=data.get("itinerary"),  # ← THIS IS THE IMPORTANT LINE
+  )

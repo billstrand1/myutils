@@ -50,14 +50,16 @@ class TripDetails(TripDetailsTemplate):
       alert('Country is required')
       raise Exception("Country is required")
 
-    itinerary_value = None
-    if self._clear_itinerary:
-      itinerary_value = None
-    elif self.file_itinerary.file is not None:
+      # Determine itinerary value explicitly
+    if self.file_itinerary.file is not None:
       itinerary_value = self.file_itinerary.file
+    elif self._clear_itinerary:
+      itinerary_value = None
     elif self.trip_row:
       itinerary_value = self.trip_row['itinerary']
-    
+    else:
+      itinerary_value = None
+
     return {
       "trip_id": self.txt_trip_id.text,
       "trip_description": self.txt_description.text,
@@ -74,18 +76,46 @@ class TripDetails(TripDetailsTemplate):
       "web_url": self.txt_web_url.text,
       "youtube_url": self.txt_youtube_url.text,
 
-      #From 2A2 Update.
-      "_clear_itinerary": self._clear_itinerary,
-      # itinerary file (keep existing if not replaced)
-      "itinerary": (
-        itinerary_value
-
-        # self.file_itinerary.file
-        # if self.file_itinerary.file is not None
-        # else (self.trip_row['itinerary'] if self.trip_row else None)
-        
-      ),
+      # CRITICAL: always send explicit value
+      "itinerary": itinerary_value,
     }
+    
+    # itinerary_value = None
+    # if self._clear_itinerary:
+    #   itinerary_value = None
+    # elif self.file_itinerary.file is not None:
+    #   itinerary_value = self.file_itinerary.file
+    # elif self.trip_row:
+    #   itinerary_value = self.trip_row['itinerary']
+    
+    # return {
+    #   "trip_id": self.txt_trip_id.text,
+    #   "trip_description": self.txt_description.text,
+    #   "country": self.txt_country.text,
+    #   "city": self.txt_city.text,
+    #   "state": self.txt_state.text,
+    #   "start_date": self.dp_start.date,
+    #   "end_date": self.dp_end.date,
+    #   "notes": self.txt_notes.text,
+
+    #   "tripit_edit": self.txt_tripit_edit.text,
+    #   "tripit_read": self.txt_tripit_read.text,
+    #   "miles": self.checkbox_miles.checked,
+    #   "web_url": self.txt_web_url.text,
+    #   "youtube_url": self.txt_youtube_url.text,
+
+    #   #From 2A2 Update.
+    #   "_clear_itinerary": self._clear_itinerary,
+    #   # itinerary file (keep existing if not replaced)
+    #   "itinerary": (
+    #     itinerary_value
+
+    #     # self.file_itinerary.file
+    #     # if self.file_itinerary.file is not None
+    #     # else (self.trip_row['itinerary'] if self.trip_row else None)
+        
+    #   ),
+    # }
 
   def _update_itinerary_status(self):
     # New file selected in this session
