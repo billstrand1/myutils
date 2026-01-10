@@ -21,9 +21,9 @@ class TripAssetRow(TripAssetRowTemplate):
     self.lbl_desc.text = asset['description'] or "(no description)"
     self.lbl_type.text = asset['asset_type']
 
-    self.lbl_thumbnail.visible = bool(asset['is_thumbnail'])
-    if asset['is_thumbnail']:
-      self.lbl_thumbnail.text = "Thumbnail"
+    # self.lbl_thumbnail.visible = bool(asset['is_thumbnail'])
+    # if asset['is_thumbnail']:
+    #   self.lbl_thumbnail.text = "Thumbnail"
 
   @handle("link_edit", "click")
   def link_edit_click(self, **event_args):

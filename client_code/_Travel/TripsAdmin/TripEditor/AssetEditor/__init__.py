@@ -38,7 +38,7 @@ class AssetEditor(AssetEditorTemplate):
     self._clear_file = False
     self.txt_description.text = asset['description']
     self.txt_notes.text = asset['notes']
-    self.chk_thumbnail.checked = asset['is_thumbnail']
+    # self.chk_thumbnail.checked = asset['is_thumbnail']
     self.txt_web_url.text = asset['web_url']
     self.txt_youtube_url.text = asset['youtube_url']
     self._update_file_status()
