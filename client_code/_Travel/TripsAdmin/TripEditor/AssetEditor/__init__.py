@@ -82,7 +82,7 @@ class AssetEditor(AssetEditorTemplate):
       "youtube_url": (self.txt_youtube_url.text or "").strip() or None,
       "description": self.txt_description.text,
       "notes": self.txt_notes.text,
-      "is_thumbnail": self.chk_thumbnail.checked,
+      # "is_thumbnail": self.chk_thumbnail.checked,
       "clear_file": self._clear_file,
     }
     
