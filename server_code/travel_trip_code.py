@@ -65,4 +65,5 @@ def update_trip(trip_row, data):
     web_url=data.get("web_url"),
     youtube_url=data.get("youtube_url"),
     itinerary=data.get("itinerary"),  # ← THIS IS THE IMPORTANT LINE
+    thumbnail=data.get("thumbnail"),   # NEW
   )

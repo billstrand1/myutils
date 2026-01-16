@@ -38,9 +38,18 @@ class TripEditor(TripEditorTemplate):
     # self.trip_assets_manager.set_trip(self.trip_row)
     n=Notification("Trip Saved",  title= 'Success.')#("Trip saved")
     n.show()
-    open_form("_Travel.TripsAdmin")
+    # open_form("_Travel.TripsAdmin")
     
 
   @handle("button_cancel", "click")
   def button_cancel_click(self, **event_args):
-    open_form("_Travel.TripsAdmin")
+    alert("Changes not saved", timeout=2)
+    # open_form("_Travel.TripsAdmin")
+
+  @handle("btn_return_home", "click")
+  def btn_return_home_click(self, **event_args):
+    if confirm(
+      "Return to Trips Admin?\nAny unsaved changes will be lost.",
+      title="Return to Trips"
+    ):
+      open_form("_Travel.TripsAdmin")

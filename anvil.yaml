@@ -126,9 +126,6 @@ db_schema:
       name: web_url
       type: string
     - admin_ui: {width: 200}
-      name: is_thumbnail
-      type: bool
-    - admin_ui: {width: 200}
       name: asset_type
       type: string
     - admin_ui: {width: 200}
@@ -160,7 +157,7 @@ db_schema:
     - admin_ui: {width: 102}
       name: qb_reports
       type: bool
-    - admin_ui: {width: 134}
+    - admin_ui: {order: 0.017578125, width: 69}
       name: cost
       type: number
     - admin_ui: {width: 200}
@@ -175,7 +172,7 @@ db_schema:
     - admin_ui: {width: 208}
       name: trip_description
       type: string
-    - admin_ui: {width: 178}
+    - admin_ui: {order: 0.05517578125, width: 139}
       name: itinerary
       type: media
     - admin_ui: {width: 153}
@@ -217,6 +214,9 @@ db_schema:
     - admin_ui: {order: 4.625, width: 53}
       name: state
       type: string
+    - admin_ui: {order: 0.05511474609375, width: 134}
+      name: thumbnail
+      type: media
     server: full
     title: trips
   users:

@@ -3,9 +3,18 @@ components:
   name: lbl_desc
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
-- layout_properties: {grid_position: 'QCBRBY,RKTRFN'}
-  name: lbl_type
+- event_bindings: {}
+  layout_properties: {grid_position: 'QCBRBY,XVRNSA'}
+  name: lnk_asset_type
   properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Link
+- layout_properties: {grid_position: 'QCBRBY,KIXQEW NEJVIE,WTNTWA'}
+  name: img_preview
+  properties: {height: '80', visible: false}
+  type: Image
+- layout_properties: {grid_position: 'QCBRBY,KIXQEW IEQDNF,LVOVDL'}
+  name: lbl_preview_hint
+  properties: {text: Preview, visible: false}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 - layout_properties: {grid_position: 'QCBRBY,RJKIFX'}
   name: lbl_thumbnail
@@ -22,6 +31,6 @@ components:
   properties: {background_color: '', icon: 'mi:delete', icon_color: 'theme:Error', icon_size: 20, text: Delete}
   type: form:dep_lin1x4oec0ytd:_Components.Link
 container:
-  properties: {col_widths: '{"KCJRLL":15,"RKTRFN":15,"RJKIFX":15,"KOAIRZ":10,"EUSBED":17}'}
+  properties: {col_widths: '{"KCJRLL":12,"RJKIFX":12,"KOAIRZ":8,"EUSBED":12,"XVRNSA":8,"KIXQEW":8}'}
   type: ColumnPanel
 is_package: true

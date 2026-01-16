@@ -92,7 +92,7 @@ def add_asset(trip_row, data):
     description=data['description'],
     notes=data['notes'],
     asset_type=asset_type,
-    is_thumbnail=data['is_thumbnail'],
+    # is_thumbnail=data['is_thumbnail'],
     sort_order=max_order + 1
   )
 
@@ -134,7 +134,7 @@ def update_asset(asset_row, data):
     description=data.get("description"),
     notes=data.get("notes"),
     asset_type=asset_type,
-    is_thumbnail=bool(data.get("is_thumbnail")),
+    # is_thumbnail=bool(data.get("is_thumbnail")),
   )
 
   #------2B.5----
