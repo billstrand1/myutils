@@ -134,7 +134,7 @@ def update_asset(asset_row, data):
     description=data.get("description"),
     notes=data.get("notes"),
     asset_type=asset_type,
-    is_thumbnail=bool(data.get("is_thumbnail")),
+    # is_thumbnail=bool(data.get("is_thumbnail")),
   )
 
   #------2B.5----

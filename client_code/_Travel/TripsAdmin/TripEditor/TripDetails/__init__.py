@@ -176,13 +176,7 @@ class TripDetails(TripDetailsTemplate):
     if confirm("Remove the itinerary file? This cannot be undone.", title="Remove Itinerary"):
       self._clear_itinerary = True
       self._update_itinerary_ui()
-    # if not (self.trip_row and self.trip_row['itinerary']):
-    #   alert("No itinerary file to remove")
-    #   return
 
-    # if confirm("Remove the itinerary file? This cannot be undone.", title="Remove File"):
-    #   self._clear_itinerary = True
-    #   self.lbl_itinerary_status.text = "Will remove itinerary file on Save"
 
   @handle("btn_remove_thumbnail", "click")
   def btn_remove_thumbnail_click(self, **event_args):
