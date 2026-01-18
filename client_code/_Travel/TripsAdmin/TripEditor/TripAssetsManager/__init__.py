@@ -13,8 +13,9 @@ class TripAssetsManager(TripAssetsManagerTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.trip_row = None
-    self.rp_assets.set_event_handler("x-refresh", self.refresh_assets)
     self._read_only = False
+    self.rp_assets.set_event_handler("x-refresh", self.refresh_assets)
+
 
   def load_trip(self, trip_row):
     """
@@ -42,7 +43,10 @@ class TripAssetsManager(TripAssetsManagerTemplate):
   def refresh_assets(self, **event_args):
     assets = anvil.server.call("get_assets_for_trip", self.trip_row)
     self.rp_assets.items = assets
-    self.rp_assets.raise_event("x-set-read-only", read_only=self._read_only)
+    # Apply read-only AFTER rows are created
+    self._apply_read_only_to_rows()
+    
+    # self.rp_assets.raise_event("x-set-read-only", read_only=self._read_only)
 
   @handle("btn_add_asset", "click")
   def btn_add_asset_click(self, **e):
@@ -53,6 +57,20 @@ class TripAssetsManager(TripAssetsManagerTemplate):
     self.refresh_assets()
 
   def set_read_only(self, read_only: bool):
-    self.btn_add_asset.visible = not read_only
     self._read_only = read_only
+    self.btn_add_asset.visible = not read_only
+
+    self._apply_read_only_to_rows()
+    
+    # Propagate immediately to rows (if already loaded)
+    # if self.rp_assets.items is not None:
+    #   self.rp_assets.raise_event(
+    #     "x-set-read-only",
+    #     read_only=read_only
+    #   )
+
+  def _apply_read_only_to_rows(self):
+    for row in self.rp_assets.get_components():
+      if hasattr(row, "apply_read_only"):
+        row.apply_read_only(self._read_only)
 

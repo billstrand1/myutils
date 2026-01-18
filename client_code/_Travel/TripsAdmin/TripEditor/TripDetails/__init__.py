@@ -261,7 +261,7 @@ class TripDetails(TripDetailsTemplate):
       self.txt_tripit_read,
       self.txt_web_url,
       self.txt_youtube_url,
-      self.txt_miles,
+      self.checkbox_miles,
       self.txt_notes,
     ]:
       tb.enabled = not read_only
@@ -279,5 +279,5 @@ class TripDetails(TripDetailsTemplate):
     self.btn_remove_thumbnail.visible = not read_only
   
     # Viewer icons (still allowed in view mode)
-    self.btn_open_web.visible = True
-    self.btn_open_youtube.visible = True
+    self.btn_open_web_url.visible_url = True
+    self.btn_open_youtube_url.visible_url = True

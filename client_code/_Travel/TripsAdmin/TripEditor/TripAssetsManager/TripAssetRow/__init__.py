@@ -20,6 +20,15 @@ class TripAssetRow(TripAssetRowTemplate):
     if asset is None:
       return
     asset_type = asset['asset_type']
+    notes = asset['notes']
+    
+    if notes:
+      self.lbl_notes.text = notes
+      self.lbl_notes.visible = True
+    else:
+      self.lbl_notes.text = ""
+      self.lbl_notes.visible = False
+    
     self.img_preview.visible = False
     self.lbl_preview_hint.visible = False
     self.img_preview.source = None
@@ -36,6 +45,7 @@ class TripAssetRow(TripAssetRowTemplate):
     icon = icon_map.get(asset_type, "")
     self.lnk_asset_type.text = f"{icon} {asset_type.capitalize()}"   
     self.lbl_desc.text = asset['description'] or "(no description)"
+    
     # self.img_preview.tooltip = "Click to view"
     # self.lbl_preview_hint.tooltip = "Click to view"
 
@@ -110,7 +120,8 @@ class TripAssetRow(TripAssetRowTemplate):
       return
   
     file_row = {
-      "description": asset['description'] or "Asset",
+      "title": When the asset['description'] or "Asset", #self.lbl_desc.text, 
+      # "description": asset['description'] or "Asset", 
       "comments": asset['notes'],
       "file": asset['file'],
       "web_url": asset['web_url'],
@@ -153,15 +164,6 @@ class TripAssetRow(TripAssetRowTemplate):
     return None
 
 
-  # @handle("img_preview", "click")
-  # def img_preview_click(self, **e):
-  #   self._open_asset_viewer()
-  
-  # @handle("lbl_preview_hint", "click")
-  # def lbl_preview_hint_click(self, **e):
-  #   self._open_asset_viewer()
-
-  @handle("x-set-read-only")
-  def set_read_only(self, read_only=False, **e):
-    self.btn_edit.visible = not read_only
-    self.btn_delete.visible = not read_only
+  def apply_read_only(self, read_only: bool):
+    self.link_edit.visible = not read_only
+    self.link_delete.visible = not read_only

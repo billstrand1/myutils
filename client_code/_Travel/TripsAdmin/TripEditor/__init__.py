@@ -6,10 +6,11 @@ import anvil.users
 
 
 class TripEditor(TripEditorTemplate):
-  def __init__(self, trip_row=None, mode="edit", **properties):
+  def __init__(self, trip_row=None, mode="view", **properties):
     self.init_components(**properties)
     self.trip_row = trip_row
-
+    self.mode = mode   # ← MUST come before _apply_mode()
+    
     if trip_row:
       self.lbl_title.text = 'Edit Trip'
     else:
@@ -19,6 +20,10 @@ class TripEditor(TripEditorTemplate):
     self.trip_assets_manager.load_trip(trip_row)
 
     self._apply_mode()
+
+    # Later:
+    # can_edit = anvil.users.get_user()['is_admin']
+    # self.btn_edit.visible = is_view and can_edit
     
     # TripIt links: ONLY visible for new trips
     # is_new = trip_row is None
@@ -58,6 +63,8 @@ class TripEditor(TripEditorTemplate):
 
 
   def _apply_mode(self):
+    # mode = getattr(self, "mode", "edit")
+    # is_view = self.mode == "view"
     is_view = self.mode == "view"
 
     # TripDetails controls
@@ -69,7 +76,19 @@ class TripEditor(TripEditorTemplate):
     # Buttons
     self.button_save.visible = not is_view
     self.button_cancel.visible = not is_view
-
+    self.btn_edit.visible = is_view
+    
     # Return Home always available
     self.btn_return_home.visible = True
+
+    if self.mode == "view":
+      self.lbl_title.text = "View Trip"
+    else:
+      self.lbl_title.text = "Edit Trip"
+
+  @handle("btn_edit", "click")
+  def btn_edit_click(self, **event_args):
+    self.mode = "edit"
+    self._apply_mode()
+
 
