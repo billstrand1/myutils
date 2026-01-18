@@ -6,7 +6,7 @@ import anvil.users
 
 
 class TripEditor(TripEditorTemplate):
-  def __init__(self, trip_row=None, **properties):
+  def __init__(self, trip_row=None, mode="edit", **properties):
     self.init_components(**properties)
     self.trip_row = trip_row
 
@@ -17,6 +17,8 @@ class TripEditor(TripEditorTemplate):
       
     self.trip_details.load_trip(trip_row)
     self.trip_assets_manager.load_trip(trip_row)
+
+    self._apply_mode()
     
     # TripIt links: ONLY visible for new trips
     # is_new = trip_row is None
@@ -53,3 +55,21 @@ class TripEditor(TripEditorTemplate):
       title="Return to Trips"
     ):
       open_form("_Travel.TripsAdmin")
+
+
+  def _apply_mode(self):
+    is_view = self.mode == "view"
+
+    # TripDetails controls
+    self.trip_details.set_read_only(is_view)
+
+    # Assets: view-only still allowed
+    self.trip_assets_manager.set_read_only(is_view)
+
+    # Buttons
+    self.button_save.visible = not is_view
+    self.button_cancel.visible = not is_view
+
+    # Return Home always available
+    self.btn_return_home.visible = True
+

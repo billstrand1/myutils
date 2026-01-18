@@ -248,4 +248,36 @@ class TripDetails(TripDetailsTemplate):
       self.img_thumbnail_preview.source = None
       self.img_thumbnail_preview.visible = False
 
-
+  #Step 4 — Make TripDetails Read-Only (Correctly)
+  def set_read_only(self, read_only: bool):
+    # Text inputs
+    for tb in [
+      self.txt_trip_id,
+      self.txt_description,
+      self.txt_country,
+      self.txt_city,
+      self.txt_state,
+      self.txt_tripit_edit,
+      self.txt_tripit_read,
+      self.txt_web_url,
+      self.txt_youtube_url,
+      self.txt_miles,
+      self.txt_notes,
+    ]:
+      tb.enabled = not read_only
+  
+      # Date pickers
+    self.dp_start.enabled = not read_only
+    self.dp_end.enabled = not read_only
+  
+    # File loaders
+    self.file_itinerary.visible = not read_only
+    self.file_thumbnail.visible = not read_only
+  
+    # Remove buttons
+    self.btn_remove_itinerary.visible = not read_only
+    self.btn_remove_thumbnail.visible = not read_only
+  
+    # Viewer icons (still allowed in view mode)
+    self.btn_open_web.visible = True
+    self.btn_open_youtube.visible = True

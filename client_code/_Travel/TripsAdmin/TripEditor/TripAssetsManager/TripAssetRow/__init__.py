@@ -160,3 +160,8 @@ class TripAssetRow(TripAssetRowTemplate):
   # @handle("lbl_preview_hint", "click")
   # def lbl_preview_hint_click(self, **e):
   #   self._open_asset_viewer()
+
+  @handle("x-set-read-only")
+  def set_read_only(self, read_only=False, **e):
+    self.btn_edit.visible = not read_only
+    self.btn_delete.visible = not read_only
