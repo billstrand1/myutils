@@ -120,7 +120,7 @@ class TripAssetRow(TripAssetRowTemplate):
       return
   
     file_row = {
-      "title": When the asset['description'] or "Asset", #self.lbl_desc.text, 
+      "title": asset['description'] or "Asset", #self.lbl_desc.text, 
       # "description": asset['description'] or "Asset", 
       "comments": asset['notes'],
       "file": asset['file'],
