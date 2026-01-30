@@ -8,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from ...AssetEditor import AssetEditor
 from ......_FileBrowserDT.FileViewerDT import FileViewerDT
+from ...... import _Travel
 
 class TripAssetRow(TripAssetRowTemplate):
   def __init__(self, **properties):
@@ -51,7 +52,11 @@ class TripAssetRow(TripAssetRowTemplate):
 
 
     # Inline preview logic
-    if asset['file'] and self._is_image_media(asset['file']):
+    #Correction from Gemini #2 Centralize "Media Logic" (DRY - Don't Repeat Yourself)
+
+    # if asset['file'] and self._is_image_media(asset['file']):
+    if asset['file'] and _Travel.is_image(asset['file']):
+
       # Image file preview
       self.img_preview.source = asset['file']
       self.img_preview.visible = True
@@ -136,11 +141,11 @@ class TripAssetRow(TripAssetRowTemplate):
     self._open_asset_viewer()
 
 
-  def _is_image_media(self, media_obj):
-    if not media_obj:
-      return False
-    name = (getattr(media_obj, "name", "") or "").lower()
-    return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+  # def _is_image_media(self, media_obj):
+  #   if not media_obj:
+  #     return False
+  #   name = (getattr(media_obj, "name", "") or "").lower()
+  #   return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
   
   def _youtube_thumbnail_url(self, youtube_url):
     """

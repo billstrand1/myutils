@@ -190,11 +190,11 @@ class TripDetails(TripDetailsTemplate):
 
 
 
-  def _is_image_media(self, media_obj):
-    if not media_obj:
-      return False
-    name = (getattr(media_obj, "name", "") or "").lower()
-    return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+  # def _is_image_media(self, media_obj):
+  #   if not media_obj:
+  #     return False
+  #   name = (getattr(media_obj, "name", "") or "").lower()
+  #   return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
   
   def _update_itinerary_ui(self):
     # Status label
@@ -215,7 +215,8 @@ class TripDetails(TripDetailsTemplate):
       media = None
   
     # Preview (images only)
-    if self._is_image_media(media):
+    # if self._is_image_media(media):
+    if _Travel.is_image(media):  
       self.img_itinerary_preview.source = media
       self.img_itinerary_preview.visible = True
     else:
@@ -241,7 +242,8 @@ class TripDetails(TripDetailsTemplate):
       media = None
   
     # Preview (images only)
-    if self._is_image_media(media):
+    # if self._is_image_media(media):
+    if _Travel.is_image(media):
       self.img_thumbnail_preview.source = media
       self.img_thumbnail_preview.visible = True
     else:
