@@ -42,19 +42,6 @@ class TripsAdminRow(TripsAdminRowTemplate):
     else:
       self.lbl_location.text = ""
 
-    # Dates
-    # sd = trip['start_date']
-    # ed = trip['end_date']
-
-    # if sd and ed:
-    #   self.lbl_dates.text = f"{sd:%Y-%m-%d} → {ed:%Y-%m-%d}"
-    # elif sd:
-    #   self.lbl_dates.text = f"Start: {sd:%Y-%m-%d}"
-    # elif ed:
-    #   self.lbl_dates.text = f"End: {ed:%Y-%m-%d}"
-    # else:
-    #   self.lbl_dates.text = ""
-
   # Change Date Formatting:
     sd = trip['start_date']
     ed = trip['end_date']
@@ -109,11 +96,9 @@ class TripsAdminRow(TripsAdminRowTemplate):
 
 
 
-  @handle("btn_edit", "click")
-  def btn_edit_click(self, **event_args):
-    # open_form("TripEditor", trip_row=self.item)
-
-    open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item, mode='edit')
+  # @handle("btn_edit", "click")
+  # def btn_edit_click(self, **event_args):
+  #   open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item, mode='edit')
 
   @handle("btn_view", "click")
   def btn_view_click(self, **event_args):

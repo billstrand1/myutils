@@ -39,7 +39,7 @@ class TripGroupRow(TripGroupRowTemplate):
     self.panel_body.visible = False
     self.link_toggle.text = "▶"
 
-    self._load_thumbnail()
+    # self._load_thumbnail()
 
   # ---------------- accordion toggle ----------------
 

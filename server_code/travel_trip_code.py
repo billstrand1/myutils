@@ -16,7 +16,32 @@ def get_all_trips_admin():
   return list(app_tables.trips.search(tables.order_by("start_date", ascending=False)))
   # return list(get_trips_for_year(2025))
 
+@anvil.server.callable
+def get_all_trips_admin_search(search_query=None):
+  # 1. Get the base search (optionally restricted by user/permissions)
+  # Replace 'trips' with your actual table name if different
+  all_trips = app_tables.trips.search(tables.order_by("start_date", ascending=False))
 
+  if not search_query:
+    return all_trips
+
+  # 2. If there is a query, filter using 'any_of' and 'ilike'
+  # The % signs allow for partial matches (e.g. "Paris" matches "Paris, France")
+  term = f"%{search_query}%"
+
+  filtered_trips = app_tables.trips.search(
+    tables.order_by("start_date", ascending=False),
+    q.any_of(
+      trip_id=q.ilike(term),
+      trip_description=q.ilike(term),
+      city=q.ilike(term),
+      country=q.ilike(term),
+      state=q.ilike(term)
+    )
+  )
+
+  return filtered_trips
+  
 @anvil.server.callable
 def get_trips_for_year(year):
   print(f'getting trips for year {year}')

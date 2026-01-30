@@ -9,23 +9,28 @@ components:
         text: |
           Trips Admin
       type: form:dep_lin1x4oec0ytd:_Components.Text
-    - data_bindings: []
-      event_bindings: {}
-      layout_properties: {}
-      name: btn_new_trip
-      properties: {icon: 'mi:add', text: New Trip}
-      type: form:dep_lin1x4oec0ytd:_Components.Button
-    layout_properties: {grid_position: 'AFQYPR,QRREEL'}
+    layout_properties: {grid_position: 'AFQYPR,QRREEL WIOEBF,EPWKSN'}
     name: fp_header
     properties: {}
     type: FlowPanel
+  - event_bindings: {}
+    layout_properties: {grid_position: 'AFQYPR,QRREEL UWBQUO,YNMJCH'}
+    name: txt_search
+    properties: {appearance: outlined, placeholder: Search... Press enter when finished., text: ''}
+    type: form:dep_lin1x4oec0ytd:_Components.TextInput.TextBox
+  - data_bindings: []
+    event_bindings: {}
+    layout_properties: {grid_position: 'AFQYPR,CMEYAK'}
+    name: btn_new_trip
+    properties: {align: full, icon: 'mi:add', text: New Trip}
+    type: form:dep_lin1x4oec0ytd:_Components.Button
   - layout_properties: {grid_position: 'QXXUHX,MZVPWV'}
     name: rp_trips
     properties: {item_template: _Travel.TripsAdmin.TripsAdminRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'GZFGMJ,NTWDOZ'}
   name: column_panel_1
-  properties: {}
+  properties: {col_widths: '{"QRREEL":35,"CMEYAK":25}'}
   type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
