@@ -24,7 +24,7 @@ class TripAssetRow(TripAssetRowTemplate):
     notes = asset['notes']
     
     if notes:
-      self.lbl_notes.text = notes
+      self.lbl_notes.text = '(' + notes + ')'
       self.lbl_notes.visible = True
     else:
       self.lbl_notes.text = ""

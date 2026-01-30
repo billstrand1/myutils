@@ -51,6 +51,11 @@ class TripDetails(TripDetailsTemplate):
 
 
   def collect_data(self):
+    if self.dp_start.date and self.dp_end.date:
+      if self.dp_end.date < self.dp_start.date:
+        alert("End date cannot be before start date!")
+        raise Exception("Invalid Dates")
+        
     if not self.txt_country.text:
       alert("Country is required")
       raise Exception("Country is required")
