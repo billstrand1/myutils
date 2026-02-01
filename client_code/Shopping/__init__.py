@@ -13,8 +13,8 @@ class Shopping(ShoppingTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     # ------------------Comment out before cloning, run from data_functions Server Code
-    print('Calling for log-in')
-    anvil.server.call('force_debug_login_shr_utils')   
+    # print('Calling for log-in')
+    # anvil.server.call('force_debug_login_shr_utils')   
     
     # Check admin status ONCE on startup
     # anvil.users.login_with_form()
