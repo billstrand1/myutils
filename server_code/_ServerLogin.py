@@ -8,7 +8,7 @@ import anvil.server
 @anvil.server.callable
 def force_debug_login_shr_utils():
   print('DONT FORGET TO COMMENT OUT FORCED LOGIN')
-  anvil.users.force_login(app_tables.users.get(email="shara3@email.com"))
+  anvil.users.force_login(app_tables.users.get(email="dbutler2@y.com"))
   
   # dbutler2@y.com
   # bill.strand@yahoo.com

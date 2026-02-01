@@ -5,6 +5,9 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 from datetime import datetime
+from . import admin
+from . import Globals
+
 
 
 @anvil.server.callable
@@ -40,40 +43,23 @@ def get_grouped_items():
     # Format for the RepeatingPanel: [{'name': 'Susan', 'items': [...]}, ...]
   return [{'name': name, 'items': items} for name, items in groups.items()]
 
-# @anvil.server.callable
-# def update_item(item_row, updates):
-#   user = anvil.users.get_user()
-#   # Security check: only the owner can update
-#   if item_row['user'] == user:
-#     updates['updated'] = datetime.now()
-#     item_row.update(**updates)
-#   else:
-#     raise Exception("Permission denied: You do not own this item.")
 
 @anvil.server.callable
 def update_item(item_row, updates):
   user = anvil.users.get_user()
-  # Permission: Owner OR Admin
-  if item_row['user'] == user or has_role(user, 'admin'):
+  
+  # Secure check: Owner OR Admin
+  if item_row['user'] == user or admin.has_role(user, 'admin'):
     updates['updated'] = datetime.now()
     item_row.update(**updates)
   else:
     raise Exception("Permission denied: You do not own this item.")
-    
-# @anvil.server.callable
-# def delete_item(item_row):
-#   user = anvil.users.get_user()
-#   # Security check: only the owner can delete
-#   if item_row['user'] == user:
-#     item_row.delete()
-#   else:
-#     raise Exception("Permission denied: You do not own this item.")
 
 @anvil.server.callable
 def delete_item(item_row):
   user = anvil.users.get_user()
-# Permission: Owner OR Admin
-  if item_row['user'] == user or has_role(user, 'admin'):
+  print(f"delete_item says: Globals.is_admin: {Globals.is_admin}")
+  if item_row['user'] == user or admin.has_role(user, 'admin'):
     item_row.delete()
   else:
     raise Exception("Permission denied: You do not own this item.")

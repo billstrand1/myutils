@@ -6,6 +6,7 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from .. import Globals
 
 
 class Shopping(ShoppingTemplate):
@@ -13,9 +14,21 @@ class Shopping(ShoppingTemplate):
     self.init_components(**properties)
     # ------------------Comment out before cloning, run from data_functions Server Code
     print('Calling for log-in')
-    anvil.server.call('force_debug_login_shr_utils')    
+    anvil.server.call('force_debug_login_shr_utils')   
+    
+    # Check admin status ONCE on startup
     # anvil.users.login_with_form()
+    # self.is_admin = anvil.server.call('am_i_admin')
+    Globals.check_permissions()
+    self.refresh_list()
 
+  # def refresh_list(self, **event_args):
+    # Get grouped items from server
+    items = anvil.server.call('get_grouped_items')
+
+    # Pass the admin status to the RepeatingPanel
+    # This allows the GroupTemplate to know if the user is an admin
+    self.repeating_panel_main.items = items
     
     # Listen for refresh requests from the nested templates
     self.repeating_panel_main.set_event_handler('x-refresh-all', self.refresh_list)
