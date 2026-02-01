@@ -8,12 +8,6 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .... import Globals
 
-# class ItemTemplate(ItemTemplateTemplate):
-#   def __init__(self, **properties):
-#     self.init_components(**properties)
-#     # Hide buttons if the current user isn't the owner
-# # ItemTemplate1 Code
-
 class ItemTemplate(ItemTemplateTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
@@ -22,7 +16,7 @@ class ItemTemplate(ItemTemplateTemplate):
     is_owner = self.item['user'] == current_user
 
     has_permission = is_owner or Globals.is_admin
-    print(f"has_permission: {has_permission}, Globals.is_admin: {Globals.is_admin}")
+    # print(f"has_permission: {has_permission}, Globals.is_admin: {Globals.is_admin}")
 
     # UI Control
     self.check_box_1.enabled = has_permission
