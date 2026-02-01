@@ -7,14 +7,19 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import Globals
-
+from .GroupTemplate import GroupTemplate
 
 class _Shopping(_ShoppingTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     # ------------------Comment out before cloning, run from data_functions Server Code
-    print('Calling for log-in')
-    anvil.server.call('force_debug_login_shr_utils')   
+    # print('Calling for log-in')
+    # anvil.server.call('force_debug_login_shr_utils')   
+
+    user = anvil.users.get_user()
+    if not user:
+      user = anvil.users.login_with_form()
+    print(f"{user['last_name']} is logged in") 
     
     # Check admin status ONCE on startup
     # anvil.users.login_with_form()
