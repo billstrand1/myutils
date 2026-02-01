@@ -42,24 +42,66 @@ class TripsAdminRow(TripsAdminRowTemplate):
     else:
       self.lbl_location.text = ""
 
-    # Dates
+  # Change Date Formatting:
     sd = trip['start_date']
     ed = trip['end_date']
-
+    def trip_days(sd, ed):
+      return (ed - sd).days + 1    
+      
+    def fmt_year(d):
+      return d.strftime("'%y")
+    
+    def fmt_month_day(d):
+      return d.strftime("%b %-d")  # macOS/Linux
+      # Windows fallback:
+      # return d.strftime("%b %d").replace(" 0", " ")
+    
     if sd and ed:
-      self.lbl_dates.text = f"{sd:%Y-%m-%d} → {ed:%Y-%m-%d}"
+      days = trip_days(sd, ed)
+      day_label = "day" if days == 1 else "days"
+      duration = f" [{days} {day_label}]"
+    
+      # Single-day trip (compact rule)
+      if sd == ed:
+        self.lbl_dates.text = (
+          f"{fmt_month_day(sd)}, {fmt_year(sd)}{duration}"
+        )
+    
+      elif sd.year == ed.year:
+        if sd.month == ed.month:
+          # Same month, same year
+          self.lbl_dates.text = (
+            f"{fmt_month_day(sd)} → {ed.day}, {fmt_year(ed)}{duration}"
+          )
+        else:
+          # Different month, same year
+          self.lbl_dates.text = (
+            f"{fmt_month_day(sd)} → {fmt_month_day(ed)}, {fmt_year(ed)}{duration}"
+          )
+      else:
+        # Different years
+        self.lbl_dates.text = (
+          f"{fmt_month_day(sd)}, {fmt_year(sd)} → "
+          f"{fmt_month_day(ed)}, {fmt_year(ed)}{duration}"
+        )
+    
     elif sd:
-      self.lbl_dates.text = f"Start: {sd:%Y-%m-%d}"
+      self.lbl_dates.text = f"{fmt_month_day(sd)}, {fmt_year(sd)}"
+    
     elif ed:
-      self.lbl_dates.text = f"End: {ed:%Y-%m-%d}"
+      self.lbl_dates.text = f"{fmt_month_day(ed)}, {fmt_year(ed)}"
+    
     else:
       self.lbl_dates.text = ""
 
-  @handle("btn_edit", "click")
-  def btn_edit_click(self, **event_args):
-    # open_form("TripEditor", trip_row=self.item)
 
-    open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item)
 
+  # @handle("btn_edit", "click")
+  # def btn_edit_click(self, **event_args):
+  #   open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item, mode='edit')
+
+  @handle("btn_view", "click")
+  def btn_view_click(self, **event_args):
+    open_form("_Travel.TripsAdmin.TripEditor", trip_row=self.item, mode='view')
 
 

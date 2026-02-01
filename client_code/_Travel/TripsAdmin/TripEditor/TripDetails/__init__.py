@@ -51,6 +51,11 @@ class TripDetails(TripDetailsTemplate):
 
 
   def collect_data(self):
+    if self.dp_start.date and self.dp_end.date:
+      if self.dp_end.date < self.dp_start.date:
+        alert("End date cannot be before start date!")
+        raise Exception("Invalid Dates")
+        
     if not self.txt_country.text:
       alert("Country is required")
       raise Exception("Country is required")
@@ -190,11 +195,11 @@ class TripDetails(TripDetailsTemplate):
 
 
 
-  def _is_image_media(self, media_obj):
-    if not media_obj:
-      return False
-    name = (getattr(media_obj, "name", "") or "").lower()
-    return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+  # def _is_image_media(self, media_obj):
+  #   if not media_obj:
+  #     return False
+  #   name = (getattr(media_obj, "name", "") or "").lower()
+  #   return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
   
   def _update_itinerary_ui(self):
     # Status label
@@ -215,7 +220,8 @@ class TripDetails(TripDetailsTemplate):
       media = None
   
     # Preview (images only)
-    if self._is_image_media(media):
+    # if self._is_image_media(media):
+    if _Travel.is_image(media):  
       self.img_itinerary_preview.source = media
       self.img_itinerary_preview.visible = True
     else:
@@ -241,11 +247,44 @@ class TripDetails(TripDetailsTemplate):
       media = None
   
     # Preview (images only)
-    if self._is_image_media(media):
+    # if self._is_image_media(media):
+    if _Travel.is_image(media):
       self.img_thumbnail_preview.source = media
       self.img_thumbnail_preview.visible = True
     else:
       self.img_thumbnail_preview.source = None
       self.img_thumbnail_preview.visible = False
 
-
+  #Step 4 — Make TripDetails Read-Only (Correctly)
+  def set_read_only(self, read_only: bool):
+    # Text inputs
+    for tb in [
+      self.txt_trip_id,
+      self.txt_description,
+      self.txt_country,
+      self.txt_city,
+      self.txt_state,
+      self.txt_tripit_edit,
+      self.txt_tripit_read,
+      self.txt_web_url,
+      self.txt_youtube_url,
+      self.checkbox_miles,
+      self.txt_notes,
+    ]:
+      tb.enabled = not read_only
+  
+      # Date pickers
+    self.dp_start.enabled = not read_only
+    self.dp_end.enabled = not read_only
+  
+    # File loaders
+    self.file_itinerary.visible = not read_only
+    self.file_thumbnail.visible = not read_only
+  
+    # Remove buttons
+    self.btn_remove_itinerary.visible = not read_only
+    self.btn_remove_thumbnail.visible = not read_only
+  
+    # Viewer icons (still allowed in view mode)
+    self.btn_open_web_url.visible_url = True
+    self.btn_open_youtube_url.visible_url = True

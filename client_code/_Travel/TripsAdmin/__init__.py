@@ -35,3 +35,7 @@ class TripsAdmin(TripsAdminTemplate):
       # open_form("TripEditor", trip_row=None)
       open_form("_Travel.TripsAdmin.TripEditor", trip_row=None)
 
+  @handle("txt_search", "pressed_enter")
+  def txt_search_pressed_enter(self, **event_args):
+    query = self.txt_search.text
+    self.rp_trips.items = anvil.server.call("get_all_trips_admin_search", search_query=query)

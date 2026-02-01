@@ -7,6 +7,13 @@ import datetime
 from datetime import date
 
 
+is_admin = False
+def check_permissions():
+  global is_admin
+  is_admin = anvil.server.call('am_i_admin')
+  print(f"from globals, is_admin = {is_admin}")
+
+
 
 def validate_member_data(member):
   #Used by _DirectoryHome

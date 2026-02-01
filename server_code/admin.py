@@ -30,3 +30,17 @@ def has_role(user, role):
     return False
   else:
     return False
+
+@anvil.server.callable
+def am_i_admin():
+  """Checks if the logged-in user is an admin using the has_role function."""
+  return has_role(anvil.users.get_user(), 'admin')
+
+  
+# @anvil.server.callable
+# def is_current_user_admin():
+#   user = anvil.users.get_user()
+#   # Use your existing logic here safely on the server
+#   if user and 'roles' in user and user['roles'] is not None:
+#     return 'admin' in user['roles']
+#   return False

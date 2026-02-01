@@ -32,3 +32,14 @@ def open_in_file_viewer_dt(*, title, file=None, web_url=None, youtube_url=None, 
   viewer = FileViewerDT(file_rows=[file_row], start_index=0)
   alert(content=viewer, large=True, buttons=[])
 
+
+def is_image(media_obj):
+  if not media_obj: return False
+  name = (getattr(media_obj, "name", "") or "").lower()
+  return name.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))
+
+def get_youtube_thumb(url):
+  import re
+  m = re.search(r"(?:youtu\.be/|v=)([^?&]+)", url or "")
+  return f"https://img.youtube.com/vi/{m.group(1)}/hqdefault.jpg" if m else None
+  

@@ -1,6 +1,10 @@
 components:
-- layout_properties: {grid_position: 'QCBRBY,KCJRLL'}
+- layout_properties: {grid_position: 'QCBRBY,KCJRLL OEHRIM,UWODXO'}
   name: lbl_desc
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'QCBRBY,KCJRLL TPRBWU,UYYYNU'}
+  name: lbl_notes
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
 - event_bindings: {}
@@ -23,14 +27,14 @@ components:
 - event_bindings: {}
   layout_properties: {grid_position: 'QCBRBY,KOAIRZ'}
   name: link_edit
-  properties: {icon: 'mi:edit', icon_size: 20, text: Edit}
+  properties: {icon: 'mi:edit', icon_size: 20, text: ''}
   type: form:dep_lin1x4oec0ytd:_Components.Link
 - event_bindings: {}
   layout_properties: {grid_position: 'QCBRBY,EUSBED'}
   name: link_delete
-  properties: {background_color: '', icon: 'mi:delete', icon_color: 'theme:Error', icon_size: 20, text: Delete}
+  properties: {background_color: '', icon: 'mi:delete', icon_color: 'theme:Error', icon_size: 20, text: ''}
   type: form:dep_lin1x4oec0ytd:_Components.Link
 container:
-  properties: {col_widths: '{"KCJRLL":12,"RJKIFX":12,"KOAIRZ":8,"EUSBED":12,"XVRNSA":8,"KIXQEW":8}'}
+  properties: {col_widths: '{"KCJRLL":22,"RJKIFX":12,"KOAIRZ":2,"EUSBED":3,"XVRNSA":10,"KIXQEW":11}'}
   type: ColumnPanel
 is_package: true

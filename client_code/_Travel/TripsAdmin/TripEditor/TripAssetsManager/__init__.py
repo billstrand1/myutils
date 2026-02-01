@@ -13,7 +13,9 @@ class TripAssetsManager(TripAssetsManagerTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.trip_row = None
+    self._read_only = False
     self.rp_assets.set_event_handler("x-refresh", self.refresh_assets)
+
 
   def load_trip(self, trip_row):
     """
@@ -39,28 +41,36 @@ class TripAssetsManager(TripAssetsManagerTemplate):
     self.btn_add_asset.visible = True
 
   def refresh_assets(self, **event_args):
-    assets = anvil.server.call(
-      "get_assets_for_trip",
-      self.trip_row
-    )
+    assets = anvil.server.call("get_assets_for_trip", self.trip_row)
     self.rp_assets.items = assets
+    # Apply read-only AFTER rows are created
+    self._apply_read_only_to_rows()
+    
+    # self.rp_assets.raise_event("x-set-read-only", read_only=self._read_only)
 
   @handle("btn_add_asset", "click")
   def btn_add_asset_click(self, **e):
     editor = AssetEditor(self.trip_row)
-
-    # PROBLEM:  SAVE / CLOSE ARE NOT WORKING PROPERLY
-    #FILE UPLOAD DOES NOT HAVE CODE TO ALLOW IT TO WORK
-    
-    #Trying to Fix:
-    # def close_modal(**event_args):
-    #   alert.dismiss()
-    #   self.refresh_assets()
-    
-
-    # editor.set_event_handler("x-close", close_modal) 
-
     
     alert(editor, large=True, buttons=[])
     self.raise_event("x-close-alert")
     self.refresh_assets()
+
+  def set_read_only(self, read_only: bool):
+    self._read_only = read_only
+    self.btn_add_asset.visible = not read_only
+
+    self._apply_read_only_to_rows()
+    
+    # Propagate immediately to rows (if already loaded)
+    # if self.rp_assets.items is not None:
+    #   self.rp_assets.raise_event(
+    #     "x-set-read-only",
+    #     read_only=read_only
+    #   )
+
+  def _apply_read_only_to_rows(self):
+    for row in self.rp_assets.get_components():
+      if hasattr(row, "apply_read_only"):
+        row.apply_read_only(self._read_only)
+
