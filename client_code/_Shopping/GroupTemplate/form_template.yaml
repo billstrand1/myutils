@@ -9,7 +9,7 @@ components:
   type: form:dep_lin1x4oec0ytd:_Components.Text
 - layout_properties: {grid_position: 'ZBYWFO,BDLNUZ'}
   name: repeating_panel_items
-  properties: {item_template: Shopping.GroupTemplate.ItemTemplate}
+  properties: {item_template: _Shopping.GroupTemplate.ItemTemplate}
   type: RepeatingPanel
 container: {type: ColumnPanel}
 is_package: true

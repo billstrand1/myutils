@@ -1,4 +1,4 @@
-from ._anvil_designer import ShoppingTemplate
+from ._anvil_designer import _ShoppingTemplate
 from anvil import *
 import anvil.server
 import m3.components as m3
@@ -9,20 +9,20 @@ from anvil.tables import app_tables
 from .. import Globals
 
 
-class Shopping(ShoppingTemplate):
+class _Shopping(_ShoppingTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     # ------------------Comment out before cloning, run from data_functions Server Code
-    # print('Calling for log-in')
-    # anvil.server.call('force_debug_login_shr_utils')   
+    print('Calling for log-in')
+    anvil.server.call('force_debug_login_shr_utils')   
     
     # Check admin status ONCE on startup
     # anvil.users.login_with_form()
     # self.is_admin = anvil.server.call('am_i_admin')
+    
     Globals.check_permissions()
     self.refresh_list()
 
-  # def refresh_list(self, **event_args):
     # Get grouped items from server
     items = anvil.server.call('get_grouped_items')
 
