@@ -1,0 +1,15 @@
+components:
+- layout_properties: {grid_position: 'IWZTJJ,YAAHXZ'}
+  name: divider_1
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Divider
+- layout_properties: {grid_position: 'JKXGUJ,YIURRY'}
+  name: label_header
+  properties: {}
+  type: form:dep_lin1x4oec0ytd:_Components.Text
+- layout_properties: {grid_position: 'ZBYWFO,BDLNUZ'}
+  name: repeating_panel_items
+  properties: {item_template: Shopping.GroupTemplate.ItemTemplate}
+  type: RepeatingPanel
+container: {type: ColumnPanel}
+is_package: true
