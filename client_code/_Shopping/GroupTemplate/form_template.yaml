@@ -7,9 +7,11 @@ components:
   name: label_header
   properties: {}
   type: form:dep_lin1x4oec0ytd:_Components.Text
-- layout_properties: {grid_position: 'ZBYWFO,BDLNUZ'}
+- layout_properties: {full_width_row: true, grid_position: 'ZBYWFO,BDLNUZ'}
   name: repeating_panel_items
   properties: {item_template: _Shopping.GroupTemplate.ItemTemplate}
   type: RepeatingPanel
-container: {type: ColumnPanel}
+container:
+  properties: {wrap_on: never}
+  type: ColumnPanel
 is_package: true
