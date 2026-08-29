@@ -315,7 +315,7 @@ dependencies:
   version: {branch: published}
 - dep_id: dep_e0hnpqf0sgb4ku
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {version_tag: v3.6.1}
+  version: {branch: published}
 name: MyUtils
 native_deps: null
 package_name: MyUtils
@@ -334,5 +334,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/email.yml
-startup: {module: _Shopping, type: form}
+startup: {module: _FileBrowserDT, type: form}
 startup_form: null
